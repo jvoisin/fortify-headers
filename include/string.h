@@ -17,9 +17,6 @@ void *__fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t
 	return memcpy(dest, src, n);
 }
 
-#undef memcpy
-#define memcpy(dest, src, n) __fortify_memcpy(dest, src, n)
-
 static inline __attribute__ ((always_inline))
 void *__fortify_memmove(void *__restrict dest, const void *__restrict src, size_t n)
 {
@@ -31,9 +28,6 @@ void *__fortify_memmove(void *__restrict dest, const void *__restrict src, size_
 		__builtin_trap();
 	return memmove(dest, src, n);
 }
-
-#undef memmove
-#define memmove(dest, src, n) __fortify_memmove(dest, src, n)
 
 static inline __attribute__ ((always_inline))
 void *__fortify_memset(void *dest, int c, size_t n)
@@ -47,9 +41,6 @@ void *__fortify_memset(void *dest, int c, size_t n)
 	return memset(dest, c, n);
 }
 
-#undef memset
-#define memset(dest, src, n) __fortify_memset(dest, src, n)
-
 static inline __attribute__ ((always_inline))
 char *__fortify_strcat(char *__restrict dest, const char *__restrict src)
 {
@@ -62,9 +53,6 @@ char *__fortify_strcat(char *__restrict dest, const char *__restrict src)
 	return strcat(dest, src);
 }
 
-#undef strcat
-#define strcat(dest, src) __fortify_strcat(dest, src)
-
 static inline __attribute__ ((always_inline))
 char *__fortify_strcpy(char *__restrict dest, const char *__restrict src)
 {
@@ -76,9 +64,6 @@ char *__fortify_strcpy(char *__restrict dest, const char *__restrict src)
 		__builtin_trap();
 	return strcpy(dest, src);
 }
-
-#undef strcpy
-#define strcpy(dest, src) __fortify_strcpy(dest, src)
 
 static inline __attribute__ ((always_inline))
 char *__fortify_strncat(char *__restrict dest, const char *__restrict src, size_t n)
@@ -99,9 +84,6 @@ char *__fortify_strncat(char *__restrict dest, const char *__restrict src, size_
 	return strncat(dest, src, n);
 }
 
-#undef strncat
-#define strncat(dest, src, n) __fortify_strcat(dest, src, n)
-
 static inline __attribute__ ((always_inline))
 char *__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_t n)
 {
@@ -113,9 +95,6 @@ char *__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_
 		__builtin_trap();
 	return strncpy(dest, src, n);
 }
-
-#undef strncpy
-#define strncpy(dest, src, n) __fortify_strcpy(dest, src, n)
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 static inline __attribute__ ((always_inline))
@@ -130,9 +109,6 @@ size_t __fortify_strlcat(char *__restrict dest, const char *__restrict src, size
 	return strlcat(dest, src, n);
 }
 
-#undef strlcat
-#define strlcat(dest, src, n) __fortify_strlcat(dest, src, n)
-
 static inline __attribute__ ((always_inline))
 size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size_t n)
 {
@@ -144,10 +120,30 @@ size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size
 		__builtin_trap();
 	return strlcpy(dest, src, n);
 }
+#endif
 
+#undef memcpy
+#define memcpy(dest, src, n) __fortify_memcpy(dest, src, n)
+#undef memmove
+#define memmove(dest, src, n) __fortify_memmove(dest, src, n)
+#undef memset
+#define memset(dest, src, n) __fortify_memset(dest, src, n)
+#undef strcat
+#define strcat(dest, src) __fortify_strcat(dest, src)
+#undef strcpy
+#define strcpy(dest, src) __fortify_strcpy(dest, src)
+#undef strncat
+#define strncat(dest, src, n) __fortify_strcat(dest, src, n)
+#undef strncpy
+#define strncpy(dest, src, n) __fortify_strcpy(dest, src, n)
+
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#undef strlcat
+#define strlcat(dest, src, n) __fortify_strlcat(dest, src, n)
 #undef strlcpy
 #define strlcpy(dest, src, n) __fortify_strlcpy(dest, src, n)
 #endif
+
 #endif
 
 #endif
