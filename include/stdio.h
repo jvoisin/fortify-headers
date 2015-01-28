@@ -9,7 +9,7 @@ static inline
 __attribute__ ((always_inline))
 __attribute__ ((__format__ (printf, 3, 0)))
 __attribute__ ((__nonnull__ (3)))
-int __fortify_vsnprintf(char *__restrict s, size_t n, const char *__restrict fmt, __va_list ap)
+int __fortify_vsnprintf(char *__restrict s, size_t n, const char *__restrict fmt, __builtin_va_list ap)
 {
 	size_t bos = __builtin_object_size(s, 0);
 
