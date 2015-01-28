@@ -6,7 +6,8 @@
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
 static inline __attribute__ ((always_inline))
-void *__fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t n)
+void *
+__fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -16,7 +17,8 @@ void *__fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t
 }
 
 static inline __attribute__ ((always_inline))
-void *__fortify_memmove(void *__restrict dest, const void *__restrict src, size_t n)
+void *
+__fortify_memmove(void *__restrict dest, const void *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -26,7 +28,8 @@ void *__fortify_memmove(void *__restrict dest, const void *__restrict src, size_
 }
 
 static inline __attribute__ ((always_inline))
-void *__fortify_memset(void *dest, int c, size_t n)
+void *
+__fortify_memset(void *dest, int c, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -36,7 +39,8 @@ void *__fortify_memset(void *dest, int c, size_t n)
 }
 
 static inline __attribute__ ((always_inline))
-char *__fortify_stpcpy(char *__restrict dest, const char *__restrict src)
+char *
+__fortify_stpcpy(char *__restrict dest, const char *__restrict src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -46,7 +50,8 @@ char *__fortify_stpcpy(char *__restrict dest, const char *__restrict src)
 }
 
 static inline __attribute__ ((always_inline))
-char *__fortify_stpncpy(char *__restrict dest, const char *__restrict src, size_t n)
+char *
+__fortify_stpncpy(char *__restrict dest, const char *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -56,7 +61,8 @@ char *__fortify_stpncpy(char *__restrict dest, const char *__restrict src, size_
 }
 
 static inline __attribute__ ((always_inline))
-char *__fortify_strcat(char *__restrict dest, const char *__restrict src)
+char *
+__fortify_strcat(char *__restrict dest, const char *__restrict src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -66,7 +72,8 @@ char *__fortify_strcat(char *__restrict dest, const char *__restrict src)
 }
 
 static inline __attribute__ ((always_inline))
-char *__fortify_strcpy(char *__restrict dest, const char *__restrict src)
+char *
+__fortify_strcpy(char *__restrict dest, const char *__restrict src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -76,7 +83,8 @@ char *__fortify_strcpy(char *__restrict dest, const char *__restrict src)
 }
 
 static inline __attribute__ ((always_inline))
-char *__fortify_strncat(char *__restrict dest, const char *__restrict src, size_t n)
+char *
+__fortify_strncat(char *__restrict dest, const char *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 	size_t slen, dlen;
@@ -93,7 +101,8 @@ char *__fortify_strncat(char *__restrict dest, const char *__restrict src, size_
 }
 
 static inline __attribute__ ((always_inline))
-char *__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_t n)
+char *
+__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -104,7 +113,8 @@ char *__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_
 
 #ifdef _GNU_SOURCE
 static inline __attribute__ ((always_inline))
-void *__fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
+void *
+__fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -116,7 +126,8 @@ void *__fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 static inline __attribute__ ((always_inline))
-size_t __fortify_strlcat(char *__restrict dest, const char *__restrict src, size_t n)
+size_t
+__fortify_strlcat(char *__restrict dest, const char *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -126,7 +137,8 @@ size_t __fortify_strlcat(char *__restrict dest, const char *__restrict src, size
 }
 
 static inline __attribute__ ((always_inline))
-size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size_t n)
+size_t
+__fortify_strlcpy(char *__restrict dest, const char *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
