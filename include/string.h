@@ -153,9 +153,9 @@ size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size
 #undef memset
 #define memset(dest, src, n) __fortify_memset(dest, src, n)
 #undef stpcpy
-#define stpcpy(dest, src) __fortify_stpcpy(dest, src);
+#define stpcpy(dest, src) __fortify_stpcpy(dest, src)
 #undef stpncpy
-#define stpncpy(dest, src, n) __fortify_stpncpy(dest, src, n);
+#define stpncpy(dest, src, n) __fortify_stpncpy(dest, src, n)
 #undef strcat
 #define strcat(dest, src) __fortify_strcat(dest, src)
 #undef strcpy
