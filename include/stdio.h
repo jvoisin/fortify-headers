@@ -13,15 +13,21 @@ int __fortify_vsnprintf(char *__restrict s, size_t n, const char *__restrict fmt
 {
 	size_t bos = __builtin_object_size(s, 0);
 
-	if (bos == (size_t)-1)
-		return vsnprintf(s, n, fmt, ap);
-	if (__builtin_constant_p(n) && n > bos)
+	if (n > bos)
 		__builtin_trap();
 	return vsnprintf(s, n, fmt, ap);
 }
 
 #undef vsnprintf
 #define vsnprintf(s, n, fmt, ap) __fortify_vsnprintf(s, n, fmt, ap)
+#undef snprintf
+#define snprintf(s, n, fmt, ...) ({ \
+	size_t _n = (n); \
+	size_t bos = __builtin_object_size(s, 0); \
+	if (n > bos) \
+		__builtin_trap(); \
+	snprintf(s, n, fmt, __VA_ARGS__); \
+})
 
 #endif
 
