@@ -102,6 +102,18 @@ char *__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_
 	return strncpy(dest, src, n);
 }
 
+#if defined(_GNU_SOURCE)
+static inline __attribute__ ((always_inline))
+void *__fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
+{
+	size_t bos = __builtin_object_size(dest, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return mempcpy(dest, src, n);
+}
+#endif
+
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 static inline __attribute__ ((always_inline))
 size_t __fortify_strlcat(char *__restrict dest, const char *__restrict src, size_t n)
@@ -142,6 +154,11 @@ size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size
 #define strncat(dest, src, n) __fortify_strcat(dest, src, n)
 #undef strncpy
 #define strncpy(dest, src, n) __fortify_strcpy(dest, src, n)
+
+#if defined(_GNU_SOURCE)
+#undef mempcpy
+#define mempcpy(dest, src, n) __fortify_mempcpy(dest, src, n)
+#endif
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef strlcat
