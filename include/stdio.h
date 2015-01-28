@@ -24,9 +24,9 @@ int __fortify_vsnprintf(char *__restrict s, size_t n, const char *__restrict fmt
 #define snprintf(s, n, fmt, ...) ({ \
 	size_t _n = (n); \
 	size_t bos = __builtin_object_size(s, 0); \
-	if (n > bos) \
+	if (_n > bos) \
 		__builtin_trap(); \
-	snprintf(s, n, fmt, __VA_ARGS__); \
+	snprintf(s, _n, fmt, __VA_ARGS__); \
 })
 
 #endif
