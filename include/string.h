@@ -102,7 +102,7 @@ char *__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_
 	return strncpy(dest, src, n);
 }
 
-#if defined(_GNU_SOURCE)
+#ifdef _GNU_SOURCE
 static inline __attribute__ ((always_inline))
 void *__fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
 {
@@ -155,7 +155,7 @@ size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size
 #undef strncpy
 #define strncpy(dest, src, n) __fortify_strcpy(dest, src, n)
 
-#if defined(_GNU_SOURCE)
+#ifdef _GNU_SOURCE
 #undef mempcpy
 #define mempcpy(dest, src, n) __fortify_mempcpy(dest, src, n)
 #endif
