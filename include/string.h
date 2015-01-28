@@ -42,6 +42,18 @@ void *__fortify_memset(void *dest, int c, size_t n)
 }
 
 static inline __attribute__ ((always_inline))
+char *__fortify_stpcpy(char *__restrict dest, const char *__restrict src)
+{
+	size_t bos = __builtin_object_size(dest, 0);
+
+	if (bos == (size_t)-1)
+		return stpcpy(dest, src);
+	if (strlen(src) + 1 > bos)
+		__builtin_trap();
+	return stpcpy(dest, src);
+}
+
+static inline __attribute__ ((always_inline))
 char *__fortify_strcat(char *__restrict dest, const char *__restrict src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -128,6 +140,8 @@ size_t __fortify_strlcpy(char *__restrict dest, const char *__restrict src, size
 #define memmove(dest, src, n) __fortify_memmove(dest, src, n)
 #undef memset
 #define memset(dest, src, n) __fortify_memset(dest, src, n)
+#undef stpcpy
+#define stpcpy(dest, src) __fortify_stpcpy(dest, src);
 #undef strcat
 #define strcat(dest, src) __fortify_strcat(dest, src)
 #undef strcpy
