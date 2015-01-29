@@ -21,8 +21,22 @@ __fortify_bcopy(const void *__restrict src, void *__restrict dest, size_t n)
 	return bcopy(src, dest, n);
 }
 
+static inline __attribute__ ((always_inline))
+void
+__fortify_bzero(void *src, size_t n)
+{
+	size_t bos = __builtin_object_size(src, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return bzero(src, n);
+}
+
 #undef bcopy
 #define bcopy(src, dest, n) __fortify_bcopy(src, dest, n)
+#undef bzero
+#define bzero(src, n) __fortify_bzero(src, n)
+
 #endif
 
 #endif
