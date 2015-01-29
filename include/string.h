@@ -1,3 +1,4 @@
+/* See LICENSE file for copyright and license details. */
 #ifndef FORTIFY_STRING_H_
 #define FORTIFY_STRING_H_
 
