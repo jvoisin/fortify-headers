@@ -5,6 +5,16 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
+static inline __attribute__ ((always_inline))
+char *__fortify_fgets(char *s, int n, FILE *fp)
+{
+	size_t bos = __builtin_object_size(s, 0);
+
+	if ((size_t)n > bos)
+		__builtin_trap();
+	return fgets(s, n, fp);
+}
+
 static inline
 __attribute__ ((always_inline))
 __attribute__ ((__format__ (printf, 3, 0)))
@@ -20,6 +30,8 @@ __fortify_vsnprintf(char *__restrict s, size_t n, const char *__restrict fmt,
 	return vsnprintf(s, n, fmt, ap);
 }
 
+#undef fgets
+#define fgets(s, n, fp) __fortify_fgets(s, n, fp)
 #undef vsnprintf
 #define vsnprintf(s, n, fmt, ap) __fortify_vsnprintf(s, n, fmt, ap)
 #undef snprintf
