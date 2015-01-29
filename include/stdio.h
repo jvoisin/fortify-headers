@@ -6,7 +6,8 @@
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
 static inline __attribute__ ((always_inline))
-char *__fortify_fgets(char *s, int n, FILE *fp)
+char *
+__fortify_fgets(char *s, int n, FILE *fp)
 {
 	size_t bos = __builtin_object_size(s, 0);
 
