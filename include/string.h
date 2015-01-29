@@ -20,9 +20,9 @@ __fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t n)
 	if (__builtin_constant_p(n) && n > bos)
 		__memcpy_error();
 
-	/* trap if pointers are overlapping */
-	if ((d <= s && d + n > s) ||
-	    (s <= d && s + n > d))
+	/* trap if pointers are overlapping but not if dest == src */
+	if ((d < s && d + n > s) ||
+	    (s < d && s + n > d))
 		__builtin_trap();
 	if (n > bos)
 		__builtin_trap();
