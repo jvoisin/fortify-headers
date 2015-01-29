@@ -77,7 +77,7 @@ __fortify_stpncpy(char *__restrict dest, const char *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
-	if (__builtin_costant_p(n) && n > bos)
+	if (__builtin_constant_p(n) && n > bos)
 		__stpncpy_error();
 
 	if (n > bos)
