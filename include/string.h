@@ -10,7 +10,13 @@ void *
 __fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
+	char *d = dest;
+	const char *s = src;
 
+	/* trap if pointers are overlapping */
+	if ((d <= s && d + n > s) ||
+	    (s <= d && s + n > d))
+		__builtin_trap();
 	if (n > bos)
 		__builtin_trap();
 	return memcpy(dest, src, n);
