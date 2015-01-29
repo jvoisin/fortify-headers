@@ -9,7 +9,6 @@
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE) || defined(_POSIX_SOURCE) \
  || (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE+0 < 200809L) \
  || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE+0 < 700)
-
 static inline __attribute__ ((always_inline))
 void
 __fortify_bcopy(const void *__restrict src, void *__restrict dest, size_t n)
@@ -36,7 +35,6 @@ __fortify_bzero(void *src, size_t n)
 #define bcopy(src, dest, n) __fortify_bcopy(src, dest, n)
 #undef bzero
 #define bzero(src, n) __fortify_bzero(src, n)
-
 #endif
 
 #endif
