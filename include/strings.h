@@ -14,7 +14,7 @@
 __errordecl(__bcopy_error, "bcopy: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 void
-__fortify_bcopy(const void *__restrict src, void *__restrict dest, size_t n)
+__fortify_bcopy(const void *src, void *dest, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 

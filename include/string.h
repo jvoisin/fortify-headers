@@ -11,7 +11,7 @@
 __errordecl(__memcpy_error, "memcpy: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 void *
-__fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t n)
+__fortify_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 	char *d = dest;
@@ -32,7 +32,7 @@ __fortify_memcpy(void *__restrict dest, const void *__restrict src, size_t n)
 __errordecl(__memmove_error, "memmove: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 void *
-__fortify_memmove(void *__restrict dest, const void *__restrict src, size_t n)
+__fortify_memmove(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -61,7 +61,7 @@ __fortify_memset(void *dest, int c, size_t n)
 
 static inline __attribute__ ((always_inline))
 char *
-__fortify_stpcpy(char *__restrict dest, const char *__restrict src)
+__fortify_stpcpy(char *dest, const char *src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -73,7 +73,7 @@ __fortify_stpcpy(char *__restrict dest, const char *__restrict src)
 __errordecl(__stpncpy_error, "stpncpy: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 char *
-__fortify_stpncpy(char *__restrict dest, const char *__restrict src, size_t n)
+__fortify_stpncpy(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -87,7 +87,7 @@ __fortify_stpncpy(char *__restrict dest, const char *__restrict src, size_t n)
 
 static inline __attribute__ ((always_inline))
 char *
-__fortify_strcat(char *__restrict dest, const char *__restrict src)
+__fortify_strcat(char *dest, const char *src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -98,7 +98,7 @@ __fortify_strcat(char *__restrict dest, const char *__restrict src)
 
 static inline __attribute__ ((always_inline))
 char *
-__fortify_strcpy(char *__restrict dest, const char *__restrict src)
+__fortify_strcpy(char *dest, const char *src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -110,7 +110,7 @@ __fortify_strcpy(char *__restrict dest, const char *__restrict src)
 __errordecl(__strncat_error, "strncat: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 char *
-__fortify_strncat(char *__restrict dest, const char *__restrict src, size_t n)
+__fortify_strncat(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 	size_t slen, dlen;
@@ -132,7 +132,7 @@ __fortify_strncat(char *__restrict dest, const char *__restrict src, size_t n)
 __errordecl(__strncpy_error, "strncpy: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 char *
-__fortify_strncpy(char *__restrict dest, const char *__restrict src, size_t n)
+__fortify_strncpy(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -148,7 +148,7 @@ __fortify_strncpy(char *__restrict dest, const char *__restrict src, size_t n)
 __errordecl(__mempcpy_error, "mempcpy: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 void *
-__fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
+__fortify_mempcpy(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -165,7 +165,7 @@ __fortify_mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
 __errordecl(__strlcat_error, "strlcat: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 size_t
-__fortify_strlcat(char *__restrict dest, const char *__restrict src, size_t n)
+__fortify_strlcat(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
@@ -180,7 +180,7 @@ __fortify_strlcat(char *__restrict dest, const char *__restrict src, size_t n)
 __errordecl(__strlcpy_error, "strlcpy: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 size_t
-__fortify_strlcpy(char *__restrict dest, const char *__restrict src, size_t n)
+__fortify_strlcpy(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
 
