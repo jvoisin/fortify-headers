@@ -10,9 +10,9 @@ static inline __attribute__ ((always_inline))
 int
 __fortify_FD_CLR(int fd, fd_set *set)
 {
-	size_t n = __builtin_object_size(set, 0);
+	size_t bos = __builtin_object_size(set, 0);
 
-	if (fd < 0 || fd >= FD_SETSIZE || n < sizeof(fd_set))
+	if (fd < 0 || fd >= FD_SETSIZE || bos < sizeof(fd_set))
 		__builtin_trap();
 	return FD_CLR(fd, set);
 }
@@ -21,9 +21,9 @@ static inline __attribute__ ((always_inline))
 int
 __fortify_FD_SET(int fd, fd_set *set)
 {
-	size_t n = __builtin_object_size(set, 0);
+	size_t bos = __builtin_object_size(set, 0);
 
-	if (fd < 0 || fd >= FD_SETSIZE || n < sizeof(fd_set))
+	if (fd < 0 || fd >= FD_SETSIZE || bos < sizeof(fd_set))
 		__builtin_trap();
 	return FD_SET(fd, set);
 }
