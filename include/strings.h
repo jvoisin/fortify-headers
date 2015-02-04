@@ -47,6 +47,8 @@ __fortify_bzero(void *src, size_t n)
 #define bzero(src, n) __fortify_bzero(src, n)
 #endif
 
+#undef __errordecl
+
 #endif
 
 #endif

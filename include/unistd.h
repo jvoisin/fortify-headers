@@ -43,6 +43,8 @@ __fortify_read(int fd, void *buf, size_t n)
 #undef read
 #define read(fd, buf, n) __fortify_read(fd, buf, n)
 
+#undef __errordecl
+
 #endif
 
 #endif

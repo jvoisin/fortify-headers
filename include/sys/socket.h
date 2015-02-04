@@ -43,6 +43,8 @@ __fortify_recvfrom(int sockfd, void *buf, size_t n, int flags, struct sockaddr *
 #undef recvfrom
 #define recvfrom(sockfd, buf, n, flags, sa, salen) __fortify_recvfrom(sockfd, buf, n, flags, sa, salen)
 
+#undef __errordecl
+
 #endif
 
 #endif

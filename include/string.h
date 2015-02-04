@@ -224,6 +224,8 @@ __fortify_strlcpy(char *dest, const char *src, size_t n)
 #define strlcpy(dest, src, n) __fortify_strlcpy(dest, src, n)
 #endif
 
+#undef __errordecl
+
 #endif
 
 #endif

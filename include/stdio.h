@@ -58,6 +58,8 @@ __errordecl(__snprintf_error, "snprintf: buffer overflow detected");
 	snprintf(s, _n, fmt, ## __VA_ARGS__); \
 })
 
+#undef __errordecl
+
 #endif
 
 #endif
