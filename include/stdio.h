@@ -6,7 +6,7 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#define __errordecl(name, msg) extern void name(void) __attribute__((__error__(msg)))
+#define __errordecl(name, msg) extern void name(void) __attribute__ ((__error__(msg)))
 
 __errordecl(__fgets_error, "fgets: buffer overflow detected");
 static inline __attribute__ ((always_inline))

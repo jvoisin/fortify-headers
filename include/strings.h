@@ -6,7 +6,7 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#define __errordecl(name, msg) extern void name(void) __attribute__((__error__(msg)))
+#define __errordecl(name, msg) extern void name(void) __attribute__ ((__error__(msg)))
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE) || defined(_POSIX_SOURCE) \
  || (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE+0 < 200809L) \
