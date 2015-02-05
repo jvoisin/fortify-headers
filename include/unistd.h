@@ -8,6 +8,21 @@
 
 #define __errordecl(name, msg) extern void name(void) __attribute__ ((__error__(msg)))
 
+__errordecl(__confstr_error, "confstr: buffer overflow detected");
+static inline __attribute__ ((always_inline))
+size_t
+__fortify_confstr(int name, char *buf, size_t len)
+{
+	size_t bos = __builtin_object_size(buf, 0);
+
+	if (__builtin_constant_p(len) && len > bos)
+		__confstr_error();
+
+	if (len > bos)
+		__builtin_trap();
+	return confstr(name, buf, len);
+}
+
 __errordecl(__pread_error, "pread: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 ssize_t
@@ -38,6 +53,8 @@ __fortify_read(int fd, void *buf, size_t n)
 	return read(fd, buf, n);
 }
 
+#undef confstr
+#define confstr(name, buf, len) __fortify_confstr(name, buf, len)
 #undef pread
 #define pread(fd, buf, n, offset) __fortify_pread(fd, buf, n, offset)
 #undef read
