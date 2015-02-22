@@ -1,4 +1,3 @@
-/* See LICENSE file for copyright and license details. */
 #ifndef FORTIFY_STDIO_H_
 #define FORTIFY_STDIO_H_
 

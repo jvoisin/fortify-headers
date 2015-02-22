@@ -1,4 +1,3 @@
-/* See LICENSE file for copyright and license details. */
 #ifndef FORTIFY_UNISTD_H_
 #define FORTIFY_UNISTD_H_
 

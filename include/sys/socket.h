@@ -1,4 +1,3 @@
-/* See LICENSE file for copyright and license details. */
 #ifndef FORTIFY_SYS_SOCKET_H_
 #define FORTIFY_SYS_SOCKET_H_
 
