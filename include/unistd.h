@@ -37,6 +37,21 @@ __fortify_getcwd(char *buf, size_t len)
 	return getcwd(buf, len);
 }
 
+__errordecl(__gethostname_error, "gethostname: buffer overflow detected");
+static inline __attribute__ ((always_inline))
+int
+__fortify_gethostname(char *name, size_t len)
+{
+	size_t bos = __builtin_object_size(name, 0);
+
+	if (__builtin_constant_p(len) && len > bos)
+		__gethostname_error();
+
+	if (len > bos)
+		__builtin_trap();
+	return gethostname(name, len);
+}
+
 __errordecl(__pread_error, "pread: buffer overflow detected");
 static inline __attribute__ ((always_inline))
 ssize_t
@@ -71,6 +86,8 @@ __fortify_read(int fd, void *buf, size_t n)
 #define confstr(name, buf, len) __fortify_confstr(name, buf, len)
 #undef getcwd
 #define getcwd(buf, len) __fortify_getcwd(buf, len)
+#undef gethostname
+#define gethostname(name, len) __fortify_gethostname(name, len)
 #undef pread
 #define pread(fd, buf, n, offset) __fortify_pread(fd, buf, n, offset)
 #undef read
