@@ -60,6 +60,17 @@ __fortify_read(int fd, void *buf, size_t n)
 	return read(fd, buf, n);
 }
 
+static inline __attribute__ ((always_inline))
+ssize_t
+__fortify_write(int fd, const void *buf, size_t n)
+{
+	size_t bos = __builtin_object_size(buf, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return write(fd, buf, n);
+}
+
 #undef confstr
 #define confstr(name, buf, len) __fortify_confstr(name, buf, len)
 #undef getcwd
@@ -70,6 +81,8 @@ __fortify_read(int fd, void *buf, size_t n)
 #define pread(fd, buf, n, offset) __fortify_pread(fd, buf, n, offset)
 #undef read
 #define read(fd, buf, n) __fortify_read(fd, buf, n)
+#undef write
+#define write(fd, buf, n) __fortify_write(fd, buf, n)
 
 #endif
 
