@@ -39,6 +39,17 @@ __fortify_gethostname(char *name, size_t len)
 }
 
 static inline __attribute__ ((always_inline))
+int
+__fortify_getlogin_r(char *name, size_t len)
+{
+	size_t bos = __builtin_object_size(name, 0);
+
+	if (len > bos)
+		__builtin_trap();
+	return getlogin_r(name, len);
+}
+
+static inline __attribute__ ((always_inline))
 ssize_t
 __fortify_pread(int fd, void *buf, size_t n, off_t offset)
 {
@@ -77,6 +88,8 @@ __fortify_write(int fd, const void *buf, size_t n)
 #define getcwd(buf, len) __fortify_getcwd(buf, len)
 #undef gethostname
 #define gethostname(name, len) __fortify_gethostname(name, len)
+#undef getlogin_r
+#define getlogin_r(name, len) __fortify_getlogin_r(name, len)
 #undef pread
 #define pread(fd, buf, n, offset) __fortify_pread(fd, buf, n, offset)
 #undef read
