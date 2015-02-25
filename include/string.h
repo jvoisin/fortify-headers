@@ -13,7 +13,8 @@ __fortify_memcpy(void *dest, const void *src, size_t n)
 	char *d = dest;
 	const char *s = src;
 
-	/* trap if pointers are overlapping but not if dest == src */
+	/* trap if pointers are overlapping but not if dest == src.
+	 * gcc seems to like to generate code that relies on dest == src */
 	if ((d < s && d + n > s) ||
 	    (s < d && s + n > d))
 		__builtin_trap();
