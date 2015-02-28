@@ -27,6 +27,19 @@ __fortify_getcwd(char *buf, size_t len)
 	return getcwd(buf, len);
 }
 
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+static inline __attribute__ ((always_inline))
+int
+__fortify_getdomainname(char *name, size_t len)
+{
+	size_t bos = __builtin_object_size(name, 0);
+
+	if (len > bos)
+		__builtin_trap();
+	return getdomainname(name, len);
+}
+#endif
+
 static inline __attribute__ ((always_inline))
 int
 __fortify_gethostname(char *name, size_t len)
@@ -86,6 +99,12 @@ __fortify_write(int fd, const void *buf, size_t n)
 #define confstr(name, buf, len) __fortify_confstr(name, buf, len)
 #undef getcwd
 #define getcwd(buf, len) __fortify_getcwd(buf, len)
+
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#undef getdomainname
+#define getdomainname(name, len) __fortify_getdomainname(name, len)
+#endif
+
 #undef gethostname
 #define gethostname(name, len) __fortify_gethostname(name, len)
 #undef getlogin_r
