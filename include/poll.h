@@ -11,7 +11,7 @@ __fortify_poll(struct pollfd *fds, nfds_t nfds, int timeout)
 {
 	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
 
-	if (bos != -1 && nfds > bos / sizeof(struct pollfd))
+	if (nfds > bos / sizeof(struct pollfd))
 		__builtin_trap();
 	return poll(fds, nfds, timeout);
 }

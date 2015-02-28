@@ -46,7 +46,7 @@ __fortify_getgroups(int len, gid_t *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
 
-	if (bos != -1 && len > bos / sizeof(gid_t))
+	if (len > bos / sizeof(gid_t))
 		__builtin_trap();
 	return getgroups(len, set);
 }
