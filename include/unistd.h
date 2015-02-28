@@ -42,6 +42,17 @@ __fortify_getdomainname(char *name, size_t len)
 
 static inline __attribute__ ((always_inline))
 int
+__fortify_getgroups(int len, gid_t *set)
+{
+	size_t bos = __builtin_object_size(set, 0);
+
+	if (bos != -1 && len > bos / sizeof(gid_t))
+		__builtin_trap();
+	return getgroups(len, set);
+}
+
+static inline __attribute__ ((always_inline))
+int
 __fortify_gethostname(char *name, size_t len)
 {
 	size_t bos = __builtin_object_size(name, 0);
@@ -105,6 +116,8 @@ __fortify_write(int fd, const void *buf, size_t n)
 #define getdomainname(name, len) __fortify_getdomainname(name, len)
 #endif
 
+#undef getgroups
+#define getgroups(len, set) __fortify_getgroups(len, set)
 #undef gethostname
 #define gethostname(name, len) __fortify_gethostname(name, len)
 #undef getlogin_r
