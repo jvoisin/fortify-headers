@@ -1,8 +1,7 @@
 #ifndef FORTIFY_STDLIB_H_
 #define FORTIFY_STDLIB_H_
 
-#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
- || defined(_BSD_SOURCE)
+#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #include_next <limits.h>
 #endif
 
@@ -10,8 +9,7 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
- || defined(_BSD_SOURCE)
+#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 static inline __attribute__ ((always_inline))
 char *
 __fortify_realpath(const char *path, char *resolved)
