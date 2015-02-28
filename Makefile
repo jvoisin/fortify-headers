@@ -10,7 +10,7 @@ uninstall:
 
 dist: clean
 	mkdir -p fortify-$(VERSION)
-	cp -R LICENSE Makefile include fortify-$(VERSION)
+	cp -R LICENSE Makefile README include fortify-$(VERSION)
 	tar -cf fortify-$(VERSION).tar fortify-$(VERSION)
 	gzip fortify-$(VERSION).tar
 	rm -rf fortify-$(VERSION)
