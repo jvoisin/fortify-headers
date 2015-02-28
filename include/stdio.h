@@ -37,7 +37,7 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 
 #undef snprintf
 #define snprintf(s, n, fmt, ...) ({ \
-	size_t _n = (n); \
+	size_t _n = n; \
 	size_t bos = __builtin_object_size(s, 0); \
 	if (_n > bos) \
 		__builtin_trap(); \
