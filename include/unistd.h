@@ -96,6 +96,28 @@ __fortify_read(int fd, void *buf, size_t n)
 }
 
 static inline __attribute__ ((always_inline))
+ssize_t
+__fortify_readlink(const char *path, char *buf, size_t n)
+{
+	size_t bos = __builtin_object_size(buf, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return readlink(path, buf, n);
+}
+
+static inline __attribute__ ((always_inline))
+ssize_t
+__fortify_readlinkat(int fd, const char *path, char *buf, size_t n)
+{
+	size_t bos = __builtin_object_size(buf, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return readlinkat(fd, path, buf, n);
+}
+
+static inline __attribute__ ((always_inline))
 int
 __fortify_ttyname_r(int fd, char *name, size_t n)
 {
@@ -137,6 +159,10 @@ __fortify_write(int fd, const void *buf, size_t n)
 #define pread(fd, buf, n, offset) __fortify_pread(fd, buf, n, offset)
 #undef read
 #define read(fd, buf, n) __fortify_read(fd, buf, n)
+#undef readlink
+#define readlink(path, buf, n) __fortify_readlink(path, buf, n)
+#undef readlinkat
+#define readlinkat(fd, path, buf, n) __fortify_readlinkat(fd, path, buf, n)
 #undef ttyname_r
 #define ttyname_r(fd, name, n) __fortify_ttyname_r(fd, name, n)
 #undef write
