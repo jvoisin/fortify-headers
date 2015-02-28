@@ -19,9 +19,13 @@ __fortify_realpath(const char *path, char *resolved)
 	size_t bos;
 
 	if (resolved) {
+#ifndef PATH_MAX
+		__builtin_trap();
+#else
 		bos = __builtin_object_size(resolved, 0);
 		if (PATH_MAX > bos)
 			__builtin_trap();
+#endif
 	}
 	return realpath(path, resolved);
 }
