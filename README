@@ -5,3 +5,6 @@ is libc-agnostic and simply overlays the system headers by using
 The implementation will trap only non-conformant programs.  This in turn
 implies that fortify source level 2 protection is handled in the same way
 as level 1.
+
+This implementation does not provide binary compatibility with existing
+fortify source implementations.
