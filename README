@@ -1,0 +1,7 @@
+This is a standalone implementation of fortify source.  The implementation
+is libc-agnostic and simply overlays the system headers by using
+#include_next magic.
+
+The implementation will trap only non-conformant programs.  This in turn
+implies that fortify source level 2 protection is handled in the same way
+as level 1.
