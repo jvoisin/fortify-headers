@@ -18,6 +18,26 @@ __fortify_fgets(char *s, int n, FILE *fp)
 
 static inline
 __attribute__ ((always_inline))
+__attribute__ ((__format__ (printf, 2, 0)))
+__attribute__ ((__nonnull__ (2)))
+int
+__fortify_vsprintf(char *s, const char *fmt, __builtin_va_list ap)
+{
+	size_t bos = __builtin_object_size(s, 0);
+	int r;
+
+	if (bos != -1) {
+		r = vsnprintf(s, bos, fmt, ap);
+		if (r == -1 || (size_t)r >= bos)
+			__builtin_trap();
+	} else {
+		r = vsprintf(s, fmt, ap);
+	}
+	return r;
+}
+
+static inline
+__attribute__ ((always_inline))
 __attribute__ ((__format__ (printf, 3, 0)))
 __attribute__ ((__nonnull__ (3)))
 int
@@ -32,6 +52,8 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 
 #undef fgets
 #define fgets(s, n, fp) __fortify_fgets(s, n, fp)
+#undef vsprintf
+#define vsprintf(s, fmt, ap) __fortify_vsprintf(s, fmt, ap)
 #undef vsnprintf
 #define vsnprintf(s, n, fmt, ap) __fortify_vsnprintf(s, n, fmt, ap)
 
