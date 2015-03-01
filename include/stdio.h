@@ -50,7 +50,7 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 	int r; \
 	if (bos != -1) { \
 		r = (snprintf)(s, bos, fmt, ## __VA_ARGS__); \
-		if (r == -1 || r >= bos) \
+		if (r == -1 || (size_t)r >= bos) \
 			__builtin_trap(); \
 	} else { \
 		r = (sprintf)(s, fmt, ## __VA_ARGS__); \
