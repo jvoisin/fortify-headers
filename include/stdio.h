@@ -29,6 +29,19 @@ __fortify_fread(void *dst, size_t n, size_t nmemb, FILE *fp)
 	return fread(dst, n, nmemb, fp);
 }
 
+static inline __attribute__ ((always_inline))
+size_t
+__fortify_fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
+{
+	size_t bos = __builtin_object_size(dst, 0);
+
+	if (n != 0 && (n * nmemb) / n != nmemb)
+		__builtin_trap();
+	if (n * nmemb > bos)
+		__builtin_trap();
+	return fwrite(dst, n, nmemb, fp);
+}
+
 static inline
 __attribute__ ((always_inline))
 __attribute__ ((__format__ (printf, 2, 0)))
@@ -67,6 +80,8 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 #define fgets(s, n, fp) __fortify_fgets(s, n, fp)
 #undef fread
 #define fread(dst, n, nmemb, fp) __fortify_fread(dst, n, nmemb, fp)
+#undef fwrite
+#define fwrite(dst, n, nmemb, fp) __fortify_fwrite(dst, n, nmemb, fp)
 #undef vsprintf
 #define vsprintf(s, fmt, ap) __fortify_vsprintf(s, fmt, ap)
 #undef vsnprintf
