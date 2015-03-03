@@ -41,6 +41,17 @@ __fortify_mbsrtowcs(wchar_t *d, const char **s,
 }
 
 static inline __attribute__ ((always_inline))
+size_t
+__fortify_mbstowcs(wchar_t *d, const char *s, size_t wn)
+{
+	size_t bos = __builtin_object_size(d, 0);
+
+	if (wn > bos / sizeof(wchar_t))
+		__builtin_trap();
+	return mbstowcs(d, s, wn);
+}
+
+static inline __attribute__ ((always_inline))
 wchar_t *
 __fortify_wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -79,6 +90,8 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #define mbsnrtowcs(d, s, n, wn, st) __fortify_mbsnrtowcs(d, s, n, wn, st)
 #undef mbsrtowcs
 #define mbsrtowcs(d, s, wn, st) __fortify_mbsrtowcs(d, s, wn, st)
+#undef mbstowcs
+#define mbstowcs(d, s, wn) __fortify_mbstowcs(d, s, wn)
 #undef wmemcpy
 #define wmemcpy(d, s, n) __fortify_wmemcpy(d, s, n)
 #undef wmemmove
