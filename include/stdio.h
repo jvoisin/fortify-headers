@@ -54,7 +54,7 @@ __fortify_vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 
 	if (bos != -1) {
 		r = vsnprintf(s, bos, fmt, ap);
-		if (r == -1 || (size_t)r >= bos)
+		if (r != -1 && (size_t)r >= bos)
 			__builtin_trap();
 	} else {
 		r = vsprintf(s, fmt, ap);
@@ -102,7 +102,7 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 	int r; \
 	if (bos != -1) { \
 		r = (snprintf)(s, bos, fmt, ## __VA_ARGS__); \
-		if (r == -1 || (size_t)r >= bos) \
+		if (r != -1 && (size_t)r >= bos) \
 			__builtin_trap(); \
 	} else { \
 		r = (sprintf)(s, fmt, ## __VA_ARGS__); \
