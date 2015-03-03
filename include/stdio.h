@@ -49,7 +49,7 @@ __fortify_vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 	size_t bos = __builtin_object_size(s, 0);
 	int r;
 
-	if (bos != -1) {
+	if (bos != (size_t)-1) {
 		r = vsnprintf(s, bos, fmt, ap);
 		if (r != -1 && (size_t)r >= bos)
 			__builtin_trap();
@@ -94,7 +94,7 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 #define sprintf(s, fmt, ...) ({ \
 	size_t bos = __builtin_object_size(s, 0); \
 	int r; \
-	if (bos != -1) { \
+	if (bos != (size_t)-1) { \
 		r = (snprintf)(s, bos, fmt, ## __VA_ARGS__); \
 		if (r != -1 && (size_t)r >= bos) \
 			__builtin_trap(); \
