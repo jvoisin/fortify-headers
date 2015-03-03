@@ -42,10 +42,7 @@ __fortify_fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
 	return fwrite(dst, n, nmemb, fp);
 }
 
-static inline
-__attribute__ ((always_inline))
-__attribute__ ((__format__ (printf, 2, 0)))
-__attribute__ ((__nonnull__ (2)))
+static inline __attribute__ ((always_inline))
 int
 __fortify_vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 {
@@ -62,10 +59,7 @@ __fortify_vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 	return r;
 }
 
-static inline
-__attribute__ ((always_inline))
-__attribute__ ((__format__ (printf, 3, 0)))
-__attribute__ ((__nonnull__ (3)))
+static inline __attribute__ ((always_inline))
 int
 __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 {
