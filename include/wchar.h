@@ -17,6 +17,30 @@ __fortify_fgetws(wchar_t *s, int n, FILE *fp)
 }
 
 static inline __attribute__ ((always_inline))
+size_t
+__fortify_mbsnrtowcs(wchar_t *d, const char **s, size_t n,
+                     size_t wn, mbstate_t *st)
+{
+	size_t bos = __builtin_object_size(d, 0);
+
+	if (wn > bos / sizeof(wchar_t))
+		__builtin_trap();
+	return mbsnrtowcs(d, s, n, wn, st);
+}
+
+static inline __attribute__ ((always_inline))
+size_t
+__fortify_mbsrtowcs(wchar_t *d, const char **s,
+                    size_t wn, mbstate_t *st)
+{
+	size_t bos = __builtin_object_size(d, 0);
+
+	if (wn > bos / sizeof(wchar_t))
+		__builtin_trap();
+	return mbsrtowcs(d, s, wn, st);
+}
+
+static inline __attribute__ ((always_inline))
 wchar_t *
 __fortify_wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -51,6 +75,10 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 
 #undef fgetws
 #define fgetws(s, n, fp) __fortify_fgetws(s, n, fp)
+#undef mbsnrtowcs
+#define mbsnrtowcs(d, s, n, wn, st) __fortify_mbsnrtowcs(d, s, n, wn, st)
+#undef mbsrtowcs
+#define mbsrtowcs(d, s, wn, st) __fortify_mbsrtowcs(d, s, wn, st)
 #undef wmemcpy
 #define wmemcpy(d, s, n) __fortify_wmemcpy(d, s, n)
 #undef wmemmove
