@@ -150,6 +150,17 @@ __fortify_wcstombs(char *s, const wchar_t *ws, size_t n)
 }
 
 static inline __attribute__ ((always_inline))
+int
+__fortify_wctomb(char *s, wchar_t wc)
+{
+	size_t bos = __builtin_object_size(s, 0);
+
+	if (MB_CUR_MAX > bos)
+		__builtin_trap();
+	return wctomb(s, wc);
+}
+
+static inline __attribute__ ((always_inline))
 wchar_t *
 __fortify_wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -206,6 +217,8 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #define wcsrtombs(d, s, n, st) __fortify_wcsrtombs(d, s, n, st)
 #undef wcstombs
 #define wcstombs(s, ws, n) __fortify_wcstombs(s, ws, n)
+#undef wctomb
+#define wctomb(s, wc) __fortify_wctomb(s, wc)
 #undef wmemcpy
 #define wmemcpy(d, s, n) __fortify_wmemcpy(d, s, n)
 #undef wmemmove
