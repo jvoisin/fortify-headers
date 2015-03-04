@@ -23,8 +23,14 @@ __fortify_mbsnrtowcs(wchar_t *d, const char **s, size_t n,
                      size_t wn, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
+	size_t actual;
 
-	if (wn > bos / sizeof(wchar_t))
+	if (wn > (size_t)-1 / sizeof(wchar_t))
+		__builtin_trap();
+	actual = wn * sizeof(wchar_t);
+	if (actual > n)
+		actual = n;
+	if (actual > bos)
 		__builtin_trap();
 	return mbsnrtowcs(d, s, n, wn, st);
 }
@@ -120,8 +126,14 @@ __fortify_wcsnrtombs(char *d, const wchar_t **s, size_t wn,
                      size_t n, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
+	size_t actual;
 
-	if (n > bos)
+	if (wn > (size_t)-1 / sizeof(wchar_t))
+		__builtin_trap();
+	actual = wn * sizeof(wchar_t);
+	if (actual > n)
+		actual = n;
+	if (actual > bos)
 		__builtin_trap();
 	return wcsnrtombs(d, s, wn, n, st);
 }
