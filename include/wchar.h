@@ -1,6 +1,7 @@
 #ifndef FORTIFY_WCHAR_H_
 #define FORTIFY_WCHAR_H_
 
+#include_next <stdlib.h>
 #include_next <wchar.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
@@ -52,6 +53,39 @@ __fortify_mbstowcs(wchar_t *d, const char *s, size_t n)
 }
 
 static inline __attribute__ ((always_inline))
+size_t
+__fortify_wcrtomb(char *s, wchar_t wc, mbstate_t *st)
+{
+	size_t bos = __builtin_object_size(s, 0);
+
+	if (MB_CUR_MAX > bos)
+		__builtin_trap();
+	return wcrtomb(s, wc, st);
+}
+
+static inline __attribute__ ((always_inline))
+wchar_t *
+__fortify_wcscat(wchar_t *d, const wchar_t *s)
+{
+	size_t bos = __builtin_object_size(d, 0);
+
+	if (wcslen(s) + wcslen(d) + 1 > bos / sizeof(wchar_t))
+		__builtin_trap();
+	return wcscat(d, s);
+}
+
+static inline __attribute__ ((always_inline))
+wchar_t *
+__fortify_wcscpy(wchar_t *d, const wchar_t *s)
+{
+	size_t bos = __builtin_object_size(d, 0);
+
+	if (wcslen(s) + 1 > bos / sizeof(wchar_t))
+		__builtin_trap();
+	return wcscpy(d, s);
+}
+
+static inline __attribute__ ((always_inline))
 wchar_t *
 __fortify_wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -92,6 +126,12 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #define mbsrtowcs(d, s, wn, st) __fortify_mbsrtowcs(d, s, wn, st)
 #undef mbstowcs
 #define mbstowcs(d, s, n) __fortify_mbstowcs(d, s, n)
+#undef wcrtomb
+#define wcrtomb(s, wc, st) __fortify_wcrtomb(s, wc, st)
+#undef wcscat
+#define wcscat(d, s) __fortify_wcscat(d, s)
+#undef wcscpy
+#define wcscpy(d, s) __fortify_wcscpy(d, s)
 #undef wmemcpy
 #define wmemcpy(d, s, n) __fortify_wmemcpy(d, s, n)
 #undef wmemmove
