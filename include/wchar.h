@@ -43,13 +43,13 @@ __fortify_mbsrtowcs(wchar_t *d, const char **s,
 
 static inline __attribute__ ((always_inline))
 size_t
-__fortify_mbstowcs(wchar_t *d, const char *s, size_t n)
+__fortify_mbstowcs(wchar_t *ws, const char *s, size_t wn)
 {
-	size_t bos = __builtin_object_size(d, 0);
+	size_t bos = __builtin_object_size(ws, 0);
 
-	if (n > bos / sizeof(wchar_t))
+	if (wn > bos / sizeof(wchar_t))
 		__builtin_trap();
-	return mbstowcs(d, s, n);
+	return mbstowcs(ws, s, wn);
 }
 
 static inline __attribute__ ((always_inline))
@@ -139,6 +139,17 @@ __fortify_wcsrtombs(char *d, const wchar_t **s, size_t n,
 }
 
 static inline __attribute__ ((always_inline))
+size_t
+__fortify_wcstombs(char *s, const wchar_t *ws, size_t n)
+{
+	size_t bos = __builtin_object_size(s, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return wcstombs(s, ws, n);
+}
+
+static inline __attribute__ ((always_inline))
 wchar_t *
 __fortify_wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -178,7 +189,7 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #undef mbsrtowcs
 #define mbsrtowcs(d, s, wn, st) __fortify_mbsrtowcs(d, s, wn, st)
 #undef mbstowcs
-#define mbstowcs(d, s, n) __fortify_mbstowcs(d, s, n)
+#define mbstowcs(ws, s, wn) __fortify_mbstowcs(ws, s, wn)
 #undef wcrtomb
 #define wcrtomb(s, wc, st) __fortify_wcrtomb(s, wc, st)
 #undef wcscat
@@ -193,6 +204,8 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #define wcsnrtombs(d, s, wn, n, st) __fortify_wcsnrtombs(d, s, wn, n, st)
 #undef wcsrtombs
 #define wcsrtombs(d, s, n, st) __fortify_wcsrtombs(d, s, n, st)
+#undef wcstombs
+#define wcstombs(s, ws, n) __fortify_wcstombs(s, ws, n)
 #undef wmemcpy
 #define wmemcpy(d, s, n) __fortify_wmemcpy(d, s, n)
 #undef wmemmove
