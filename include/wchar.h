@@ -147,10 +147,12 @@ __fortify_wcsrtombs(char *d, const wchar_t **s, size_t n,
                     mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
+	size_t r;
 
-	if (n > bos)
+	r = wcsrtombs(d, s, n > bos ? bos : n, st);
+	if (bos < n && d && *s && r != (size_t)-1)
 		__builtin_trap();
-	return wcsrtombs(d, s, n, st);
+	return r;
 }
 
 static inline __attribute__ ((always_inline))
