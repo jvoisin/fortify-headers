@@ -41,10 +41,13 @@ __fortify_mbsrtowcs(wchar_t *d, const char **s,
                     size_t wn, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
+	size_t r;
 
-	if (wn > bos / sizeof(wchar_t))
+	bos /= sizeof(wchar_t);
+	r = mbsrtowcs(d, s, wn > bos ? bos : wn, st);
+	if (bos < wn && d && *s && r != (size_t)-1)
 		__builtin_trap();
-	return mbsrtowcs(d, s, wn, st);
+	return r;
 }
 
 static inline __attribute__ ((always_inline))
