@@ -87,6 +87,35 @@ __fortify_wcscpy(wchar_t *d, const wchar_t *s)
 
 static inline __attribute__ ((always_inline))
 wchar_t *
+__fortify_wcsncat(wchar_t *d, const wchar_t *s, size_t n)
+{
+	size_t bos = __builtin_object_size(d, 0);
+	size_t slen, dlen;
+
+	if (n > bos / sizeof(wchar_t)) {
+		slen = wcslen(s);
+		dlen = wcslen(d);
+		if (slen > n)
+			slen = n;
+		if (slen + dlen + 1 > bos / sizeof(wchar_t))
+			__builtin_trap();
+	}
+	return wcsncat(d, s, n);
+}
+
+static inline __attribute__ ((always_inline))
+wchar_t *
+__fortify_wcsncpy(wchar_t *d, const wchar_t *s, size_t n)
+{
+	size_t bos = __builtin_object_size(d, 0);
+
+	if (n > bos / sizeof(wchar_t))
+		__builtin_trap();
+	return wcsncpy(d, s, n);
+}
+
+static inline __attribute__ ((always_inline))
+wchar_t *
 __fortify_wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
 	size_t bos = __builtin_object_size(d, 0);
@@ -132,6 +161,10 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #define wcscat(d, s) __fortify_wcscat(d, s)
 #undef wcscpy
 #define wcscpy(d, s) __fortify_wcscpy(d, s)
+#undef wcsncat
+#define wcsncat(d, s, n) __fortify_wcsncat(d, s, n)
+#undef wcsncpy
+#define wcsncpy(d, s, n) __fortify_wcsncpy(d, s, n)
 #undef wmemcpy
 #define wmemcpy(d, s, n) __fortify_wmemcpy(d, s, n)
 #undef wmemmove
