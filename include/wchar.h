@@ -23,16 +23,19 @@ __fortify_mbsnrtowcs(wchar_t *d, const char **s, size_t n,
                      size_t wn, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
-	size_t actual;
+	size_t r;
 
-	if (wn > (size_t)-1 / sizeof(wchar_t))
-		__builtin_trap();
-	actual = wn * sizeof(wchar_t);
-	if (actual > n)
-		actual = n;
-	if (actual > bos)
-		__builtin_trap();
-	return mbsnrtowcs(d, s, n, wn, st);
+	if (wn > n / sizeof(wchar_t)) {
+		bos /= sizeof(wchar_t);
+		r = mbsnrtowcs(d, s, n, wn > bos ? bos : wn, st);
+		if (bos < wn && d && *s && r != (size_t)-1)
+			__builtin_trap();
+	} else {
+		r = mbsnrtowcs(d, s, n > bos ? bos : n, wn, st);
+		if (bos < n && d && *s && r != (size_t)-1)
+			__builtin_trap();
+	}
+	return r;
 }
 
 static inline __attribute__ ((always_inline))
@@ -129,16 +132,19 @@ __fortify_wcsnrtombs(char *d, const wchar_t **s, size_t wn,
                      size_t n, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
-	size_t actual;
+	size_t r;
 
-	if (wn > (size_t)-1 / sizeof(wchar_t))
-		__builtin_trap();
-	actual = wn * sizeof(wchar_t);
-	if (actual > n)
-		actual = n;
-	if (actual > bos)
-		__builtin_trap();
-	return wcsnrtombs(d, s, wn, n, st);
+	if (wn > n / sizeof(wchar_t)) {
+		bos /= sizeof(wchar_t);
+		r = wcsnrtombs(d, s, wn > bos ? bos : wn, n, st);
+		if (bos < wn && d && *s && r != (size_t)-1)
+			__builtin_trap();
+	} else {
+		r = wcsnrtombs(d, s, wn, n > bos ? bos : n, st);
+		if (bos < n && d && *s && r != (size_t)-1)
+			__builtin_trap();
+	}
+	return r;
 }
 
 static inline __attribute__ ((always_inline))
