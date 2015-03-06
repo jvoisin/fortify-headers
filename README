@@ -23,9 +23,8 @@ Why?
 How to use?
 ===========
 
-A plan for integrating fortify into a Linux distribution is still in
-planning stages.  If you want to quickly test it, you can try something
-like the following:
+A plan for integrating fortify into a system is still in planning stages.
+If you want to quickly test it, you can try something like the following:
 
 cat > fgets.c <<EOF
 #include <stdio.h>
