@@ -21,6 +21,69 @@ Features
   resulting binary.
 
 
+Supported interfaces
+====================
+
+FD_CLR
+FD_SET
+bcopy
+bzero
+confstr
+fgets
+fgetws
+fread
+fwrite
+getcwd
+getdomainname
+getgroups
+gethostname
+getlogin_r
+mbsnrtowcs
+mbsrtowcs
+mbstowcs
+memcpy
+memmove
+mempcpy
+memset
+poll
+ppoll
+pread
+read
+readlink
+readlinkat
+realpath
+recv
+recvfrom
+send
+sendto
+snprintf
+sprintf
+stpcpy
+stpncpy
+strcat
+strcpy
+strlcat
+strlcpy
+strncat
+strncpy
+ttyname_r
+vsnprintf
+vsprintf
+wcrtomb
+wcscat
+wcscpy
+wcsncat
+wcsncpy
+wcsnrtombs
+wcsrtombs
+wcstombs
+wctomb
+wmemcpy
+wmemmove
+wmemset
+write
+
+
 Sample usage
 ============
 
