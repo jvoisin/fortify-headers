@@ -14,7 +14,10 @@ Why?
   level 2 is treated in the same way as level 1.
 - Avoids making function calls when UB has already been invoked.  This
   is handled by using GCC's __builtin_trap().
-- All of the check functions are inlined into the resulting binary.
+- Check functions for out-of-bounds read interfaces, such as send(),
+  write(), fwrite() etc.
+- No ABI is enforced.  All of the check functions are inlined into the
+  resulting binary.
 
 
 How to use?
