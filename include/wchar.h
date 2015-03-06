@@ -59,7 +59,7 @@ __fortify_mbstowcs(wchar_t *ws, const char *s, size_t wn)
 {
 	size_t bos = __builtin_object_size(ws, 0);
 
-	if (wn > bos / sizeof(wchar_t))
+	if (ws && wn > bos / sizeof(wchar_t))
 		__builtin_trap();
 	return mbstowcs(ws, s, wn);
 }
@@ -70,7 +70,7 @@ __fortify_wcrtomb(char *s, wchar_t wc, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(s, 0);
 
-	if (MB_CUR_MAX > bos)
+	if (s && MB_CUR_MAX > bos)
 		__builtin_trap();
 	return wcrtomb(s, wc, st);
 }
@@ -167,7 +167,7 @@ __fortify_wcstombs(char *s, const wchar_t *ws, size_t n)
 {
 	size_t bos = __builtin_object_size(s, 0);
 
-	if (n > bos)
+	if (s && n > bos)
 		__builtin_trap();
 	return wcstombs(s, ws, n);
 }
@@ -178,7 +178,7 @@ __fortify_wctomb(char *s, wchar_t wc)
 {
 	size_t bos = __builtin_object_size(s, 0);
 
-	if (MB_CUR_MAX > bos)
+	if (s && MB_CUR_MAX > bos)
 		__builtin_trap();
 	return wctomb(s, wc);
 }
