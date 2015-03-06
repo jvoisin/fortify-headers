@@ -1,10 +1,43 @@
-This is a standalone implementation of fortify source.  The implementation
-is libc-agnostic and simply overlays the system headers by using
-#include_next magic.
+What is it?
+===========
 
-The implementation will trap only non-conformant programs.  This in turn
-implies that fortify source level 2 protection is handled in the same way
-as level 1.
+This is a standalone implementation of fortify source[0].  It is libc-agnostic
+and simply overlays the system headers by using GCC's #include_next.  It was
+initially designed to be used on musl[1] based Linux distributions.
 
-This implementation does not provide binary compatibility with existing
-fortify source implementations.
+
+Why?
+====
+
+- It is portable, works on *BSD and Linux systems.
+- It will only trap non-conformant programs.  This means that fortify
+  level 2 is treated in the same way as level 1.
+- Avoids making function calls when UB has already been invoked.  This
+  is handled by using GCC's __builtin_trap().
+- All of the check functions are inlined into the resulting binary.
+
+
+How to use?
+===========
+
+A plan for integrating fortify into a Linux distribution is still in
+planning stages.  If you want to quickly test it, you can try something
+like the following:
+
+cat > fgets.c <<EOF
+#include <stdio.h>
+int
+main(void)
+{
+	char buf[BUFSIZ];
+	fgets(buf, sizeof(buf) + 1, stdin);
+	return 0;
+}
+EOF
+cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=1 -O1 fgets.c
+./a.out
+
+At this point, the program will crash.
+
+[0] http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html
+[1] http://www.musl-libc.org/
