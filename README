@@ -7,8 +7,8 @@ in GCC and clang.  It was initially designed to be used on musl[1] based Linux
 distributions.
 
 
-Why?
-====
+Features
+========
 
 - It is portable, works on *BSD and Linux systems.
 - It will only trap non-conformant programs.  This means that fortify
@@ -21,8 +21,8 @@ Why?
   resulting binary.
 
 
-How to use?
-===========
+Sample usage
+============
 
 A plan for integrating fortify into a system is still in planning stages.
 If you want to quickly test it, you can try something like the following:
