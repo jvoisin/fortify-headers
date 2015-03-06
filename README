@@ -3,22 +3,44 @@ What is it?
 
 This is a standalone implementation of fortify source[0].  It is libc-agnostic
 and simply overlays the system headers by using the #include_next extension found
-in GCC and clang.  It was initially designed to be used on musl[1] based Linux
+in GCC and clang.  It was initially intended to be used on musl[1] based Linux
 distributions.
 
 
 Features
 ========
 
-- It is portable, works on *BSD and Linux systems.
+- It is portable, works on *BSD, Linux and possibly other systems.
 - It will only trap non-conformant programs.  This means that fortify
   level 2 is treated in the same way as level 1.
 - Avoids making function calls when UB has already been invoked.  This
   is handled by using __builtin_trap().
 - Support for out-of-bounds read interfaces, such as send(), write(),
   fwrite() etc.
-- No ABI is enforced.  All of the check functions are inlined into the
-  resulting binary.
+- No ABI is enforced.  All of the fortify check functions are inlined
+  into the resulting binary.
+
+
+Sample usage
+============
+
+A plan for integrating fortify into a system is still under discussion.
+If you want to quickly test it, you can try something like the following:
+
+cat > fgets.c <<EOF
+#include <stdio.h>
+int
+main(void)
+{
+	char buf[BUFSIZ];
+	fgets(buf, sizeof(buf) + 1, stdin);
+	return 0;
+}
+EOF
+cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=1 -O1 fgets.c
+./a.out
+
+At this point, the program will crash.
 
 
 Supported interfaces
@@ -83,27 +105,6 @@ wmemmove
 wmemset
 write
 
-
-Sample usage
-============
-
-A plan for integrating fortify into a system is still under discussion.
-If you want to quickly test it, you can try something like the following:
-
-cat > fgets.c <<EOF
-#include <stdio.h>
-int
-main(void)
-{
-	char buf[BUFSIZ];
-	fgets(buf, sizeof(buf) + 1, stdin);
-	return 0;
-}
-EOF
-cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=1 -O1 fgets.c
-./a.out
-
-At this point, the program will crash.
 
 [0] http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html
 [1] http://www.musl-libc.org/
