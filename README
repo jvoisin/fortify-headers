@@ -2,8 +2,9 @@ What is it?
 ===========
 
 This is a standalone implementation of fortify source[0].  It is libc-agnostic
-and simply overlays the system headers by using GCC's #include_next.  It was
-initially designed to be used on musl[1] based Linux distributions.
+and simply overlays the system headers by using the #include_next extension found
+in GCC and clang.  It was initially designed to be used on musl[1] based Linux
+distributions.
 
 
 Why?
@@ -13,7 +14,7 @@ Why?
 - It will only trap non-conformant programs.  This means that fortify
   level 2 is treated in the same way as level 1.
 - Avoids making function calls when UB has already been invoked.  This
-  is handled by using GCC's __builtin_trap().
+  is handled by using __builtin_trap().
 - Check functions for out-of-bounds read interfaces, such as send(),
   write(), fwrite() etc.
 - No ABI is enforced.  All of the check functions are inlined into the
