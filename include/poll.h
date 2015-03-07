@@ -27,7 +27,6 @@ __fortify_ppoll(struct pollfd *fds, nfds_t nfds,
 		__builtin_trap();
 	return ppoll(fds, nfds, timeout, mask);
 }
-
 #endif
 
 #undef poll
