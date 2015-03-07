@@ -13,8 +13,8 @@ Features
 - It is portable, works on *BSD, Linux and possibly other systems.
 - It will only trap non-conformant programs.  This means that fortify
   level 2 is treated in the same way as level 1.
-- Avoids making function calls when UB has already been invoked.  This
-  is handled by using __builtin_trap().
+- Avoids making function calls when undefined behaviour has already been
+  invoked.  This is handled by using __builtin_trap().
 - Support for out-of-bounds read interfaces, such as send(), write(),
   fwrite() etc.
 - No ABI is enforced.  All of the fortify check functions are inlined
