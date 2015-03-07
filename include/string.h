@@ -170,9 +170,9 @@ __fortify_strlcpy(char *dest, const char *src, size_t n)
 #undef strcpy
 #define strcpy(dest, src) __fortify_strcpy(dest, src)
 #undef strncat
-#define strncat(dest, src, n) __fortify_strcat(dest, src, n)
+#define strncat(dest, src, n) __fortify_strncat(dest, src, n)
 #undef strncpy
-#define strncpy(dest, src, n) __fortify_strcpy(dest, src, n)
+#define strncpy(dest, src, n) __fortify_strncpy(dest, src, n)
 
 #ifdef _GNU_SOURCE
 #undef mempcpy
