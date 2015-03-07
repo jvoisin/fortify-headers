@@ -40,7 +40,7 @@ EOF
 cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=1 -O1 fgets.c
 ./a.out
 
-At this point, the program will crash.
+At this point, the program will safely crash.
 
 
 Supported interfaces
