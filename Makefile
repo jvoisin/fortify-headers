@@ -9,14 +9,14 @@ uninstall:
 	rm -rf $(DESTDIR)$(PREFIX)/include/fortify
 
 dist: clean
-	mkdir -p fortify-$(VERSION)
-	cp -R LICENSE Makefile README include fortify-$(VERSION)
-	tar -cf fortify-$(VERSION).tar fortify-$(VERSION)
-	gzip fortify-$(VERSION).tar
-	rm -rf fortify-$(VERSION)
+	mkdir -p fortify-headers-$(VERSION)
+	cp -R LICENSE Makefile README include fortify-headers-$(VERSION)
+	tar -cf fortify-headers-$(VERSION).tar fortify-headers-$(VERSION)
+	gzip fortify-headers-$(VERSION).tar
+	rm -rf fortify-headers-$(VERSION)
 
 clean:
-	rm -f fortify-$(VERSION).tar.gz
+	rm -f fortify-headers-$(VERSION).tar.gz
 
 .PHONY:
 	install uninstall dist clean
