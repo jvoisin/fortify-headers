@@ -17,7 +17,8 @@ __fortify_poll(struct pollfd *fds, nfds_t nfds, int timeout)
 }
 
 #ifdef _GNU_SOURCE
-static int
+static inline __attribute__ ((always_inline))
+int
 __fortify_ppoll(struct pollfd *fds, nfds_t nfds,
                 const struct timespec *timeout, const sigset_t *mask)
 {
