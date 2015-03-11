@@ -12,8 +12,8 @@ void *
 __fortify_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
-	char *d = (char *)dest;
-	const char *s = (const char *)src;
+	char *d = dest;
+	const char *s = src;
 
 	/* trap if pointers are overlapping but not if dest == src.
 	 * gcc seems to like to generate code that relies on dest == src */
