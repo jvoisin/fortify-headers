@@ -5,9 +5,7 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef __cplusplus
 
 static inline __attribute__ ((always_inline))
 void *
@@ -190,8 +188,6 @@ __fortify_strlcpy(char *dest, const char *src, size_t n)
 #define strlcpy(dest, src, n) __fortify_strlcpy(dest, src, n)
 #endif
 
-#ifdef __cplusplus
-}
 #endif
 
 #endif

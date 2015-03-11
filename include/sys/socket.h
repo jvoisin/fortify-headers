@@ -5,9 +5,7 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef __cplusplus
 
 static inline __attribute__ ((always_inline))
 ssize_t
@@ -64,8 +62,6 @@ __fortify_sendto(int sockfd, const void *buf, size_t n, int flags,
 #undef sendto
 #define sendto(sockfd, buf, n, flags, sa, salen) __fortify_sendto(sockfd, buf, n, flags, sa, salen)
 
-#ifdef __cplusplus
-}
 #endif
 
 #endif

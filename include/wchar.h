@@ -6,9 +6,7 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef __cplusplus
 
 static inline __attribute__ ((always_inline))
 wchar_t *
@@ -253,8 +251,6 @@ __fortify_wmemset(wchar_t *s, wchar_t c, size_t n)
 #undef wmemset
 #define wmemset(s, c, n) __fortify_wmemset(s, c, n)
 
-#ifdef __cplusplus
-}
 #endif
 
 #endif
