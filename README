@@ -6,7 +6,8 @@ and simply overlays the system headers by using the #include_next extension foun
 in GCC and clang.  It was initially intended to be used on musl[1] based Linux
 distributions.
 
-NOTE: It does *not* support C++.
+NOTE: It does *not* support C++.  For C++ programs, the fortify headers
+will essentially be a no-op.
 
 Features
 ========
