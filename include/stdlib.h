@@ -9,6 +9,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 static inline __attribute__ ((always_inline))
 char *
@@ -30,6 +34,10 @@ __fortify_realpath(const char *path, char *resolved)
 
 #undef realpath
 #define realpath(path, resolved) __fortify_realpath(path, resolved)
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

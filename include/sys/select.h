@@ -5,6 +5,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline __attribute__ ((always_inline))
 int
 __fortify_FD_CLR(int fd, fd_set *set)
@@ -31,6 +35,10 @@ __fortify_FD_SET(int fd, fd_set *set)
 #define FD_CLR(fd, set) __fortify_FD_CLR(fd, set)
 #undef FD_SET
 #define FD_SET(fd, set) __fortify_FD_SET(fd, set)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

@@ -5,6 +5,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline __attribute__ ((always_inline))
 int
 __fortify_poll(struct pollfd *fds, nfds_t nfds, int timeout)
@@ -36,6 +40,10 @@ __fortify_ppoll(struct pollfd *fds, nfds_t nfds,
 #ifdef _GNU_SOURCE
 #undef ppoll
 #define ppoll(fds, nfds, timeout, mask) __fortify_ppoll(fds, nfds, timeout, mask)
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

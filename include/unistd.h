@@ -5,6 +5,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline __attribute__ ((always_inline))
 size_t
 __fortify_confstr(int name, char *buf, size_t len)
@@ -167,6 +171,10 @@ __fortify_write(int fd, const void *buf, size_t n)
 #define ttyname_r(fd, name, n) __fortify_ttyname_r(fd, name, n)
 #undef write
 #define write(fd, buf, n) __fortify_write(fd, buf, n)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

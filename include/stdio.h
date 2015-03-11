@@ -5,6 +5,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline __attribute__ ((always_inline))
 char *
 __fortify_fgets(char *s, int n, FILE *fp)
@@ -103,6 +107,10 @@ __fortify_vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 	} \
 	r; \
 })
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
