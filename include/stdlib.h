@@ -1,5 +1,5 @@
-#ifndef FORTIFY_STDLIB_H_
-#define FORTIFY_STDLIB_H_
+#ifndef _FORTIFY_STDLIB_H
+#define _FORTIFY_STDLIB_H
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #include_next <limits.h>

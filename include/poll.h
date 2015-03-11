@@ -1,5 +1,5 @@
-#ifndef FORTIFY_POLL_H_
-#define FORTIFY_POLL_H_
+#ifndef _FORTIFY_POLL_H
+#define _FORTIFY_POLL_H
 
 #include_next <poll.h>
 

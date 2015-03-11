@@ -1,5 +1,5 @@
-#ifndef FORTIFY_STDIO_H_
-#define FORTIFY_STDIO_H_
+#ifndef _FORTIFY_STDIO_H
+#define _FORTIFY_STDIO_H
 
 #include_next <stdio.h>
 

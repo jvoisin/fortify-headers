@@ -1,5 +1,5 @@
-#ifndef FORTIFY_SYS_SOCKET_H_
-#define FORTIFY_SYS_SOCKET_H_
+#ifndef _FORTIFY_SYS_SOCKET_H
+#define _FORTIFY_SYS_SOCKET_H
 
 #include_next <sys/socket.h>
 

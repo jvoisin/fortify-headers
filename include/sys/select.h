@@ -1,5 +1,5 @@
-#ifndef FORTIFY_SYS_SELECT_H_
-#define FORTIFY_SYS_SELECT_H_
+#ifndef _FORTIFY_SYS_SELECT_H
+#define _FORTIFY_SYS_SELECT_H
 
 #include_next <sys/select.h>
 

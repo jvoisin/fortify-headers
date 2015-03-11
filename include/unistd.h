@@ -1,5 +1,5 @@
-#ifndef FORTIFY_UNISTD_H_
-#define FORTIFY_UNISTD_H_
+#ifndef _FORTIFY_UNISTD_H
+#define _FORTIFY_UNISTD_H
 
 #include_next <unistd.h>
 

@@ -1,5 +1,5 @@
-#ifndef FORTIFY_WCHAR_H_
-#define FORTIFY_WCHAR_H_
+#ifndef _FORTIFY_WCHAR_H
+#define _FORTIFY_WCHAR_H
 
 #include_next <stdlib.h>
 #include_next <wchar.h>

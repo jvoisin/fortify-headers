@@ -1,5 +1,5 @@
-#ifndef FORTIFY_STRING_H_
-#define FORTIFY_STRING_H_
+#ifndef _FORTIFY_STRING_H
+#define _FORTIFY_STRING_H
 
 #include_next <string.h>
 
