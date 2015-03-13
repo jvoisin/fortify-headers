@@ -6,38 +6,33 @@
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
 #ifndef __cplusplus
-
-static inline __attribute__ ((always_inline))
-int
-__fortify_poll(struct pollfd *fds, nfds_t nfds, int timeout)
-{
-	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
-
-	if (nfds > bos / sizeof(struct pollfd))
-		__builtin_trap();
-	return poll(fds, nfds, timeout);
-}
-
-#ifdef _GNU_SOURCE
-static inline __attribute__ ((always_inline))
-int
-__fortify_ppoll(struct pollfd *fds, nfds_t nfds,
-                const struct timespec *timeout, const sigset_t *mask)
-{
-	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
-
-	if (nfds > bos / sizeof(struct pollfd))
-		__builtin_trap();
-	return ppoll(fds, nfds, timeout, mask);
-}
-#endif
-
 #undef poll
-#define poll(fds, nfds, timeout) __fortify_poll(fds, nfds, timeout)
+
+extern int __poll_orig(struct pollfd *, nfds_t, int)
+	__asm__(__USER_LABEL_PREFIX__ "poll");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int poll(struct pollfd *fds, nfds_t nfds, int timeout)
+{
+	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
+
+	if (nfds > bos / sizeof(struct pollfd))
+		__builtin_trap();
+	return __poll_orig(fds, nfds, timeout);
+}
 
 #ifdef _GNU_SOURCE
 #undef ppoll
-#define ppoll(fds, nfds, timeout, mask) __fortify_ppoll(fds, nfds, timeout, mask)
+extern int __ppoll_orig(struct pollfd *, nfds_t, const struct timespec *, const sigset_t *)
+	__asm__(__USER_LABEL_PREFIX__ "ppoll");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int ppoll(struct pollfd *fds, nfds_t nfds, const struct timespec *timeout, const sigset_t *mask)
+{
+	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
+
+	if (nfds > bos / sizeof(struct pollfd))
+		__builtin_trap();
+	return __ppoll_orig(fds, nfds, timeout, mask);
+}
 #endif
 
 #endif

@@ -7,9 +7,8 @@
 
 #ifndef __cplusplus
 
-static inline __attribute__ ((always_inline))
-int
-__fortify_FD_CLR(int fd, fd_set *set)
+static __inline __attribute__((__always_inline__,__gnu_inline__))
+int __fortify_FD_CLR(int fd, fd_set *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
 
@@ -18,9 +17,8 @@ __fortify_FD_CLR(int fd, fd_set *set)
 	return FD_CLR(fd, set);
 }
 
-static inline __attribute__ ((always_inline))
-int
-__fortify_FD_SET(int fd, fd_set *set)
+static __inline __attribute__((__always_inline__,__gnu_inline__))
+int __fortify_FD_SET(int fd, fd_set *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
 

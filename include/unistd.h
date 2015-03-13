@@ -6,169 +6,164 @@
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
 #ifndef __cplusplus
+#undef confstr
+#undef getcwd
+#undef getgroups
+#undef gethostname
+#undef getlogin_r
+#undef pread
+#undef read
+#undef readlink
+#undef readlinkat
+#undef ttyname_r
+#undef write
 
-static inline __attribute__ ((always_inline))
-size_t
-__fortify_confstr(int name, char *buf, size_t len)
+extern size_t __confstr_orig(int, char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "confstr");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+size_t confstr(int name, char *buf, size_t len)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (len > bos)
 		__builtin_trap();
-	return confstr(name, buf, len);
+	return __confstr_orig(name, buf, len);
 }
 
-static inline __attribute__ ((always_inline))
-char *
-__fortify_getcwd(char *buf, size_t len)
+extern char *__getcwd_orig(char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "getcwd");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+char *getcwd(char *buf, size_t len)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (len > bos)
 		__builtin_trap();
-	return getcwd(buf, len);
+	return __getcwd_orig(buf, len);
 }
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
-static inline __attribute__ ((always_inline))
-int
-__fortify_getdomainname(char *name, size_t len)
+#undef getdomainname
+extern int __getdomainname_orig(char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "getdomainname");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int getdomainname(char *name, size_t len)
 {
 	size_t bos = __builtin_object_size(name, 0);
 
 	if (len > bos)
 		__builtin_trap();
-	return getdomainname(name, len);
+	return __getdomainname_orig(name, len);
 }
 #endif
 
-static inline __attribute__ ((always_inline))
-int
-__fortify_getgroups(int len, gid_t *set)
+extern int __getgroups_orig(int, gid_t *)
+	__asm__(__USER_LABEL_PREFIX__ "getgroups");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int getgroups(int len, gid_t *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
 
 	if (len > bos / sizeof(gid_t))
 		__builtin_trap();
-	return getgroups(len, set);
+	return __getgroups_orig(len, set);
 }
 
-static inline __attribute__ ((always_inline))
-int
-__fortify_gethostname(char *name, size_t len)
+extern int __gethostname_orig(char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "gethostname");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int gethostname(char *name, size_t len)
 {
 	size_t bos = __builtin_object_size(name, 0);
 
 	if (len > bos)
 		__builtin_trap();
-	return gethostname(name, len);
+	return __gethostname_orig(name, len);
 }
 
-static inline __attribute__ ((always_inline))
-int
-__fortify_getlogin_r(char *name, size_t len)
+extern int __getlogin_r_orig(char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "getlogin_r");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int getlogin_r(char *name, size_t len)
 {
 	size_t bos = __builtin_object_size(name, 0);
 
 	if (len > bos)
 		__builtin_trap();
-	return getlogin_r(name, len);
+	return __getlogin_r_orig(name, len);
 }
 
-static inline __attribute__ ((always_inline))
-ssize_t
-__fortify_pread(int fd, void *buf, size_t n, off_t offset)
+extern ssize_t __pread_orig(int, void *, size_t, off_t)
+	__asm__(__USER_LABEL_PREFIX__ "pread");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+ssize_t pread(int fd, void *buf, size_t n, off_t offset)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return pread(fd, buf, n, offset);
+	return __pread_orig(fd, buf, n, offset);
 }
 
-static inline __attribute__ ((always_inline))
-ssize_t
-__fortify_read(int fd, void *buf, size_t n)
+extern ssize_t __read_orig(int, void *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "read");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+ssize_t read(int fd, void *buf, size_t n)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return read(fd, buf, n);
+	return __read_orig(fd, buf, n);
 }
 
-static inline __attribute__ ((always_inline))
-ssize_t
-__fortify_readlink(const char *path, char *buf, size_t n)
+extern ssize_t __readlink_orig(const char *, char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "readlink");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+ssize_t readlink(const char *path, char *buf, size_t n)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return readlink(path, buf, n);
+	return __readlink_orig(path, buf, n);
 }
 
-static inline __attribute__ ((always_inline))
-ssize_t
-__fortify_readlinkat(int fd, const char *path, char *buf, size_t n)
+extern ssize_t __readlinkat_orig(int, const char *, char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "readlinkat");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+ssize_t readlinkat(int fd, const char *path, char *buf, size_t n)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return readlinkat(fd, path, buf, n);
+	return __readlinkat_orig(fd, path, buf, n);
 }
 
-static inline __attribute__ ((always_inline))
-int
-__fortify_ttyname_r(int fd, char *name, size_t n)
+extern int __ttyname_r_orig(int, char *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "ttyname_r");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int ttyname_r(int fd, char *name, size_t n)
 {
 	size_t bos = __builtin_object_size(name, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return ttyname_r(fd, name, n);
+	return __ttyname_r_orig(fd, name, n);
 }
 
-static inline __attribute__ ((always_inline))
-ssize_t
-__fortify_write(int fd, const void *buf, size_t n)
+extern ssize_t __write_orig(int, const void *, size_t)
+	__asm__(__USER_LABEL_PREFIX__ "write");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+ssize_t write(int fd, const void *buf, size_t n)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return write(fd, buf, n);
+	return __write_orig(fd, buf, n);
 }
-
-#undef confstr
-#define confstr(name, buf, len) __fortify_confstr(name, buf, len)
-#undef getcwd
-#define getcwd(buf, len) __fortify_getcwd(buf, len)
-
-#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
-#undef getdomainname
-#define getdomainname(name, len) __fortify_getdomainname(name, len)
-#endif
-
-#undef getgroups
-#define getgroups(len, set) __fortify_getgroups(len, set)
-#undef gethostname
-#define gethostname(name, len) __fortify_gethostname(name, len)
-#undef getlogin_r
-#define getlogin_r(name, len) __fortify_getlogin_r(name, len)
-#undef pread
-#define pread(fd, buf, n, offset) __fortify_pread(fd, buf, n, offset)
-#undef read
-#define read(fd, buf, n) __fortify_read(fd, buf, n)
-#undef readlink
-#define readlink(path, buf, n) __fortify_readlink(path, buf, n)
-#undef readlinkat
-#define readlinkat(fd, path, buf, n) __fortify_readlinkat(fd, path, buf, n)
-#undef ttyname_r
-#define ttyname_r(fd, name, n) __fortify_ttyname_r(fd, name, n)
-#undef write
-#define write(fd, buf, n) __fortify_write(fd, buf, n)
 
 #endif
 

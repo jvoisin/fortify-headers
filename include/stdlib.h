@@ -12,9 +12,11 @@
 #ifndef __cplusplus
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
-static inline __attribute__ ((always_inline))
-char *
-__fortify_realpath(const char *path, char *resolved)
+#undef realpath
+extern char *__realpath_orig(const char *, char *)
+	__asm__(__USER_LABEL_PREFIX__ "realpath");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+char *realpath(const char *path, char *resolved)
 {
 	size_t bos;
 
@@ -27,11 +29,8 @@ __fortify_realpath(const char *path, char *resolved)
 			__builtin_trap();
 #endif
 	}
-	return realpath(path, resolved);
+	return __realpath_orig(path, resolved);
 }
-
-#undef realpath
-#define realpath(path, resolved) __fortify_realpath(path, resolved)
 #endif
 
 #endif
