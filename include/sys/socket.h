@@ -5,7 +5,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #undef recv
 #undef recvfrom
 #undef send
@@ -61,6 +64,8 @@ ssize_t sendto(int sockfd, const void *buf, size_t n, int flags,
 	return __sendto_orig(sockfd, buf, n, flags, sa, salen);
 }
 
+#ifdef __cplusplus
+}
 #endif
 
 #endif

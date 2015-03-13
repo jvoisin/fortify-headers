@@ -5,7 +5,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #undef memcpy
 #undef memmove
 #undef memset
@@ -181,6 +184,8 @@ size_t strlcpy(char *dest, const char *src, size_t n)
 }
 #endif
 
+#ifdef __cplusplus
+}
 #endif
 
 #endif

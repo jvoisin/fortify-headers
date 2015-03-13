@@ -9,7 +9,9 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef realpath
@@ -33,6 +35,8 @@ char *realpath(const char *path, char *resolved)
 }
 #endif
 
+#ifdef __cplusplus
+}
 #endif
 
 #endif

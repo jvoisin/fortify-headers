@@ -6,7 +6,10 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #undef fgetws
 #undef mbsnrtowcs
 #undef mbsrtowcs
@@ -246,6 +249,8 @@ wchar_t *wmemset(wchar_t *s, wchar_t c, size_t n)
 	return __wmemset_orig(s, c, n);
 }
 
+#ifdef __cplusplus
+}
 #endif
 
 #endif

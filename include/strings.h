@@ -5,7 +5,9 @@
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE) || defined(_POSIX_SOURCE) \
  || (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE+0 < 200809L) \
@@ -37,6 +39,8 @@ void bzero(void *src, size_t n)
 }
 #endif
 
+#ifdef __cplusplus
+}
 #endif
 
 #endif
