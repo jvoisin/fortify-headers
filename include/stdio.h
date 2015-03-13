@@ -54,6 +54,18 @@ size_t fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
 	return __fwrite_orig(dst, n, nmemb, fp);
 }
 
+extern int __vsnprintf_orig(char *, size_t, const char *, __builtin_va_list)
+	__asm__(__USER_LABEL_PREFIX__ "vsnprintf");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
+{
+	size_t bos = __builtin_object_size(s, 0);
+
+	if (n > bos)
+		__builtin_trap();
+	return __vsnprintf_orig(s, n, fmt, ap);
+}
+
 extern int __vsprintf_orig(char *, const char *, __builtin_va_list)
 	__asm__(__USER_LABEL_PREFIX__ "vsprintf");
 extern __inline __attribute__((__always_inline__,__gnu_inline__))
@@ -70,18 +82,6 @@ int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 		r = __vsprintf_orig(s, fmt, ap);
 	}
 	return r;
-}
-
-extern int __vsnprintf_orig(char *, size_t, const char *, __builtin_va_list)
-	__asm__(__USER_LABEL_PREFIX__ "vsnprintf");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
-int vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
-{
-	size_t bos = __builtin_object_size(s, 0);
-
-	if (n > bos)
-		__builtin_trap();
-	return __vsnprintf_orig(s, n, fmt, ap);
 }
 
 #undef snprintf
