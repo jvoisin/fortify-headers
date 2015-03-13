@@ -84,28 +84,35 @@ int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 	return r;
 }
 
-#undef snprintf
-#define snprintf(s, n, fmt, ...) ({ \
-	size_t _n = n; \
-	size_t bos = __builtin_object_size(s, 0); \
-	if (_n > bos) \
-		__builtin_trap(); \
-	(snprintf)(s, _n, fmt, ## __VA_ARGS__); \
-})
+extern int __snprintf_orig(char *, size_t, const char *, ...)
+	__asm__(__USER_LABEL_PREFIX__ "snprintf");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int snprintf(char *s, size_t n, const char *fmt, ...)
+{
+	size_t bos = __builtin_object_size(s, 0);
 
-#undef sprintf
-#define sprintf(s, fmt, ...) ({ \
-	size_t bos = __builtin_object_size(s, 0); \
-	int r; \
-	if (bos != (size_t)-1) { \
-		r = (snprintf)(s, bos, fmt, ## __VA_ARGS__); \
-		if (r != -1 && (size_t)r >= bos) \
-			__builtin_trap(); \
-	} else { \
-		r = (sprintf)(s, fmt, ## __VA_ARGS__); \
-	} \
-	r; \
-})
+	if (n > bos)
+		__builtin_trap();
+	return __snprintf_orig(s, n, fmt, __builtin_va_arg_pack());
+}
+
+extern int __sprintf_orig(char *, const char *, ...)
+	__asm__(__USER_LABEL_PREFIX__ "sprintf");
+extern __inline __attribute__((__always_inline__,__gnu_inline__))
+int sprintf(char *s, const char *fmt, ...)
+{
+	size_t bos = __builtin_object_size(s, 0);
+	int r;
+
+	if (bos != (size_t)-1) {
+		r = __snprintf_orig(s, bos, fmt, __builtin_va_arg_pack());
+		if (r != -1 && (size_t)r >= bos)
+			__builtin_trap();
+	} else {
+		r = __sprintf_orig(s, fmt, __builtin_va_arg_pack());
+	}
+	return r;
+}
 
 #endif
 
