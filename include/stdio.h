@@ -9,7 +9,7 @@
 #undef fgets
 #undef fread
 #undef fwrite
-#undef vsnprintf
+#undef vsprintf
 #undef vsnprintf
 #undef snprintf
 #undef sprintf
