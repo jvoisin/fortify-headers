@@ -36,7 +36,7 @@ wchar_t *fgetws(wchar_t *s, int n, FILE *fp)
 	return __fgetws_orig(s, n, fp);
 }
 
-extern size_t __mbsnrtowcs(wchar_t *, const char **, size_t, size_t, mbstate_t *)
+extern size_t __mbsnrtowcs_orig(wchar_t *, const char **, size_t, size_t, mbstate_t *)
 	__asm__(__USER_LABEL_PREFIX__ "mbsnrtowcs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__))
 size_t mbsnrtowcs(wchar_t *d, const char **s, size_t n, size_t wn, mbstate_t *st)
