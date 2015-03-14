@@ -19,7 +19,7 @@ extern "C" {
 
 extern char *__fgets_orig(char *, int, FILE *)
 	__asm__(__USER_LABEL_PREFIX__ "fgets");
-extern __inline __attribute__((__always_inline__,__gnu_inline____,__artificial__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *fgets(char *s, int n, FILE *fp)
 {
 	size_t bos = __builtin_object_size(s, 0);
