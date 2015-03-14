@@ -15,8 +15,7 @@ extern "C" {
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef realpath
-extern char *__realpath_orig(const char *, char *)
-	__asm__(__USER_LABEL_PREFIX__ "realpath");
+__typeof__(realpath) __realpath_orig __asm__(__USER_LABEL_PREFIX__ "realpath");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *realpath(const char *path, char *resolved)
 {

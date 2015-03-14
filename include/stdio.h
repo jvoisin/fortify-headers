@@ -17,8 +17,7 @@ extern "C" {
 #undef snprintf
 #undef sprintf
 
-extern char *__fgets_orig(char *, int, FILE *)
-	__asm__(__USER_LABEL_PREFIX__ "fgets");
+__typeof__(fgets) __fgets_orig __asm__(__USER_LABEL_PREFIX__ "fgets");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *fgets(char *s, int n, FILE *fp)
 {
@@ -29,8 +28,7 @@ char *fgets(char *s, int n, FILE *fp)
 	return __fgets_orig(s, n, fp);
 }
 
-extern size_t __fread_orig(void *, size_t, size_t, FILE *)
-	__asm__(__USER_LABEL_PREFIX__ "fread");
+__typeof__(fread) __fread_orig __asm__(__USER_LABEL_PREFIX__ "fread");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t fread(void *dst, size_t n, size_t nmemb, FILE *fp)
 {
@@ -43,8 +41,7 @@ size_t fread(void *dst, size_t n, size_t nmemb, FILE *fp)
 	return __fread_orig(dst, n, nmemb, fp);
 }
 
-extern size_t __fwrite_orig(const void *, size_t, size_t, FILE *)
-	__asm__(__USER_LABEL_PREFIX__ "fwrite");
+__typeof__(fwrite) __fwrite_orig __asm__(__USER_LABEL_PREFIX__ "fwrite");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
 {
@@ -57,8 +54,7 @@ size_t fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
 	return __fwrite_orig(dst, n, nmemb, fp);
 }
 
-extern int __vsnprintf_orig(char *, size_t, const char *, __builtin_va_list)
-	__asm__(__USER_LABEL_PREFIX__ "vsnprintf");
+__typeof__(vsnprintf) __vsnprintf_orig __asm__(__USER_LABEL_PREFIX__ "vsnprintf");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 {
@@ -69,8 +65,7 @@ int vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 	return __vsnprintf_orig(s, n, fmt, ap);
 }
 
-extern int __vsprintf_orig(char *, const char *, __builtin_va_list)
-	__asm__(__USER_LABEL_PREFIX__ "vsprintf");
+__typeof__(vsprintf) __vsprintf_orig __asm__(__USER_LABEL_PREFIX__ "vsprintf");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 {
@@ -87,8 +82,7 @@ int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 	return r;
 }
 
-extern int __snprintf_orig(char *, size_t, const char *, ...)
-	__asm__(__USER_LABEL_PREFIX__ "snprintf");
+__typeof__(snprintf) __snprintf_orig __asm__(__USER_LABEL_PREFIX__ "snprintf");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int snprintf(char *s, size_t n, const char *fmt, ...)
 {
@@ -99,8 +93,7 @@ int snprintf(char *s, size_t n, const char *fmt, ...)
 	return __snprintf_orig(s, n, fmt, __builtin_va_arg_pack());
 }
 
-extern int __sprintf_orig(char *, const char *, ...)
-	__asm__(__USER_LABEL_PREFIX__ "sprintf");
+__typeof__(sprintf) __sprintf_orig __asm__(__USER_LABEL_PREFIX__ "sprintf");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int sprintf(char *s, const char *fmt, ...)
 {

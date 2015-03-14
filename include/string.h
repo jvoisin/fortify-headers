@@ -19,8 +19,7 @@ extern "C" {
 #undef strncat
 #undef strncpy
 
-extern void *__memcpy_orig(void *, const void *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "memcpy");
+__typeof__(memcpy) __memcpy_orig __asm__(__USER_LABEL_PREFIX__ "memcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memcpy(void *dest, const void *src, size_t n)
 {
@@ -38,8 +37,7 @@ void *memcpy(void *dest, const void *src, size_t n)
 	return __memcpy_orig(dest, src, n);
 }
 
-extern void *__memmove_orig(void *, const void *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "memmove");
+__typeof__(memmove) __memmove_orig __asm__(__USER_LABEL_PREFIX__ "memmove");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memmove(void *dest, const void *src, size_t n)
 {
@@ -50,8 +48,7 @@ void *memmove(void *dest, const void *src, size_t n)
 	return __memmove_orig(dest, src, n);
 }
 
-extern void *__memset_orig(void *, int, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "memset");
+__typeof__(memset) __memset_orig __asm__(__USER_LABEL_PREFIX__ "memset");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memset(void *dest, int c, size_t n)
 {
@@ -62,8 +59,7 @@ void *memset(void *dest, int c, size_t n)
 	return __memset_orig(dest, c, n);
 }
 
-extern char *__stpcpy_orig(char *, const char *)
-	__asm__(__USER_LABEL_PREFIX__ "stpcpy");
+__typeof__(stpcpy) __stpcpy_orig __asm__(__USER_LABEL_PREFIX__ "stpcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *stpcpy(char *dest, const char *src)
 {
@@ -74,8 +70,7 @@ char *stpcpy(char *dest, const char *src)
 	return __stpcpy_orig(dest, src);
 }
 
-extern char *__stpncpy_orig(char *, const char *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "stpncpy");
+__typeof__(stpncpy) __stpncpy_orig __asm__(__USER_LABEL_PREFIX__ "stpncpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *stpncpy(char *dest, const char *src, size_t n)
 {
@@ -86,8 +81,7 @@ char *stpncpy(char *dest, const char *src, size_t n)
 	return __stpncpy_orig(dest, src, n);
 }
 
-extern char *__strcat_orig(char *, const char *)
-	__asm__(__USER_LABEL_PREFIX__ "strcat");
+__typeof__(strcat) __strcat_orig __asm__(__USER_LABEL_PREFIX__ "strcat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strcat(char *dest, const char *src)
 {
@@ -98,8 +92,7 @@ char *strcat(char *dest, const char *src)
 	return __strcat_orig(dest, src);
 }
 
-extern char *__strcpy_orig(char *, const char *)
-	__asm__(__USER_LABEL_PREFIX__ "strcpy");
+__typeof__(strcpy) __strcpy_orig __asm__(__USER_LABEL_PREFIX__ "strcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strcpy(char *dest, const char *src)
 {
@@ -110,8 +103,7 @@ char *strcpy(char *dest, const char *src)
 	return __strcpy_orig(dest, src);
 }
 
-extern char *__strncat_orig(char *, const char *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "strncat");
+__typeof__(strncat) __strncat_orig __asm__(__USER_LABEL_PREFIX__ "strncat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strncat(char *dest, const char *src, size_t n)
 {
@@ -129,8 +121,7 @@ char *strncat(char *dest, const char *src, size_t n)
 	return __strncat_orig(dest, src, n);
 }
 
-extern char *__strncpy_orig(char *, const char *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "strncpy");
+__typeof__(strncpy) __strncpy_orig __asm__(__USER_LABEL_PREFIX__ "strncpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strncpy(char *dest, const char *src, size_t n)
 {
@@ -143,8 +134,7 @@ char *strncpy(char *dest, const char *src, size_t n)
 
 #ifdef _GNU_SOURCE
 #undef mempcpy
-extern void *__mempcpy_orig(void *, const void *, size_t n)
-	__asm__(__USER_LABEL_PREFIX__ "mempcpy");
+__typeof__(mempcpy) __mempcpy_orig __asm__(__USER_LABEL_PREFIX__ "mempcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *mempcpy(void *dest, const void *src, size_t n)
 {
@@ -159,8 +149,7 @@ void *mempcpy(void *dest, const void *src, size_t n)
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef strlcat
 #undef strlcpy
-extern size_t __strlcat_orig(char *, const char *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "strlcat");
+__typeof__(strlcat) __strlcat_orig __asm__(__USER_LABEL_PREFIX__ "strlcat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t strlcat(char *dest, const char *src, size_t n)
 {
@@ -171,8 +160,7 @@ size_t strlcat(char *dest, const char *src, size_t n)
 	return __strlcat_orig(dest, src, n);
 }
 
-extern size_t __strlcpy_orig(char *, const char *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "strlcpy");
+__typeof__(strlcpy) __strlcpy_orig __asm__(__USER_LABEL_PREFIX__ "strlcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t strlcpy(char *dest, const char *src, size_t n)
 {

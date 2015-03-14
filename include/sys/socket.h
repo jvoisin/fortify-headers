@@ -14,8 +14,7 @@ extern "C" {
 #undef send
 #undef sendto
 
-extern ssize_t __recv_orig(int, void *, size_t, int)
-	__asm__(__USER_LABEL_PREFIX__ "recv");
+__typeof__(recv) __recv_orig __asm__(__USER_LABEL_PREFIX__ "recv");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 ssize_t recv(int sockfd, void *buf, size_t n, int flags)
 {
@@ -26,8 +25,7 @@ ssize_t recv(int sockfd, void *buf, size_t n, int flags)
 	return __recv_orig(sockfd, buf, n, flags);
 }
 
-extern ssize_t __recvfrom_orig(int, void *, size_t, int, struct sockaddr *, socklen_t *)
-	__asm__(__USER_LABEL_PREFIX__ "recvfrom");
+__typeof__(recvfrom) __recvfrom_orig __asm__(__USER_LABEL_PREFIX__ "recvfrom");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 ssize_t recvfrom(int sockfd, void *buf, size_t n, int flags,
                  struct sockaddr *sa, socklen_t *salen)
@@ -39,8 +37,7 @@ ssize_t recvfrom(int sockfd, void *buf, size_t n, int flags,
 	return __recvfrom_orig(sockfd, buf, n, flags, sa, salen);
 }
 
-extern ssize_t __send_orig(int, const void *, size_t, int)
-	__asm__(__USER_LABEL_PREFIX__ "send");
+__typeof__(send) __send_orig __asm__(__USER_LABEL_PREFIX__ "send");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 ssize_t send(int sockfd, const void *buf, size_t n, int flags)
 {
@@ -51,8 +48,7 @@ ssize_t send(int sockfd, const void *buf, size_t n, int flags)
 	return __send_orig(sockfd, buf, n, flags);
 }
 
-extern ssize_t __sendto_orig(int, const void *, size_t, int, const struct sockaddr *, socklen_t)
-	__asm__(__USER_LABEL_PREFIX__ "sendto");
+__typeof__(sendto) __sendto_orig __asm__(__USER_LABEL_PREFIX__ "sendto");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 ssize_t sendto(int sockfd, const void *buf, size_t n, int flags,
                const struct sockaddr *sa, socklen_t salen)

@@ -11,8 +11,7 @@ extern "C" {
 
 #undef poll
 
-extern int __poll_orig(struct pollfd *, nfds_t, int)
-	__asm__(__USER_LABEL_PREFIX__ "poll");
+__typeof__(poll) __poll_orig __asm__(__USER_LABEL_PREFIX__ "poll");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int poll(struct pollfd *fds, nfds_t nfds, int timeout)
 {
@@ -25,8 +24,7 @@ int poll(struct pollfd *fds, nfds_t nfds, int timeout)
 
 #ifdef _GNU_SOURCE
 #undef ppoll
-extern int __ppoll_orig(struct pollfd *, nfds_t, const struct timespec *, const sigset_t *)
-	__asm__(__USER_LABEL_PREFIX__ "ppoll");
+__typeof__(ppoll) __ppoll_orig __asm__(__USER_LABEL_PREFIX__ "ppoll");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int ppoll(struct pollfd *fds, nfds_t nfds, const struct timespec *timeout, const sigset_t *mask)
 {

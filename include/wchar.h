@@ -27,8 +27,7 @@ extern "C" {
 #undef wmemmove
 #undef wmemset
 
-extern wchar_t *__fgetws_orig(wchar_t *, int, FILE *)
-	__asm__(__USER_LABEL_PREFIX__ "fgetws");
+__typeof__(fgetws) __fgetws_orig __asm__(__USER_LABEL_PREFIX__ "fgetws");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *fgetws(wchar_t *s, int n, FILE *fp)
 {
@@ -39,8 +38,7 @@ wchar_t *fgetws(wchar_t *s, int n, FILE *fp)
 	return __fgetws_orig(s, n, fp);
 }
 
-extern size_t __mbsnrtowcs_orig(wchar_t *, const char **, size_t, size_t, mbstate_t *)
-	__asm__(__USER_LABEL_PREFIX__ "mbsnrtowcs");
+__typeof__(mbsnrtowcs) __mbsnrtowcs_orig __asm__(__USER_LABEL_PREFIX__ "mbsnrtowcs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t mbsnrtowcs(wchar_t *d, const char **s, size_t n, size_t wn, mbstate_t *st)
 {
@@ -60,8 +58,7 @@ size_t mbsnrtowcs(wchar_t *d, const char **s, size_t n, size_t wn, mbstate_t *st
 	return r;
 }
 
-extern size_t __mbsrtowcs_orig(wchar_t *, const char **, size_t, mbstate_t *)
-	__asm__(__USER_LABEL_PREFIX__ "mbsrtowcs");
+__typeof__(mbsrtowcs) __mbsrtowcs_orig __asm__(__USER_LABEL_PREFIX__ "mbsrtowcs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t mbsrtowcs(wchar_t *d, const char **s, size_t wn, mbstate_t *st)
 {
@@ -75,8 +72,7 @@ size_t mbsrtowcs(wchar_t *d, const char **s, size_t wn, mbstate_t *st)
 	return r;
 }
 
-extern size_t __mbstowcs_orig(wchar_t *, const char *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "mbstowcs");
+__typeof__(mbstowcs) __mbstowcs_orig __asm__(__USER_LABEL_PREFIX__ "mbstowcs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t mbstowcs(wchar_t *ws, const char *s, size_t wn)
 {
@@ -87,8 +83,7 @@ size_t mbstowcs(wchar_t *ws, const char *s, size_t wn)
 	return __mbstowcs_orig(ws, s, wn);
 }
 
-extern size_t __wcrtomb_orig(char *, wchar_t, mbstate_t *)
-	__asm__(__USER_LABEL_PREFIX__ "wcrtomb");
+__typeof__(wcrtomb) __wcrtomb_orig __asm__(__USER_LABEL_PREFIX__ "wcrtomb");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t wcrtomb(char *s, wchar_t wc, mbstate_t *st)
 {
@@ -99,8 +94,7 @@ size_t wcrtomb(char *s, wchar_t wc, mbstate_t *st)
 	return __wcrtomb_orig(s, wc, st);
 }
 
-extern wchar_t *__wcscat_orig(wchar_t *, const wchar_t *)
-	__asm__(__USER_LABEL_PREFIX__ "wcscat");
+__typeof__(wcscat) __wcscat_orig __asm__(__USER_LABEL_PREFIX__ "wcscat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wcscat(wchar_t *d, const wchar_t *s)
 {
@@ -111,8 +105,7 @@ wchar_t *wcscat(wchar_t *d, const wchar_t *s)
 	return __wcscat_orig(d, s);
 }
 
-extern wchar_t *__wcscpy_orig(wchar_t *, const wchar_t *)
-	__asm__(__USER_LABEL_PREFIX__ "wcscpy");
+__typeof__(wcscpy) __wcscpy_orig __asm__(__USER_LABEL_PREFIX__ "wcscpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wcscpy(wchar_t *d, const wchar_t *s)
 {
@@ -123,8 +116,7 @@ wchar_t *wcscpy(wchar_t *d, const wchar_t *s)
 	return __wcscpy_orig(d, s);
 }
 
-extern wchar_t *__wcsncat_orig(wchar_t *, const wchar_t *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "wcsncat");
+__typeof__(wcsncat) __wcsncat_orig __asm__(__USER_LABEL_PREFIX__ "wcsncat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wcsncat(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -142,8 +134,7 @@ wchar_t *wcsncat(wchar_t *d, const wchar_t *s, size_t n)
 	return __wcsncat_orig(d, s, n);
 }
 
-extern wchar_t *__wcsncpy_orig(wchar_t *, const wchar_t *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "wcsncpy");
+__typeof__(wcsncpy) __wcsncpy_orig __asm__(__USER_LABEL_PREFIX__ "wcsncpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wcsncpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -154,8 +145,7 @@ wchar_t *wcsncpy(wchar_t *d, const wchar_t *s, size_t n)
 	return __wcsncpy_orig(d, s, n);
 }
 
-extern size_t __wcsnrtombs_orig(char *, const wchar_t **, size_t, size_t, mbstate_t *)
-	__asm__(__USER_LABEL_PREFIX__ "wcsnrtombs");
+__typeof__(wcsnrtombs) __wcsnrtombs_orig __asm__(__USER_LABEL_PREFIX__ "wcsnrtombs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t wcsnrtombs(char *d, const wchar_t **s, size_t wn, size_t n, mbstate_t *st)
 {
@@ -175,8 +165,7 @@ size_t wcsnrtombs(char *d, const wchar_t **s, size_t wn, size_t n, mbstate_t *st
 	return r;
 }
 
-extern size_t __wcsrtombs_orig(char *, const wchar_t **, size_t, mbstate_t *)
-	__asm__(__USER_LABEL_PREFIX__ "wcsrtombs");
+__typeof__(wcsrtombs) __wcsrtombs_orig __asm__(__USER_LABEL_PREFIX__ "wcsrtombs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t wcsrtombs(char *d, const wchar_t **s, size_t n, mbstate_t *st)
 {
@@ -189,8 +178,7 @@ size_t wcsrtombs(char *d, const wchar_t **s, size_t n, mbstate_t *st)
 	return r;
 }
 
-extern size_t __wcstombs_orig(char *, const wchar_t *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "wcstombs");
+__typeof__(wcstombs) __wcstombs_orig __asm__(__USER_LABEL_PREFIX__ "wcstombs");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t wcstombs(char *s, const wchar_t *ws, size_t n)
 {
@@ -201,8 +189,7 @@ size_t wcstombs(char *s, const wchar_t *ws, size_t n)
 	return __wcstombs_orig(s, ws, n);
 }
 
-extern int __wctomb_orig(char *, wchar_t)
-	__asm__(__USER_LABEL_PREFIX__ "wctomb");
+__typeof__(wctomb) __wctomb_orig __asm__(__USER_LABEL_PREFIX__ "wctomb");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int wctomb(char *s, wchar_t wc)
 {
@@ -213,8 +200,7 @@ int wctomb(char *s, wchar_t wc)
 	return __wctomb_orig(s, wc);
 }
 
-extern wchar_t *__wmemcpy_orig(wchar_t *, const wchar_t *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "wmemcpy");
+__typeof__(wmemcpy) __wmemcpy_orig __asm__(__USER_LABEL_PREFIX__ "wmemcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -225,8 +211,7 @@ wchar_t *wmemcpy(wchar_t *d, const wchar_t *s, size_t n)
 	return __wmemcpy_orig(d, s, n);
 }
 
-extern wchar_t *__wmemmove_orig(wchar_t *, const wchar_t *, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "wmemmove");
+__typeof__(wmemmove) __wmemmove_orig __asm__(__USER_LABEL_PREFIX__ "wmemmove");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wmemmove(wchar_t *d, const wchar_t *s, size_t n)
 {
@@ -237,8 +222,7 @@ wchar_t *wmemmove(wchar_t *d, const wchar_t *s, size_t n)
 	return __wmemmove_orig(d, s, n);
 }
 
-extern wchar_t *__wmemset_orig(wchar_t *, wchar_t, size_t)
-	__asm__(__USER_LABEL_PREFIX__ "wmemset");
+__typeof__(wmemset) __wmemset_orig __asm__(__USER_LABEL_PREFIX__ "wmemset");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 wchar_t *wmemset(wchar_t *s, wchar_t c, size_t n)
 {
