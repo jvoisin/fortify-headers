@@ -17,7 +17,7 @@ extern "C" {
 #undef realpath
 extern char *__realpath_orig(const char *, char *)
 	__asm__(__USER_LABEL_PREFIX__ "realpath");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *realpath(const char *path, char *resolved)
 {
 	size_t bos;

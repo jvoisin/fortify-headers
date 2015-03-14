@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-static __inline __attribute__((__always_inline__,__gnu_inline__))
+static __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int __fortify_FD_CLR(int fd, fd_set *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
@@ -19,7 +19,7 @@ int __fortify_FD_CLR(int fd, fd_set *set)
 	return FD_CLR(fd, set);
 }
 
-static __inline __attribute__((__always_inline__,__gnu_inline__))
+static __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int __fortify_FD_SET(int fd, fd_set *set)
 {
 	size_t bos = __builtin_object_size(set, 0);

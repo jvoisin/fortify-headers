@@ -19,7 +19,7 @@ extern "C" {
 
 extern char *__fgets_orig(char *, int, FILE *)
 	__asm__(__USER_LABEL_PREFIX__ "fgets");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline____,__artificial__))
 char *fgets(char *s, int n, FILE *fp)
 {
 	size_t bos = __builtin_object_size(s, 0);
@@ -31,7 +31,7 @@ char *fgets(char *s, int n, FILE *fp)
 
 extern size_t __fread_orig(void *, size_t, size_t, FILE *)
 	__asm__(__USER_LABEL_PREFIX__ "fread");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t fread(void *dst, size_t n, size_t nmemb, FILE *fp)
 {
 	size_t bos = __builtin_object_size(dst, 0);
@@ -45,7 +45,7 @@ size_t fread(void *dst, size_t n, size_t nmemb, FILE *fp)
 
 extern size_t __fwrite_orig(const void *, size_t, size_t, FILE *)
 	__asm__(__USER_LABEL_PREFIX__ "fwrite");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
 {
 	size_t bos = __builtin_object_size(dst, 0);
@@ -59,7 +59,7 @@ size_t fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
 
 extern int __vsnprintf_orig(char *, size_t, const char *, __builtin_va_list)
 	__asm__(__USER_LABEL_PREFIX__ "vsnprintf");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 {
 	size_t bos = __builtin_object_size(s, 0);
@@ -71,7 +71,7 @@ int vsnprintf(char *s, size_t n, const char *fmt, __builtin_va_list ap)
 
 extern int __vsprintf_orig(char *, const char *, __builtin_va_list)
 	__asm__(__USER_LABEL_PREFIX__ "vsprintf");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 {
 	size_t bos = __builtin_object_size(s, 0);
@@ -89,7 +89,7 @@ int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
 
 extern int __snprintf_orig(char *, size_t, const char *, ...)
 	__asm__(__USER_LABEL_PREFIX__ "snprintf");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int snprintf(char *s, size_t n, const char *fmt, ...)
 {
 	size_t bos = __builtin_object_size(s, 0);
@@ -101,7 +101,7 @@ int snprintf(char *s, size_t n, const char *fmt, ...)
 
 extern int __sprintf_orig(char *, const char *, ...)
 	__asm__(__USER_LABEL_PREFIX__ "sprintf");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 int sprintf(char *s, const char *fmt, ...)
 {
 	size_t bos = __builtin_object_size(s, 0);

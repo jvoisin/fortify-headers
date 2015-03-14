@@ -21,7 +21,7 @@ extern "C" {
 
 extern void *__memcpy_orig(void *, const void *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "memcpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memcpy(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -40,7 +40,7 @@ void *memcpy(void *dest, const void *src, size_t n)
 
 extern void *__memmove_orig(void *, const void *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "memmove");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memmove(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -52,7 +52,7 @@ void *memmove(void *dest, const void *src, size_t n)
 
 extern void *__memset_orig(void *, int, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "memset");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memset(void *dest, int c, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -64,7 +64,7 @@ void *memset(void *dest, int c, size_t n)
 
 extern char *__stpcpy_orig(char *, const char *)
 	__asm__(__USER_LABEL_PREFIX__ "stpcpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *stpcpy(char *dest, const char *src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -76,7 +76,7 @@ char *stpcpy(char *dest, const char *src)
 
 extern char *__stpncpy_orig(char *, const char *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "stpncpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *stpncpy(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -88,7 +88,7 @@ char *stpncpy(char *dest, const char *src, size_t n)
 
 extern char *__strcat_orig(char *, const char *)
 	__asm__(__USER_LABEL_PREFIX__ "strcat");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strcat(char *dest, const char *src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -100,7 +100,7 @@ char *strcat(char *dest, const char *src)
 
 extern char *__strcpy_orig(char *, const char *)
 	__asm__(__USER_LABEL_PREFIX__ "strcpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strcpy(char *dest, const char *src)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -112,7 +112,7 @@ char *strcpy(char *dest, const char *src)
 
 extern char *__strncat_orig(char *, const char *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "strncat");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strncat(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -131,7 +131,7 @@ char *strncat(char *dest, const char *src, size_t n)
 
 extern char *__strncpy_orig(char *, const char *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "strncpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *strncpy(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -145,7 +145,7 @@ char *strncpy(char *dest, const char *src, size_t n)
 #undef mempcpy
 extern void *__mempcpy_orig(void *, const void *, size_t n)
 	__asm__(__USER_LABEL_PREFIX__ "mempcpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *mempcpy(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -161,7 +161,7 @@ void *mempcpy(void *dest, const void *src, size_t n)
 #undef strlcpy
 extern size_t __strlcat_orig(char *, const char *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "strlcat");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t strlcat(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
@@ -173,7 +173,7 @@ size_t strlcat(char *dest, const char *src, size_t n)
 
 extern size_t __strlcpy_orig(char *, const char *, size_t)
 	__asm__(__USER_LABEL_PREFIX__ "strlcpy");
-extern __inline __attribute__((__always_inline__,__gnu_inline__))
+extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 size_t strlcpy(char *dest, const char *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
