@@ -25,8 +25,8 @@ extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void *memcpy(void *dest, const void *src, size_t n)
 {
 	size_t bos = __builtin_object_size(dest, 0);
-	char *d = dest;
-	const char *s = src;
+	char *d = (char *)dest;
+	const char *s = (const char *)src;
 
 	/* trap if pointers are overlapping but not if dest == src.
 	 * gcc seems to like to generate code that relies on dest == src */
