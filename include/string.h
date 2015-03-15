@@ -12,8 +12,6 @@ extern "C" {
 #undef memcpy
 #undef memmove
 #undef memset
-#undef stpcpy
-#undef stpncpy
 #undef strcat
 #undef strcpy
 #undef strncat
@@ -59,6 +57,10 @@ void *memset(void *dest, int c, size_t n)
 	return __memset_orig(dest, c, n);
 }
 
+#if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
+ || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
+ || defined(_BSD_SOURCE)
+#undef stpcpy
 __typeof__(stpcpy) __stpcpy_orig __asm__(__USER_LABEL_PREFIX__ "stpcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *stpcpy(char *dest, const char *src)
@@ -70,6 +72,7 @@ char *stpcpy(char *dest, const char *src)
 	return __stpcpy_orig(dest, src);
 }
 
+#undef stpncpy
 __typeof__(stpncpy) __stpncpy_orig __asm__(__USER_LABEL_PREFIX__ "stpncpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 char *stpncpy(char *dest, const char *src, size_t n)
@@ -80,6 +83,7 @@ char *stpncpy(char *dest, const char *src, size_t n)
 		__builtin_trap();
 	return __stpncpy_orig(dest, src, n);
 }
+#endif
 
 __typeof__(strcat) __strcat_orig __asm__(__USER_LABEL_PREFIX__ "strcat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
