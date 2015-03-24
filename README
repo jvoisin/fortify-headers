@@ -23,7 +23,6 @@ Features
 Sample usage
 ============
 
-A plan for integrating fortify into a system is still under discussion.
 If you want to quickly test it, you can try something like the following:
 
 cat > fgets.c <<EOF
