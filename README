@@ -3,7 +3,7 @@ What is it?
 
 This is a standalone implementation of fortify source[0].  It is libc-agnostic
 and simply overlays the system headers by using the #include_next extension found
-in GCC.  It was initially intended to be used on musl[1] based Linux distributions.
+in GCC.  It was initially intended to be used on musl[1] based Linux distributions[2].
 
 
 Features
@@ -107,3 +107,4 @@ write
 
 [0] http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html
 [1] http://www.musl-libc.org/
+[2] http://git.alpinelinux.org/cgit/aports/commit/?id=067a4f28825478911bb62be3b8da758d9722753e
