@@ -45,6 +45,9 @@ At this point, the program will safely crash.
 Supported interfaces
 ====================
 
+The following interfaces are overriden to provide buffer overflow
+runtime checks.
+
 FD_CLR
 FD_SET
 bcopy
