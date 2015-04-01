@@ -1,9 +1,10 @@
 What is it?
 ===========
 
-This is a standalone implementation of fortify source[0].  It is libc-agnostic
-and simply overlays the system headers by using the #include_next extension found
-in GCC.  It was initially intended to be used on musl[1] based Linux distributions[2].
+This is a standalone implementation of fortify source[0].  It provides
+compile time buffer checks.  It is libc-agnostic and simply overlays the
+system headers by using the #include_next extension found in GCC.  It was
+initially intended to be used on musl[1] based Linux distributions[2].
 
 
 Features
