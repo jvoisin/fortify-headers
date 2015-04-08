@@ -19,42 +19,44 @@ extern "C" {
 
 __typeof__(memcpy) __memcpy_orig __asm__(__USER_LABEL_PREFIX__ "memcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void *memcpy(void *dest, const void *src, size_t n)
+void *memcpy(void *dst, const void *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
-	char *d = (char *)dest;
+	size_t bos_dst = __builtin_object_size(dst, 0);
+	size_t bos_src = __builtin_object_size(src, 0);
+	char *d = (char *)dst;
 	const char *s = (const char *)src;
 
-	/* trap if pointers are overlapping but not if dest == src.
-	 * gcc seems to like to generate code that relies on dest == src */
+	/* trap if pointers are overlapping but not if dst == src.
+	 * gcc seems to like to generate code that relies on dst == src */
 	if ((d < s && d + n > s) ||
 	    (s < d && s + n > d))
 		__builtin_trap();
-	if (n > bos)
+	if (n > bos_dst || n > bos_src)
 		__builtin_trap();
-	return __memcpy_orig(dest, src, n);
+	return __memcpy_orig(dst, src, n);
 }
 
 __typeof__(memmove) __memmove_orig __asm__(__USER_LABEL_PREFIX__ "memmove");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void *memmove(void *dest, const void *src, size_t n)
+void *memmove(void *dst, const void *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos_dst = __builtin_object_size(dst, 0);
+	size_t bos_src = __builtin_object_size(src, 0);
 
-	if (n > bos)
+	if (n > bos_dst || n > bos_src)
 		__builtin_trap();
-	return __memmove_orig(dest, src, n);
+	return __memmove_orig(dst, src, n);
 }
 
 __typeof__(memset) __memset_orig __asm__(__USER_LABEL_PREFIX__ "memset");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void *memset(void *dest, int c, size_t n)
+void *memset(void *dst, int c, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __memset_orig(dest, c, n);
+	return __memset_orig(dst, c, n);
 }
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
@@ -63,90 +65,91 @@ void *memset(void *dest, int c, size_t n)
 #undef stpcpy
 __typeof__(stpcpy) __stpcpy_orig __asm__(__USER_LABEL_PREFIX__ "stpcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *stpcpy(char *dest, const char *src)
+char *stpcpy(char *dst, const char *src)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (strlen(src) + 1 > bos)
 		__builtin_trap();
-	return __stpcpy_orig(dest, src);
+	return __stpcpy_orig(dst, src);
 }
 
 #undef stpncpy
 __typeof__(stpncpy) __stpncpy_orig __asm__(__USER_LABEL_PREFIX__ "stpncpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *stpncpy(char *dest, const char *src, size_t n)
+char *stpncpy(char *dst, const char *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __stpncpy_orig(dest, src, n);
+	return __stpncpy_orig(dst, src, n);
 }
 #endif
 
 __typeof__(strcat) __strcat_orig __asm__(__USER_LABEL_PREFIX__ "strcat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *strcat(char *dest, const char *src)
+char *strcat(char *dst, const char *src)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
-	if (strlen(src) + strlen(dest) + 1 > bos)
+	if (strlen(src) + strlen(dst) + 1 > bos)
 		__builtin_trap();
-	return __strcat_orig(dest, src);
+	return __strcat_orig(dst, src);
 }
 
 __typeof__(strcpy) __strcpy_orig __asm__(__USER_LABEL_PREFIX__ "strcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *strcpy(char *dest, const char *src)
+char *strcpy(char *dst, const char *src)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (strlen(src) + 1 > bos)
 		__builtin_trap();
-	return __strcpy_orig(dest, src);
+	return __strcpy_orig(dst, src);
 }
 
 __typeof__(strncat) __strncat_orig __asm__(__USER_LABEL_PREFIX__ "strncat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *strncat(char *dest, const char *src, size_t n)
+char *strncat(char *dst, const char *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 	size_t slen, dlen;
 
 	if (n > bos) {
 		slen = strlen(src);
-		dlen = strlen(dest);
+		dlen = strlen(dst);
 		if (slen > n)
 			slen = n;
 		if (slen + dlen + 1 > bos)
 			__builtin_trap();
 	}
-	return __strncat_orig(dest, src, n);
+	return __strncat_orig(dst, src, n);
 }
 
 __typeof__(strncpy) __strncpy_orig __asm__(__USER_LABEL_PREFIX__ "strncpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *strncpy(char *dest, const char *src, size_t n)
+char *strncpy(char *dst, const char *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __strncpy_orig(dest, src, n);
+	return __strncpy_orig(dst, src, n);
 }
 
 #ifdef _GNU_SOURCE
 #undef mempcpy
 __typeof__(mempcpy) __mempcpy_orig __asm__(__USER_LABEL_PREFIX__ "mempcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void *mempcpy(void *dest, const void *src, size_t n)
+void *mempcpy(void *dst, const void *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos_dst = __builtin_object_size(dst, 0);
+	size_t bos_src = __builtin_object_size(src, 0);
 
-	if (n > bos)
+	if (n > bos_dst || n > bos_src)
 		__builtin_trap();
-	return __mempcpy_orig(dest, src, n);
+	return __mempcpy_orig(dst, src, n);
 }
 #endif
 
@@ -155,24 +158,24 @@ void *mempcpy(void *dest, const void *src, size_t n)
 #undef strlcpy
 __typeof__(strlcat) __strlcat_orig __asm__(__USER_LABEL_PREFIX__ "strlcat");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-size_t strlcat(char *dest, const char *src, size_t n)
+size_t strlcat(char *dst, const char *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __strlcat_orig(dest, src, n);
+	return __strlcat_orig(dst, src, n);
 }
 
 __typeof__(strlcpy) __strlcpy_orig __asm__(__USER_LABEL_PREFIX__ "strlcpy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-size_t strlcpy(char *dest, const char *src, size_t n)
+size_t strlcpy(char *dst, const char *src, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos = __builtin_object_size(dst, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __strlcpy_orig(dest, src, n);
+	return __strlcpy_orig(dst, src, n);
 }
 #endif
 
