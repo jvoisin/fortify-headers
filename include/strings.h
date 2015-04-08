@@ -16,13 +16,14 @@ extern "C" {
 #undef bzero
 __typeof__(bcopy) __bcopy_orig __asm__(__USER_LABEL_PREFIX__ "bcopy");
 extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void bcopy(const void *src, void *dest, size_t n)
+void bcopy(const void *src, void *dst, size_t n)
 {
-	size_t bos = __builtin_object_size(dest, 0);
+	size_t bos_dst = __builtin_object_size(dst, 0);
+	size_t bos_src = __builtin_object_size(src, 0);
 
-	if (n > bos)
+	if (n > bos_dst || n > bos_src)
 		__builtin_trap();
-	return __bcopy_orig(src, dest, n);
+	return __bcopy_orig(src, dst, n);
 }
 
 __typeof__(bzero) __bzero_orig __asm__(__USER_LABEL_PREFIX__ "bzero");
