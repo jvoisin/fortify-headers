@@ -23,7 +23,7 @@ char *realpath(const char *path, char *resolved)
 
 	if (resolved) {
 #ifndef PATH_MAX
-# error PATH_MAX unset. A fortified realpath will not work.
+#error PATH_MAX unset. A fortified realpath will not work.
 #else
 		bos = __builtin_object_size(resolved, 0);
 		if (PATH_MAX > bos)
