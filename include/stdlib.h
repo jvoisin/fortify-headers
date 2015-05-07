@@ -1,11 +1,11 @@
 #ifndef _FORTIFY_STDLIB_H
 #define _FORTIFY_STDLIB_H
 
+#include_next <stdlib.h>
+
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #include_next <limits.h>
 #endif
-
-#include_next <stdlib.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
@@ -23,7 +23,7 @@ char *realpath(const char *path, char *resolved)
 
 	if (resolved) {
 #ifndef PATH_MAX
-		__builtin_trap();
+# error PATH_MAX unset. A fortified realpath will not work.
 #else
 		bos = __builtin_object_size(resolved, 0);
 		if (PATH_MAX > bos)
