@@ -53,7 +53,8 @@ fortify_fn(fgetws) wchar_t *fgetws(wchar_t *s, int n, FILE *fp)
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE)  || defined(_BSD_SOURCE)
 #undef mbsnrtowcs
-fortify_fn(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *d, const char **s, size_t n, size_t wn, mbstate_t *st)
+fortify_fn(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *d, const char **s, size_t n,
+                                         size_t wn, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
 	size_t r;
@@ -72,7 +73,8 @@ fortify_fn(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *d, const char **s, size_t n, s
 }
 #endif
 
-fortify_fn(mbsrtowcs) size_t mbsrtowcs(wchar_t *d, const char **s, size_t wn, mbstate_t *st)
+fortify_fn(mbsrtowcs) size_t mbsrtowcs(wchar_t *d, const char **s, size_t wn,
+                                       mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
 	size_t r;
@@ -148,7 +150,8 @@ fortify_fn(wcsncpy) wchar_t *wcsncpy(wchar_t *d, const wchar_t *s, size_t n)
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE)  || defined(_BSD_SOURCE)
 #undef wcsnrtombs
-fortify_fn(wcsnrtombs) size_t wcsnrtombs(char *d, const wchar_t **s, size_t wn, size_t n, mbstate_t *st)
+fortify_fn(wcsnrtombs) size_t wcsnrtombs(char *d, const wchar_t **s, size_t wn,
+                                         size_t n, mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
 	size_t r;
@@ -167,7 +170,8 @@ fortify_fn(wcsnrtombs) size_t wcsnrtombs(char *d, const wchar_t **s, size_t wn, 
 }
 #endif
 
-fortify_fn(wcsrtombs) size_t wcsrtombs(char *d, const wchar_t **s, size_t n, mbstate_t *st)
+fortify_fn(wcsrtombs) size_t wcsrtombs(char *d, const wchar_t **s, size_t n,
+                                       mbstate_t *st)
 {
 	size_t bos = __builtin_object_size(d, 0);
 	size_t r;
