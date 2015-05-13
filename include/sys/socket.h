@@ -4,6 +4,7 @@
 #include_next <sys/socket.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "../fortify-headers.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,50 +15,42 @@ extern "C" {
 #undef send
 #undef sendto
 
-__typeof__(recv) __recv_orig __asm__(__USER_LABEL_PREFIX__ "recv");
-extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-ssize_t recv(int sockfd, void *buf, size_t n, int flags)
+fortify_fn(recv) ssize_t recv(int sockfd, void *buf, size_t n, int flags)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __recv_orig(sockfd, buf, n, flags);
+	return __orig_recv(sockfd, buf, n, flags);
 }
 
-__typeof__(recvfrom) __recvfrom_orig __asm__(__USER_LABEL_PREFIX__ "recvfrom");
-extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-ssize_t recvfrom(int sockfd, void *buf, size_t n, int flags,
-                 struct sockaddr *sa, socklen_t *salen)
+fortify_fn(recvfrom) ssize_t recvfrom(int sockfd, void *buf, size_t n, int flags,
+                                      struct sockaddr *sa, socklen_t *salen)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __recvfrom_orig(sockfd, buf, n, flags, sa, salen);
+	return __orig_recvfrom(sockfd, buf, n, flags, sa, salen);
 }
 
-__typeof__(send) __send_orig __asm__(__USER_LABEL_PREFIX__ "send");
-extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-ssize_t send(int sockfd, const void *buf, size_t n, int flags)
+fortify_fn(send) ssize_t send(int sockfd, const void *buf, size_t n, int flags)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __send_orig(sockfd, buf, n, flags);
+	return __orig_send(sockfd, buf, n, flags);
 }
 
-__typeof__(sendto) __sendto_orig __asm__(__USER_LABEL_PREFIX__ "sendto");
-extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-ssize_t sendto(int sockfd, const void *buf, size_t n, int flags,
-               const struct sockaddr *sa, socklen_t salen)
+fortify_fn(sendto) ssize_t sendto(int sockfd, const void *buf, size_t n, int flags,
+                                  const struct sockaddr *sa, socklen_t salen)
 {
 	size_t bos = __builtin_object_size(buf, 0);
 
 	if (n > bos)
 		__builtin_trap();
-	return __sendto_orig(sockfd, buf, n, flags, sa, salen);
+	return __orig_sendto(sockfd, buf, n, flags, sa, salen);
 }
 
 #ifdef __cplusplus

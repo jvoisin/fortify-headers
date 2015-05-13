@@ -8,6 +8,7 @@
 #endif
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-headers.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,9 +16,7 @@ extern "C" {
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef realpath
-__typeof__(realpath) __realpath_orig __asm__(__USER_LABEL_PREFIX__ "realpath");
-extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-char *realpath(const char *path, char *resolved)
+fortify_fn(realpath) char *realpath(const char *path, char *resolved)
 {
 	size_t bos;
 
@@ -30,7 +29,7 @@ char *realpath(const char *path, char *resolved)
 			__builtin_trap();
 #endif
 	}
-	return __realpath_orig(path, resolved);
+	return __orig_realpath(path, resolved);
 }
 #endif
 
