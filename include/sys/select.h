@@ -25,23 +25,23 @@ extern "C" {
 #endif
 
 static __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-int __fortify_FD_CLR(int fd, fd_set *set)
+void __fortify_FD_CLR(int fd, fd_set *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
 
 	if (fd < 0 || fd >= FD_SETSIZE || bos < sizeof(fd_set))
 		__builtin_trap();
-	return FD_CLR(fd, set);
+	FD_CLR(fd, set);
 }
 
 static __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-int __fortify_FD_SET(int fd, fd_set *set)
+void __fortify_FD_SET(int fd, fd_set *set)
 {
 	size_t bos = __builtin_object_size(set, 0);
 
 	if (fd < 0 || fd >= FD_SETSIZE || bos < sizeof(fd_set))
 		__builtin_trap();
-	return FD_SET(fd, set);
+	FD_SET(fd, set);
 }
 
 #undef FD_CLR
