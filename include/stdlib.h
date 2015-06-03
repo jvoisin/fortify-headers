@@ -31,20 +31,20 @@ extern "C" {
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef realpath
-fortify_fn(realpath) char *realpath(const char *path, char *resolved)
+_FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
-	size_t bos;
+	size_t __b;
 
-	if (resolved) {
+	if (__r) {
 #ifndef PATH_MAX
 #error PATH_MAX unset. A fortified realpath will not work.
 #else
-		bos = __builtin_object_size(resolved, 0);
-		if (PATH_MAX > bos)
+		__b = __builtin_object_size(__r, 0);
+		if (PATH_MAX > __b)
 			__builtin_trap();
 #endif
 	}
-	return __orig_realpath(path, resolved);
+	return __orig_realpath(__p, __r);
 }
 #endif
 

@@ -18,7 +18,7 @@
 
 #define _FORTIFY_STR(s) #s
 #define _FORTIFY_ORIG(p,fn) __typeof__(fn) __orig_##fn __asm__(_FORTIFY_STR(p) #fn)
-#define fortify_fn(fn) _FORTIFY_ORIG(__USER_LABEL_PREFIX__,fn); \
+#define _FORTIFY_FN(fn) _FORTIFY_ORIG(__USER_LABEL_PREFIX__,fn); \
 	extern __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 
 #endif

@@ -30,42 +30,42 @@ extern "C" {
 #undef send
 #undef sendto
 
-fortify_fn(recv) ssize_t recv(int sockfd, void *buf, size_t n, int flags)
+_FORTIFY_FN(recv) ssize_t recv(int __f, void *__s, size_t __n, int __fl)
 {
-	size_t bos = __builtin_object_size(buf, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_recv(sockfd, buf, n, flags);
+	return __orig_recv(__f, __s, __n, __fl);
 }
 
-fortify_fn(recvfrom) ssize_t recvfrom(int sockfd, void *buf, size_t n, int flags,
-                                      struct sockaddr *sa, socklen_t *salen)
+_FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void *__s, size_t __n, int __fl,
+                                       struct sockaddr *__a, socklen_t *__l)
 {
-	size_t bos = __builtin_object_size(buf, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_recvfrom(sockfd, buf, n, flags, sa, salen);
+	return __orig_recvfrom(__f, __s, __n, __fl, __a, __l);
 }
 
-fortify_fn(send) ssize_t send(int sockfd, const void *buf, size_t n, int flags)
+_FORTIFY_FN(send) ssize_t send(int __f, const void *__s, size_t __n, int __fl)
 {
-	size_t bos = __builtin_object_size(buf, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_send(sockfd, buf, n, flags);
+	return __orig_send(__f, __s, __n, __fl);
 }
 
-fortify_fn(sendto) ssize_t sendto(int sockfd, const void *buf, size_t n, int flags,
-                                  const struct sockaddr *sa, socklen_t salen)
+_FORTIFY_FN(sendto) ssize_t sendto(int __f, const void *__s, size_t __n, int __fl,
+                                   const struct sockaddr *__a, socklen_t __l)
 {
-	size_t bos = __builtin_object_size(buf, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_sendto(sockfd, buf, n, flags, sa, salen);
+	return __orig_sendto(__f, __s, __n, __fl, __a, __l);
 }
 
 #ifdef __cplusplus

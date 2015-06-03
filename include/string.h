@@ -33,141 +33,141 @@ extern "C" {
 #undef strncat
 #undef strncpy
 
-fortify_fn(memcpy) void *memcpy(void *dst, const void *src, size_t n)
+_FORTIFY_FN(memcpy) void *memcpy(void *__od, const void *__os, size_t __n)
 {
-	size_t bos_dst = __builtin_object_size(dst, 0);
-	size_t bos_src = __builtin_object_size(src, 0);
-	char *d = (char *)dst;
-	const char *s = (const char *)src;
+	size_t __bd = __builtin_object_size(__od, 0);
+	size_t __bs = __builtin_object_size(__os, 0);
+	char *__d = (char *)__od;
+	const char *__s = (const char *)__os;
 
 	/* trap if pointers are overlapping but not if dst == src.
 	 * gcc seems to like to generate code that relies on dst == src */
-	if ((d < s && d + n > s) ||
-	    (s < d && s + n > d))
+	if ((__d < __s && __d + __n > __s) ||
+	    (__s < __d && __s + __n > __d))
 		__builtin_trap();
-	if (n > bos_dst || n > bos_src)
+	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_memcpy(dst, src, n);
+	return __orig_memcpy(__od, __os, __n);
 }
 
-fortify_fn(memmove) void *memmove(void *dst, const void *src, size_t n)
+_FORTIFY_FN(memmove) void *memmove(void *__d, const void *__s, size_t __n)
 {
-	size_t bos_dst = __builtin_object_size(dst, 0);
-	size_t bos_src = __builtin_object_size(src, 0);
+	size_t __bd = __builtin_object_size(__d, 0);
+	size_t __bs = __builtin_object_size(__s, 0);
 
-	if (n > bos_dst || n > bos_src)
+	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_memmove(dst, src, n);
+	return __orig_memmove(__d, __s, __n);
 }
 
-fortify_fn(memset) void *memset(void *dst, int c, size_t n)
+_FORTIFY_FN(memset) void *memset(void *__d, int __c, size_t __n)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_memset(dst, c, n);
+	return __orig_memset(__d, __c, __n);
 }
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
  || defined(_BSD_SOURCE)
 #undef stpcpy
-fortify_fn(stpcpy) char *stpcpy(char *dst, const char *src)
+_FORTIFY_FN(stpcpy) char *stpcpy(char *__d, const char *__s)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (strlen(src) + 1 > bos)
+	if (strlen(__s) + 1 > __b)
 		__builtin_trap();
-	return __orig_stpcpy(dst, src);
+	return __orig_stpcpy(__d, __s);
 }
 
 #undef stpncpy
-fortify_fn(stpncpy) char *stpncpy(char *dst, const char *src, size_t n)
+_FORTIFY_FN(stpncpy) char *stpncpy(char *__d, const char *__s, size_t __n)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_stpncpy(dst, src, n);
+	return __orig_stpncpy(__d, __s, __n);
 }
 #endif
 
-fortify_fn(strcat) char *strcat(char *dst, const char *src)
+_FORTIFY_FN(strcat) char *strcat(char *__d, const char *__s)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (strlen(src) + strlen(dst) + 1 > bos)
+	if (strlen(__s) + strlen(__d) + 1 > __b)
 		__builtin_trap();
-	return __orig_strcat(dst, src);
+	return __orig_strcat(__d, __s);
 }
 
-fortify_fn(strcpy) char *strcpy(char *dst, const char *src)
+_FORTIFY_FN(strcpy) char *strcpy(char *__d, const char *__s)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (strlen(src) + 1 > bos)
+	if (strlen(__s) + 1 > __b)
 		__builtin_trap();
-	return __orig_strcpy(dst, src);
+	return __orig_strcpy(__d, __s);
 }
 
-fortify_fn(strncat) char *strncat(char *dst, const char *src, size_t n)
+_FORTIFY_FN(strncat) char *strncat(char *__d, const char *__s, size_t __n)
 {
-	size_t bos = __builtin_object_size(dst, 0);
-	size_t slen, dlen;
+	size_t __b = __builtin_object_size(__d, 0);
+	size_t __sl, __dl;
 
-	if (n > bos) {
-		slen = strlen(src);
-		dlen = strlen(dst);
-		if (slen > n)
-			slen = n;
-		if (slen + dlen + 1 > bos)
+	if (__n > __b) {
+		__sl = strlen(__s);
+		__dl = strlen(__d);
+		if (__sl > __n)
+			__sl = __n;
+		if (__sl + __dl + 1 > __b)
 			__builtin_trap();
 	}
-	return __orig_strncat(dst, src, n);
+	return __orig_strncat(__d, __s, __n);
 }
 
-fortify_fn(strncpy) char *strncpy(char *dst, const char *src, size_t n)
+_FORTIFY_FN(strncpy) char *strncpy(char *__d, const char *__s, size_t __n)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_strncpy(dst, src, n);
+	return __orig_strncpy(__d, __s, __n);
 }
 
 #ifdef _GNU_SOURCE
 #undef mempcpy
-fortify_fn(mempcpy) void *mempcpy(void *dst, const void *src, size_t n)
+_FORTIFY_FN(mempcpy) void *mempcpy(void *__d, const void *__s, size_t __n)
 {
-	size_t bos_dst = __builtin_object_size(dst, 0);
-	size_t bos_src = __builtin_object_size(src, 0);
+	size_t __bd = __builtin_object_size(__d, 0);
+	size_t __bs = __builtin_object_size(__s, 0);
 
-	if (n > bos_dst || n > bos_src)
+	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_mempcpy(dst, src, n);
+	return __orig_mempcpy(__d, __s, __n);
 }
 #endif
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef strlcat
 #undef strlcpy
-fortify_fn(strlcat) size_t strlcat(char *dst, const char *src, size_t n)
+_FORTIFY_FN(strlcat) size_t strlcat(char *__d, const char *__s, size_t __n)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_strlcat(dst, src, n);
+	return __orig_strlcat(__d, __s, __n);
 }
 
-fortify_fn(strlcpy) size_t strlcpy(char *dst, const char *src, size_t n)
+_FORTIFY_FN(strlcpy) size_t strlcpy(char *__d, const char *__s, size_t __n)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_strlcpy(dst, src, n);
+	return __orig_strlcpy(__d, __s, __n);
 }
 #endif
 

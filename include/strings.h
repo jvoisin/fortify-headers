@@ -30,23 +30,23 @@ extern "C" {
  || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE+0 < 700)
 #undef bcopy
 #undef bzero
-fortify_fn(bcopy) void bcopy(const void *src, void *dst, size_t n)
+_FORTIFY_FN(bcopy) void bcopy(const void *__s, void *__d, size_t __n)
 {
-	size_t bos_dst = __builtin_object_size(dst, 0);
-	size_t bos_src = __builtin_object_size(src, 0);
+	size_t __bd = __builtin_object_size(__d, 0);
+	size_t __bs = __builtin_object_size(__s, 0);
 
-	if (n > bos_dst || n > bos_src)
+	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_bcopy(src, dst, n);
+	return __orig_bcopy(__s, __d, __n);
 }
 
-fortify_fn(bzero) void bzero(void *src, size_t n)
+_FORTIFY_FN(bzero) void bzero(void *__s, size_t __n)
 {
-	size_t bos = __builtin_object_size(src, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_bzero(src, n);
+	return __orig_bzero(__s, __n);
 }
 #endif
 

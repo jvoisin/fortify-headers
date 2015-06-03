@@ -33,84 +33,84 @@ extern "C" {
 #undef snprintf
 #undef sprintf
 
-fortify_fn(fgets) char *fgets(char *s, int n, FILE *fp)
+_FORTIFY_FN(fgets) char *fgets(char *__s, int __n, FILE *__f)
 {
-	size_t bos = __builtin_object_size(s, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if ((size_t)n > bos)
+	if ((size_t)__n > __b)
 		__builtin_trap();
-	return __orig_fgets(s, n, fp);
+	return __orig_fgets(__s, __n, __f);
 }
 
-fortify_fn(fread) size_t fread(void *dst, size_t n, size_t nmemb, FILE *fp)
+_FORTIFY_FN(fread) size_t fread(void *__d, size_t __n, size_t __m, FILE *__f)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n != 0 && (n * nmemb) / n != nmemb)
+	if (__n != 0 && (__n * __m) / __n != __m)
 		__builtin_trap();
-	if (n * nmemb > bos)
+	if (__n * __m > __b)
 		__builtin_trap();
-	return __orig_fread(dst, n, nmemb, fp);
+	return __orig_fread(__d, __n, __m, __f);
 }
 
-fortify_fn(fwrite) size_t fwrite(const void *dst, size_t n, size_t nmemb, FILE *fp)
+_FORTIFY_FN(fwrite) size_t fwrite(const void *__d, size_t __n, size_t __m, FILE *__f)
 {
-	size_t bos = __builtin_object_size(dst, 0);
+	size_t __b = __builtin_object_size(__d, 0);
 
-	if (n != 0 && (n * nmemb) / n != nmemb)
+	if (__n != 0 && (__n * __m) / __n != __m)
 		__builtin_trap();
-	if (n * nmemb > bos)
+	if (__n * __m > __b)
 		__builtin_trap();
-	return __orig_fwrite(dst, n, nmemb, fp);
+	return __orig_fwrite(__d, __n, __m, __f);
 }
 
-fortify_fn(vsnprintf) int vsnprintf(char *s, size_t n, const char *fmt,
-                                    __builtin_va_list ap)
+_FORTIFY_FN(vsnprintf) int vsnprintf(char *__s, size_t __n, const char *__f,
+                                     __builtin_va_list __v)
 {
-	size_t bos = __builtin_object_size(s, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_vsnprintf(s, n, fmt, ap);
+	return __orig_vsnprintf(__s, __n, __f, __v);
 }
 
-fortify_fn(vsprintf) int vsprintf(char *s, const char *fmt, __builtin_va_list ap)
+_FORTIFY_FN(vsprintf) int vsprintf(char *__s, const char *__f, __builtin_va_list __v)
 {
-	size_t bos = __builtin_object_size(s, 0);
-	int r;
+	size_t __b = __builtin_object_size(__s, 0);
+	int __r;
 
-	if (bos != (size_t)-1) {
-		r = __orig_vsnprintf(s, bos, fmt, ap);
-		if (r != -1 && (size_t)r >= bos)
+	if (__b != (size_t)-1) {
+		__r = __orig_vsnprintf(__s, __b, __f, __v);
+		if (__r != -1 && (size_t)__r >= __b)
 			__builtin_trap();
 	} else {
-		r = __orig_vsprintf(s, fmt, ap);
+		__r = __orig_vsprintf(__s, __f, __v);
 	}
-	return r;
+	return __r;
 }
 
-fortify_fn(snprintf) int snprintf(char *s, size_t n, const char *fmt, ...)
+_FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n, const char *__f, ...)
 {
-	size_t bos = __builtin_object_size(s, 0);
+	size_t __b = __builtin_object_size(__s, 0);
 
-	if (n > bos)
+	if (__n > __b)
 		__builtin_trap();
-	return __orig_snprintf(s, n, fmt, __builtin_va_arg_pack());
+	return __orig_snprintf(__s, __n, __f, __builtin_va_arg_pack());
 }
 
-fortify_fn(sprintf) int sprintf(char *s, const char *fmt, ...)
+_FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
-	size_t bos = __builtin_object_size(s, 0);
-	int r;
+	size_t __b = __builtin_object_size(__s, 0);
+	int __r;
 
-	if (bos != (size_t)-1) {
-		r = __orig_snprintf(s, bos, fmt, __builtin_va_arg_pack());
-		if (r != -1 && (size_t)r >= bos)
+	if (__b != (size_t)-1) {
+		__r = __orig_snprintf(__s, __b, __f, __builtin_va_arg_pack());
+		if (__r != -1 && (size_t)__r >= __b)
 			__builtin_trap();
 	} else {
-		r = __orig_sprintf(s, fmt, __builtin_va_arg_pack());
+		__r = __orig_sprintf(__s, __f, __builtin_va_arg_pack());
 	}
-	return r;
+	return __r;
 }
 
 #ifdef __cplusplus

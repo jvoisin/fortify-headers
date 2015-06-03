@@ -27,25 +27,25 @@ extern "C" {
 
 #undef poll
 
-fortify_fn(poll) int poll(struct pollfd *fds, nfds_t nfds, int timeout)
+_FORTIFY_FN(poll) int poll(struct pollfd *__f, nfds_t __n, int __s)
 {
-	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
+	__typeof__(sizeof 0) __b = __builtin_object_size(__f, 0);
 
-	if (nfds > bos / sizeof(struct pollfd))
+	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();
-	return __orig_poll(fds, nfds, timeout);
+	return __orig_poll(__f, __n, __s);
 }
 
 #ifdef _GNU_SOURCE
 #undef ppoll
-fortify_fn(ppoll) int ppoll(struct pollfd *fds, nfds_t nfds, const struct timespec *timeout,
-                            const sigset_t *mask)
+_FORTIFY_FN(ppoll) int ppoll(struct pollfd *__f, nfds_t __n, const struct timespec *__s,
+                             const sigset_t *__m)
 {
-	__typeof__(sizeof 0) bos = __builtin_object_size(fds, 0);
+	__typeof__(sizeof 0) __b = __builtin_object_size(__f, 0);
 
-	if (nfds > bos / sizeof(struct pollfd))
+	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();
-	return __orig_ppoll(fds, nfds, timeout, mask);
+	return __orig_ppoll(__f, __n, __s, __m);
 }
 #endif
 
