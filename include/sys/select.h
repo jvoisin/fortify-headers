@@ -24,7 +24,7 @@
 extern "C" {
 #endif
 
-static __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
+static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void __fortify_FD_CLR(int __f, fd_set *__s)
 {
 	size_t __b = __builtin_object_size(__s, 0);
@@ -34,7 +34,7 @@ void __fortify_FD_CLR(int __f, fd_set *__s)
 	FD_CLR(__f, __s);
 }
 
-static __inline __attribute__((__always_inline__,__gnu_inline__,__artificial__))
+static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void __fortify_FD_SET(int __f, fd_set *__s)
 {
 	size_t __b = __builtin_object_size(__s, 0);
