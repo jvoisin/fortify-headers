@@ -16,7 +16,9 @@
 #ifndef _FORTIFY_WCHAR_H
 #define _FORTIFY_WCHAR_H
 
+__extension__
 #include_next <stdlib.h>
+__extension__
 #include_next <wchar.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0

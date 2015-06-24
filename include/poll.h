@@ -16,6 +16,7 @@
 #ifndef _FORTIFY_POLL_H
 #define _FORTIFY_POLL_H
 
+__extension__
 #include_next <poll.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0

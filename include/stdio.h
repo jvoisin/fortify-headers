@@ -16,6 +16,7 @@
 #ifndef _FORTIFY_STDIO_H
 #define _FORTIFY_STDIO_H
 
+__extension__
 #include_next <stdio.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0

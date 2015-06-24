@@ -16,9 +16,11 @@
 #ifndef _FORTIFY_STDLIB_H
 #define _FORTIFY_STDLIB_H
 
+__extension__
 #include_next <stdlib.h>
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+__extension__
 #include_next <limits.h>
 #endif
 
