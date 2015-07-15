@@ -17,7 +17,11 @@
 #define _FORTIFY_WCHAR_H
 
 __extension__
+#include_next <limits.h>
+__extension__
 #include_next <stdlib.h>
+__extension__
+#include_next <string.h>
 __extension__
 #include_next <wchar.h>
 
@@ -99,10 +103,17 @@ _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t *__ws, const char *__s, size_t __w
 
 _FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
 {
+	char __buf[MB_LEN_MAX];
 	size_t __b = __builtin_object_size(__s, 0);
+	size_t __r;
 
-	if (__s && MB_CUR_MAX > __b)
-		__builtin_trap();
+	if (__s) {
+		__r = __orig_wcrtomb(__buf, __w, __st);
+		if (__r > __b)
+			__builtin_trap();
+		memcpy(__s, __buf, __r);
+		return __r;
+	}
 	return __orig_wcrtomb(__s, __w, __st);
 }
 
