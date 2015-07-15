@@ -88,7 +88,7 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __builtin_object_size(__d, 0);
 
-	if (__n > __b)
+	if (__n > __b && strlen(__s) + 1 > __b)
 		__builtin_trap();
 	return __orig_stpncpy(__d, __s, __n);
 }
