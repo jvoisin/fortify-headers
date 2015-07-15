@@ -41,10 +41,11 @@ extern "C" {
 _FORTIFY_FN(confstr) size_t confstr(int __n, char *__s, size_t __l)
 {
 	size_t __b = __builtin_object_size(__s, 0);
+	size_t __r = __orig_confstr(__n, __s, __b > __l ? __l : __b);
 
-	if (__l > __b)
+	if (__l > __b && __r > __b)
 		__builtin_trap();
-	return __orig_confstr(__n, __s, __l);
+	return __r;
 }
 
 _FORTIFY_FN(getcwd) char *getcwd(char *__s, size_t __l)
