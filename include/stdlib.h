@@ -35,15 +35,23 @@ extern "C" {
 #undef realpath
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
-	size_t __b;
+	size_t __b = __builtin_object_size(__r, 0);
 
 	if (__r) {
 #ifndef PATH_MAX
 #error PATH_MAX unset. A fortified realpath will not work.
 #else
-		__b = __builtin_object_size(__r, 0);
-		if (PATH_MAX > __b)
+		char __buf[PATH_MAX], *__ret;
+		size_t __l;
+
+		__ret = __orig_realpath(__p, __buf);
+		if (!__ret)
+			return NULL;
+		__l = __builtin_strlen(__ret) + 1;
+		if (__l > __b)
 			__builtin_trap();
+		__builtin_memcpy(__r, __ret, __l);
+		return __r;
 #endif
 	}
 	return __orig_realpath(__p, __r);
