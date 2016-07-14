@@ -19,12 +19,12 @@
 __extension__
 #include_next <stdlib.h>
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 __extension__
 #include_next <limits.h>
 #endif
 
-#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 #include "fortify-headers.h"
 
 #ifdef __cplusplus
