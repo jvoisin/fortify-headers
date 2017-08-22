@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2015-2017 Dimitris Papastamos <sin@2f30.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -109,6 +109,8 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
 
 	if (__s) {
 		__r = __orig_wcrtomb(__buf, __w, __st);
+		if (__r == (size_t)-1)
+			return __r;
 		if (__r > __b)
 			__builtin_trap();
 		memcpy(__s, __buf, __r);
