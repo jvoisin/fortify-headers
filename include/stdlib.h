@@ -16,12 +16,16 @@
 #ifndef _FORTIFY_STDLIB_H
 #define _FORTIFY_STDLIB_H
 
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <stdlib.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <limits.h>
 #endif
 

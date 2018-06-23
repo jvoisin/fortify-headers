@@ -16,7 +16,9 @@
 #ifndef _FORTIFY_UNISTD_H
 #define _FORTIFY_UNISTD_H
 
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <unistd.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0

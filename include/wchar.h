@@ -16,13 +16,21 @@
 #ifndef _FORTIFY_WCHAR_H
 #define _FORTIFY_WCHAR_H
 
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <limits.h>
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <stdlib.h>
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <string.h>
+#ifndef __cplusplus
 __extension__
+#endif
 #include_next <wchar.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
