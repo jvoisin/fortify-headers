@@ -121,7 +121,7 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
 			return __r;
 		if (__r > __b)
 			__builtin_trap();
-		memcpy(__s, __buf, __r);
+		__builtin_memcpy(__s, __buf, __r);
 		return __r;
 	}
 	return __orig_wcrtomb(__s, __w, __st);
