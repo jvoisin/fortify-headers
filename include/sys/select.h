@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015-2016 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2022 q66 <q66@chimera-linux.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -27,8 +28,14 @@ __extension__
 extern "C" {
 #endif
 
+#ifdef __clang__
+#define _FORTIFY_FD_POS0 const __attribute__((__pass_object_size__(0)))
+#else
+#define _FORTIFY_FD_POS0
+#endif
+
 static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void __fortify_FD_CLR(int __f, fd_set *__s)
+void __fortify_FD_CLR(int __f, fd_set * _FORTIFY_FD_POS0 __s)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -38,7 +45,7 @@ void __fortify_FD_CLR(int __f, fd_set *__s)
 }
 
 static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void __fortify_FD_SET(int __f, fd_set *__s)
+void __fortify_FD_SET(int __f, fd_set * _FORTIFY_FD_POS0 __s)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -46,6 +53,8 @@ void __fortify_FD_SET(int __f, fd_set *__s)
 		__builtin_trap();
 	FD_SET(__f, __s);
 }
+
+#undef _FORTIFY_FD_POS0
 
 #undef FD_CLR
 #define FD_CLR(fd, set) __fortify_FD_CLR(fd, set)

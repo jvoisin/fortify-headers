@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015-2016 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2022 q66 <q66@chimera-linux.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -30,7 +31,7 @@ extern "C" {
 
 #undef poll
 
-_FORTIFY_FN(poll) int poll(struct pollfd *__f, nfds_t __n, int __s)
+_FORTIFY_FN(poll) int poll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n, int __s)
 {
 	__typeof__(sizeof 0) __b = __bos(__f, 0);
 
@@ -41,8 +42,8 @@ _FORTIFY_FN(poll) int poll(struct pollfd *__f, nfds_t __n, int __s)
 
 #if defined(_GNU_SOURCE) && (!defined(_REDIR_TIME64) || !_REDIR_TIME64)
 #undef ppoll
-_FORTIFY_FN(ppoll) int ppoll(struct pollfd *__f, nfds_t __n, const struct timespec *__s,
-                             const sigset_t *__m)
+_FORTIFY_FN(ppoll) int ppoll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n,
+                             const struct timespec *__s, const sigset_t *__m)
 {
 	__typeof__(sizeof 0) __b = __bos(__f, 0);
 

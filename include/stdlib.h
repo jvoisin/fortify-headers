@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015-2016 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2022 q66 <q66@chimera-linux.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -35,7 +36,8 @@ __extension__
 extern "C" {
 #endif
 
-#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+/* FIXME clang */
+#if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)) && !defined(__clang__)
 #undef realpath
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {

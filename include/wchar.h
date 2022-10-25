@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015-2017 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2022 q66 <q66@chimera-linux.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -55,7 +56,8 @@ extern "C" {
 #undef wmemmove
 #undef wmemset
 
-_FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t *__s, int __n, FILE *__f)
+_FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t * _FORTIFY_POS0 __s,
+                                    int __n, FILE *__f)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -67,7 +69,8 @@ _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t *__s, int __n, FILE *__f)
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE)  || defined(_BSD_SOURCE)
 #undef mbsnrtowcs
-_FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *__d, const char **__s, size_t __n,
+_FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t * _FORTIFY_POS0 __d,
+                                          const char **__s, size_t __n,
                                           size_t __wn, mbstate_t *__st)
 {
 	size_t __b = __bos(__d, 0);
@@ -87,7 +90,8 @@ _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *__d, const char **__s, size_t
 }
 #endif
 
-_FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t *__d, const char **__s, size_t __wn,
+_FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t * _FORTIFY_POS0 __d,
+                                        const char **__s, size_t __wn,
                                         mbstate_t *__st)
 {
 	size_t __b = __bos(__d, 0);
@@ -100,7 +104,8 @@ _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t *__d, const char **__s, size_t _
 	return __r;
 }
 
-_FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t *__ws, const char *__s, size_t __wn)
+_FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
+                                      const char *__s, size_t __wn)
 {
 	size_t __b = __bos(__ws, 0);
 
@@ -109,7 +114,9 @@ _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t *__ws, const char *__s, size_t __w
 	return __orig_mbstowcs(__ws, __s, __wn);
 }
 
-_FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
+/* FIXME clang */
+#ifndef __clang__
+_FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 {
 	if (__s && MB_LEN_MAX > __bos(__s, 2)) {
 		char __buf[MB_LEN_MAX];
@@ -125,8 +132,10 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
 	}
 	return __orig_wcrtomb(__s, __w, __st);
 }
+#endif
 
-_FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t *__d, const wchar_t *__s)
+_FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t * _FORTIFY_POS0 __d,
+                                    const wchar_t *__s)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -135,7 +144,8 @@ _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t *__d, const wchar_t *__s)
 	return __orig_wcscat(__d, __s);
 }
 
-_FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t *__d, const wchar_t *__s)
+_FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
+                                    const wchar_t *__s)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -144,7 +154,8 @@ _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t *__d, const wchar_t *__s)
 	return __orig_wcscpy(__d, __s);
 }
 
-_FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t *__d, const wchar_t *__s, size_t __n)
+_FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
+                                      const wchar_t *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
 	size_t __sl, __dl;
@@ -160,7 +171,8 @@ _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t *__d, const wchar_t *__s, size_t _
 	return __orig_wcsncat(__d, __s, __n);
 }
 
-_FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t *__d, const wchar_t *__s, size_t __n)
+_FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
+                                      const wchar_t *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -172,7 +184,8 @@ _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t *__d, const wchar_t *__s, size_t _
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE)  || defined(_BSD_SOURCE)
 #undef wcsnrtombs
-_FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char *__d, const wchar_t **__s, size_t __wn,
+_FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
+                                          const wchar_t **__s, size_t __wn,
                                           size_t __n, mbstate_t *__st)
 {
 	size_t __b = __bos(__d, 0);
@@ -192,7 +205,8 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char *__d, const wchar_t **__s, size_t
 }
 #endif
 
-_FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char *__d, const wchar_t **__s, size_t __n,
+_FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
+                                        const wchar_t **__s, size_t __n,
                                         mbstate_t *__st)
 {
 	size_t __b = __bos(__d, 0);
@@ -204,7 +218,8 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char *__d, const wchar_t **__s, size_t _
 	return __r;
 }
 
-_FORTIFY_FN(wcstombs) size_t wcstombs(char *__s, const wchar_t *__ws, size_t __n)
+_FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
+                                      const wchar_t *__ws, size_t __n)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -213,7 +228,7 @@ _FORTIFY_FN(wcstombs) size_t wcstombs(char *__s, const wchar_t *__ws, size_t __n
 	return __orig_wcstombs(__s, __ws, __n);
 }
 
-_FORTIFY_FN(wctomb) int wctomb(char *__s, wchar_t __w)
+_FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -222,7 +237,8 @@ _FORTIFY_FN(wctomb) int wctomb(char *__s, wchar_t __w)
 	return __orig_wctomb(__s, __w);
 }
 
-_FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t *__d, const wchar_t *__s, size_t __n)
+_FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
+                                      const wchar_t *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -231,7 +247,8 @@ _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t *__d, const wchar_t *__s, size_t _
 	return __orig_wmemcpy(__d, __s, __n);
 }
 
-_FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t *__d, const wchar_t *__s, size_t __n)
+_FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
+                                        const wchar_t *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -240,7 +257,8 @@ _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t *__d, const wchar_t *__s, size_t
 	return __orig_wmemmove(__d, __s, __n);
 }
 
-_FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t *__s, wchar_t __c, size_t __n)
+_FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t * _FORTIFY_POS0 __s,
+                                      wchar_t __c, size_t __n)
 {
 	size_t __b = __bos(__s, 0);
 

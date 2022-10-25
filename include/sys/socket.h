@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015-2016 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2022 q66 <q66@chimera-linux.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -33,7 +34,8 @@ extern "C" {
 #undef send
 #undef sendto
 
-_FORTIFY_FN(recv) ssize_t recv(int __f, void *__s, size_t __n, int __fl)
+_FORTIFY_FN(recv) ssize_t recv(int __f, void * _FORTIFY_POS0 __s, size_t __n,
+                               int __fl)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -42,7 +44,8 @@ _FORTIFY_FN(recv) ssize_t recv(int __f, void *__s, size_t __n, int __fl)
 	return __orig_recv(__f, __s, __n, __fl);
 }
 
-_FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void *__s, size_t __n, int __fl,
+_FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void * _FORTIFY_POS0 __s,
+                                       size_t __n, int __fl,
                                        struct sockaddr *__a, socklen_t *__l)
 {
 	size_t __b = __bos(__s, 0);
@@ -52,7 +55,8 @@ _FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void *__s, size_t __n, int __fl,
 	return __orig_recvfrom(__f, __s, __n, __fl, __a, __l);
 }
 
-_FORTIFY_FN(send) ssize_t send(int __f, const void *__s, size_t __n, int __fl)
+_FORTIFY_FN(send) ssize_t send(int __f, const void * _FORTIFY_POS0 __s,
+                               size_t __n, int __fl)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -61,7 +65,8 @@ _FORTIFY_FN(send) ssize_t send(int __f, const void *__s, size_t __n, int __fl)
 	return __orig_send(__f, __s, __n, __fl);
 }
 
-_FORTIFY_FN(sendto) ssize_t sendto(int __f, const void *__s, size_t __n, int __fl,
+_FORTIFY_FN(sendto) ssize_t sendto(int __f, const void * _FORTIFY_POS0 __s,
+                                   size_t __n, int __fl,
                                    const struct sockaddr *__a, socklen_t __l)
 {
 	size_t __b = __bos(__s, 0);
