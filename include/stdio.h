@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015-2016 Dimitris Papastamos <sin@2f30.org>
+ * Copyright (C) 2022 q66 <q66@chimera-linux.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted.
@@ -37,7 +38,7 @@ extern "C" {
 #undef sprintf
 
 __access(write_only, 1, 2)
-_FORTIFY_FN(fgets) char *fgets(char *__s, int __n, FILE *__f)
+_FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -46,7 +47,8 @@ _FORTIFY_FN(fgets) char *fgets(char *__s, int __n, FILE *__f)
 	return __orig_fgets(__s, __n, __f);
 }
 
-_FORTIFY_FN(fread) size_t fread(void *__d, size_t __n, size_t __m, FILE *__f)
+_FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
+                                size_t __m, FILE *__f)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -57,7 +59,8 @@ _FORTIFY_FN(fread) size_t fread(void *__d, size_t __n, size_t __m, FILE *__f)
 	return __orig_fread(__d, __n, __m, __f);
 }
 
-_FORTIFY_FN(fwrite) size_t fwrite(const void *__d, size_t __n, size_t __m, FILE *__f)
+_FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
+                                  size_t __m, FILE *__f)
 {
 	size_t __b = __bos(__d, 0);
 
@@ -68,8 +71,8 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void *__d, size_t __n, size_t __m, FILE 
 	return __orig_fwrite(__d, __n, __m, __f);
 }
 
-_FORTIFY_FN(vsnprintf) int vsnprintf(char *__s, size_t __n, const char *__f,
-                                     __builtin_va_list __v)
+_FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
+                                     const char *__f, __builtin_va_list __v)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -78,7 +81,8 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char *__s, size_t __n, const char *__f,
 	return __orig_vsnprintf(__s, __n, __f, __v);
 }
 
-_FORTIFY_FN(vsprintf) int vsprintf(char *__s, const char *__f, __builtin_va_list __v)
+_FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
+                                   __builtin_va_list __v)
 {
 	size_t __b = __bos(__s, 0);
 	int __r;
@@ -93,7 +97,23 @@ _FORTIFY_FN(vsprintf) int vsprintf(char *__s, const char *__f, __builtin_va_list
 	return __r;
 }
 
-_FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n, const char *__f, ...)
+#if defined(__has_builtin)
+#if __has_builtin(__builtin_va_arg_pack)
+
+/* clang is missing __builtin_va_arg_pack, so we cannot use these impls
+ * outside of gcc; we then have a few options:
+ *
+ * 1) using va_start/end and implementing these functions as static inline,
+ *    with inlining never happening; that means extra symbols with internal
+ *    linkage, which is not ideal
+ * 2) using macros; this is incompatible with c++ and since musl does not
+ *    have the __chk variants, we'd need to implement a body with intermediate
+ *    variables within the macro, which means more non-portable mess
+ * 3) not implementing these under clang, which is what we do for now
+ */
+
+_FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
+                                    const char *__f, ...)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -116,6 +136,9 @@ _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 	}
 	return __r;
 }
+
+#endif /* __has_builtin(__builtin_va_arg_pack) */
+#endif /* defined(__has_builtin) */
 
 #ifdef __cplusplus
 }
