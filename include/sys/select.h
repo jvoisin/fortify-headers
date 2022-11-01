@@ -16,7 +16,7 @@
 #ifndef _FORTIFY_SYS_SELECT_H
 #define _FORTIFY_SYS_SELECT_H
 
-#ifndef __cplusplus
+#if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
 #include_next <sys/select.h>
