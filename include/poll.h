@@ -16,7 +16,7 @@
 #ifndef _FORTIFY_POLL_H
 #define _FORTIFY_POLL_H
 
-#ifndef __cplusplus
+#if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
 #include_next <poll.h>

@@ -16,7 +16,7 @@
 #ifndef _FORTIFY_STDIO_H
 #define _FORTIFY_STDIO_H
 
-#ifndef __cplusplus
+#if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
 #include_next <stdio.h>
