@@ -32,8 +32,8 @@ extern "C" {
 #undef bzero
 _FORTIFY_FN(bcopy) void bcopy(const void *__s, void *__d, size_t __n)
 {
-	size_t __bd = __builtin_object_size(__d, 0);
-	size_t __bs = __builtin_object_size(__s, 0);
+	size_t __bd = __bos(__d, 0);
+	size_t __bs = __bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -42,7 +42,7 @@ _FORTIFY_FN(bcopy) void bcopy(const void *__s, void *__d, size_t __n)
 
 _FORTIFY_FN(bzero) void bzero(void *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();

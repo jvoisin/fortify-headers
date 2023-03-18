@@ -30,7 +30,7 @@ extern "C" {
 static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void __fortify_FD_CLR(int __f, fd_set *__s)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__f < 0 || __f >= FD_SETSIZE || __b < sizeof(fd_set))
 		__builtin_trap();
@@ -40,7 +40,7 @@ void __fortify_FD_CLR(int __f, fd_set *__s)
 static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 void __fortify_FD_SET(int __f, fd_set *__s)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__f < 0 || __f >= FD_SETSIZE || __b < sizeof(fd_set))
 		__builtin_trap();

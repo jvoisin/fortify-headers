@@ -38,8 +38,8 @@ extern "C" {
 
 _FORTIFY_FN(memcpy) void *memcpy(void *__od, const void *__os, size_t __n)
 {
-	size_t __bd = __builtin_object_size(__od, 0);
-	size_t __bs = __builtin_object_size(__os, 0);
+	size_t __bd = __bos(__od, 0);
+	size_t __bs = __bos(__os, 0);
 	char *__d = (char *)__od;
 	const char *__s = (const char *)__os;
 
@@ -55,8 +55,8 @@ _FORTIFY_FN(memcpy) void *memcpy(void *__od, const void *__os, size_t __n)
 
 _FORTIFY_FN(memmove) void *memmove(void *__d, const void *__s, size_t __n)
 {
-	size_t __bd = __builtin_object_size(__d, 0);
-	size_t __bs = __builtin_object_size(__s, 0);
+	size_t __bd = __bos(__d, 0);
+	size_t __bs = __bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -65,7 +65,7 @@ _FORTIFY_FN(memmove) void *memmove(void *__d, const void *__s, size_t __n)
 
 _FORTIFY_FN(memset) void *memset(void *__d, int __c, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -78,7 +78,7 @@ _FORTIFY_FN(memset) void *memset(void *__d, int __c, size_t __n)
 #undef stpcpy
 _FORTIFY_FN(stpcpy) char *stpcpy(char *__d, const char *__s)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (strlen(__s) + 1 > __b)
 		__builtin_trap();
@@ -88,7 +88,7 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char *__d, const char *__s)
 #undef stpncpy
 _FORTIFY_FN(stpncpy) char *stpncpy(char *__d, const char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b && strlen(__s) + 1 > __b)
 		__builtin_trap();
@@ -98,7 +98,7 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char *__d, const char *__s, size_t __n)
 
 _FORTIFY_FN(strcat) char *strcat(char *__d, const char *__s)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (strlen(__s) + strlen(__d) + 1 > __b)
 		__builtin_trap();
@@ -107,7 +107,7 @@ _FORTIFY_FN(strcat) char *strcat(char *__d, const char *__s)
 
 _FORTIFY_FN(strcpy) char *strcpy(char *__d, const char *__s)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (strlen(__s) + 1 > __b)
 		__builtin_trap();
@@ -116,7 +116,7 @@ _FORTIFY_FN(strcpy) char *strcpy(char *__d, const char *__s)
 
 _FORTIFY_FN(strncat) char *strncat(char *__d, const char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 	size_t __sl, __dl;
 
 	if (__n > __b) {
@@ -132,7 +132,7 @@ _FORTIFY_FN(strncat) char *strncat(char *__d, const char *__s, size_t __n)
 
 _FORTIFY_FN(strncpy) char *strncpy(char *__d, const char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -143,8 +143,8 @@ _FORTIFY_FN(strncpy) char *strncpy(char *__d, const char *__s, size_t __n)
 #undef mempcpy
 _FORTIFY_FN(mempcpy) void *mempcpy(void *__d, const void *__s, size_t __n)
 {
-	size_t __bd = __builtin_object_size(__d, 0);
-	size_t __bs = __builtin_object_size(__s, 0);
+	size_t __bd = __bos(__d, 0);
+	size_t __bs = __bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -157,7 +157,7 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void *__d, const void *__s, size_t __n)
 #undef strlcpy
 _FORTIFY_FN(strlcat) size_t strlcat(char *__d, const char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -166,7 +166,7 @@ _FORTIFY_FN(strlcat) size_t strlcat(char *__d, const char *__s, size_t __n)
 
 _FORTIFY_FN(strlcpy) size_t strlcpy(char *__d, const char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();

@@ -57,7 +57,7 @@ extern "C" {
 
 _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t *__s, int __n, FILE *__f)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if ((size_t)__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -70,7 +70,7 @@ _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t *__s, int __n, FILE *__f)
 _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *__d, const char **__s, size_t __n,
                                           size_t __wn, mbstate_t *__st)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 	size_t __r;
 
 	if (__wn > __n / sizeof(wchar_t)) {
@@ -90,7 +90,7 @@ _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t *__d, const char **__s, size_t
 _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t *__d, const char **__s, size_t __wn,
                                         mbstate_t *__st)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 	size_t __r;
 
 	__b /= sizeof(wchar_t);
@@ -102,7 +102,7 @@ _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t *__d, const char **__s, size_t _
 
 _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t *__ws, const char *__s, size_t __wn)
 {
-	size_t __b = __builtin_object_size(__ws, 0);
+	size_t __b = __bos(__ws, 0);
 
 	if (__ws && __wn > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -111,14 +111,14 @@ _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t *__ws, const char *__s, size_t __w
 
 _FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
 {
-	if (__s && MB_LEN_MAX > __builtin_object_size(__s, 2)) {
+	if (__s && MB_LEN_MAX > __bos(__s, 2)) {
 		char __buf[MB_LEN_MAX];
 		size_t __r;
 
 		__r = __orig_wcrtomb(__buf, __w, __st);
 		if (__r == (size_t)-1)
 			return __r;
-		if (__r > __builtin_object_size(__s, 0))
+		if (__r > __bos(__s, 0))
 			__builtin_trap();
 		__builtin_memcpy(__s, __buf, __r);
 		return __r;
@@ -128,7 +128,7 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char *__s, wchar_t __w, mbstate_t *__st)
 
 _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t *__d, const wchar_t *__s)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (wcslen(__s) + wcslen(__d) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -137,7 +137,7 @@ _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t *__d, const wchar_t *__s)
 
 _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t *__d, const wchar_t *__s)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (wcslen(__s) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -146,7 +146,7 @@ _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t *__d, const wchar_t *__s)
 
 _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t *__d, const wchar_t *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 	size_t __sl, __dl;
 
 	if (__n > __b / sizeof(wchar_t)) {
@@ -162,7 +162,7 @@ _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t *__d, const wchar_t *__s, size_t _
 
 _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t *__d, const wchar_t *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -175,7 +175,7 @@ _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t *__d, const wchar_t *__s, size_t _
 _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char *__d, const wchar_t **__s, size_t __wn,
                                           size_t __n, mbstate_t *__st)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 	size_t __r;
 
 	if (__wn > __n / sizeof(wchar_t)) {
@@ -195,7 +195,7 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char *__d, const wchar_t **__s, size_t
 _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char *__d, const wchar_t **__s, size_t __n,
                                         mbstate_t *__st)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 	size_t __r;
 
 	__r = __orig_wcsrtombs(__d, __s, __n > __b ? __b : __n, __st);
@@ -206,7 +206,7 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char *__d, const wchar_t **__s, size_t _
 
 _FORTIFY_FN(wcstombs) size_t wcstombs(char *__s, const wchar_t *__ws, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__s && __n > __b)
 		__builtin_trap();
@@ -215,7 +215,7 @@ _FORTIFY_FN(wcstombs) size_t wcstombs(char *__s, const wchar_t *__ws, size_t __n
 
 _FORTIFY_FN(wctomb) int wctomb(char *__s, wchar_t __w)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__s && MB_LEN_MAX > __b && MB_CUR_MAX > __b)
 		__builtin_trap();
@@ -224,7 +224,7 @@ _FORTIFY_FN(wctomb) int wctomb(char *__s, wchar_t __w)
 
 _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t *__d, const wchar_t *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -233,7 +233,7 @@ _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t *__d, const wchar_t *__s, size_t _
 
 _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t *__d, const wchar_t *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -242,7 +242,7 @@ _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t *__d, const wchar_t *__s, size_t
 
 _FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t *__s, wchar_t __c, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
