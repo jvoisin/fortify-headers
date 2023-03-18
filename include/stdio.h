@@ -38,7 +38,7 @@ extern "C" {
 
 _FORTIFY_FN(fgets) char *fgets(char *__s, int __n, FILE *__f)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if ((size_t)__n > __b)
 		__builtin_trap();
@@ -47,7 +47,7 @@ _FORTIFY_FN(fgets) char *fgets(char *__s, int __n, FILE *__f)
 
 _FORTIFY_FN(fread) size_t fread(void *__d, size_t __n, size_t __m, FILE *__f)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n != 0 && (__n * __m) / __n != __m)
 		__builtin_trap();
@@ -58,7 +58,7 @@ _FORTIFY_FN(fread) size_t fread(void *__d, size_t __n, size_t __m, FILE *__f)
 
 _FORTIFY_FN(fwrite) size_t fwrite(const void *__d, size_t __n, size_t __m, FILE *__f)
 {
-	size_t __b = __builtin_object_size(__d, 0);
+	size_t __b = __bos(__d, 0);
 
 	if (__n != 0 && (__n * __m) / __n != __m)
 		__builtin_trap();
@@ -70,7 +70,7 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void *__d, size_t __n, size_t __m, FILE 
 _FORTIFY_FN(vsnprintf) int vsnprintf(char *__s, size_t __n, const char *__f,
                                      __builtin_va_list __v)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -79,7 +79,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char *__s, size_t __n, const char *__f,
 
 _FORTIFY_FN(vsprintf) int vsprintf(char *__s, const char *__f, __builtin_va_list __v)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 	int __r;
 
 	if (__b != (size_t)-1) {
@@ -94,7 +94,7 @@ _FORTIFY_FN(vsprintf) int vsprintf(char *__s, const char *__f, __builtin_va_list
 
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n, const char *__f, ...)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -103,7 +103,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n, const char *__f, ...)
 
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 	int __r;
 
 	if (__b != (size_t)-1) {

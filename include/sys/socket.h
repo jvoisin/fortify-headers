@@ -35,7 +35,7 @@ extern "C" {
 
 _FORTIFY_FN(recv) ssize_t recv(int __f, void *__s, size_t __n, int __fl)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -45,7 +45,7 @@ _FORTIFY_FN(recv) ssize_t recv(int __f, void *__s, size_t __n, int __fl)
 _FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void *__s, size_t __n, int __fl,
                                        struct sockaddr *__a, socklen_t *__l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -54,7 +54,7 @@ _FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void *__s, size_t __n, int __fl,
 
 _FORTIFY_FN(send) ssize_t send(int __f, const void *__s, size_t __n, int __fl)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -64,7 +64,7 @@ _FORTIFY_FN(send) ssize_t send(int __f, const void *__s, size_t __n, int __fl)
 _FORTIFY_FN(sendto) ssize_t sendto(int __f, const void *__s, size_t __n, int __fl,
                                    const struct sockaddr *__a, socklen_t __l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();

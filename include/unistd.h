@@ -42,7 +42,7 @@ extern "C" {
 
 _FORTIFY_FN(confstr) size_t confstr(int __n, char *__s, size_t __l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 	size_t __r = __orig_confstr(__n, __s, __b > __l ? __l : __b);
 
 	if (__l > __b && __r > __b)
@@ -52,7 +52,7 @@ _FORTIFY_FN(confstr) size_t confstr(int __n, char *__s, size_t __l)
 
 _FORTIFY_FN(getcwd) char *getcwd(char *__s, size_t __l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__l > __b)
 		__builtin_trap();
@@ -63,7 +63,7 @@ _FORTIFY_FN(getcwd) char *getcwd(char *__s, size_t __l)
 #undef getdomainname
 _FORTIFY_FN(getdomainname) int getdomainname(char *__s, size_t __l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__l > __b)
 		__builtin_trap();
@@ -73,7 +73,7 @@ _FORTIFY_FN(getdomainname) int getdomainname(char *__s, size_t __l)
 
 _FORTIFY_FN(getgroups) int getgroups(int __l, gid_t *__s)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__l > 0 && (unsigned)__l > __b / sizeof(gid_t))
 		__builtin_trap();
@@ -82,7 +82,7 @@ _FORTIFY_FN(getgroups) int getgroups(int __l, gid_t *__s)
 
 _FORTIFY_FN(gethostname) int gethostname(char *__s, size_t __l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__l > __b)
 		__builtin_trap();
@@ -91,7 +91,7 @@ _FORTIFY_FN(gethostname) int gethostname(char *__s, size_t __l)
 
 _FORTIFY_FN(getlogin_r) int getlogin_r(char *__s, size_t __l)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__l > __b)
 		__builtin_trap();
@@ -100,7 +100,7 @@ _FORTIFY_FN(getlogin_r) int getlogin_r(char *__s, size_t __l)
 
 _FORTIFY_FN(pread) ssize_t pread(int __f, void *__s, size_t __n, off_t __o)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -109,7 +109,7 @@ _FORTIFY_FN(pread) ssize_t pread(int __f, void *__s, size_t __n, off_t __o)
 
 _FORTIFY_FN(read) ssize_t read(int __f, void *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -118,7 +118,7 @@ _FORTIFY_FN(read) ssize_t read(int __f, void *__s, size_t __n)
 
 _FORTIFY_FN(readlink) ssize_t readlink(const char *__p, char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -127,7 +127,7 @@ _FORTIFY_FN(readlink) ssize_t readlink(const char *__p, char *__s, size_t __n)
 
 _FORTIFY_FN(readlinkat) ssize_t readlinkat(int __f, const char *__p, char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -136,7 +136,7 @@ _FORTIFY_FN(readlinkat) ssize_t readlinkat(int __f, const char *__p, char *__s, 
 
 _FORTIFY_FN(ttyname_r) int ttyname_r(int __f, char *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -145,7 +145,7 @@ _FORTIFY_FN(ttyname_r) int ttyname_r(int __f, char *__s, size_t __n)
 
 _FORTIFY_FN(write) ssize_t write(int __f, const void *__s, size_t __n)
 {
-	size_t __b = __builtin_object_size(__s, 0);
+	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();

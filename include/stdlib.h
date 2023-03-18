@@ -42,7 +42,7 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 #ifndef PATH_MAX
 #error PATH_MAX unset. A fortified realpath will not work.
 #else
-	if (__r && PATH_MAX > __builtin_object_size(__r, 2)) {
+	if (__r && PATH_MAX > __bos(__r, 2)) {
 		char __buf[PATH_MAX], *__ret;
 		size_t __l;
 
@@ -50,7 +50,7 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 		if (!__ret)
 			return NULL;
 		__l = __builtin_strlen(__ret) + 1;
-		if (__l > __builtin_object_size(__r, 0))
+		if (__l > __bos(__r, 0))
 			__builtin_trap();
 		__builtin_memcpy(__r, __ret, __l);
 		return __r;

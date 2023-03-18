@@ -32,7 +32,7 @@ extern "C" {
 
 _FORTIFY_FN(poll) int poll(struct pollfd *__f, nfds_t __n, int __s)
 {
-	__typeof__(sizeof 0) __b = __builtin_object_size(__f, 0);
+	__typeof__(sizeof 0) __b = __bos(__f, 0);
 
 	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();
@@ -44,7 +44,7 @@ _FORTIFY_FN(poll) int poll(struct pollfd *__f, nfds_t __n, int __s)
 _FORTIFY_FN(ppoll) int ppoll(struct pollfd *__f, nfds_t __n, const struct timespec *__s,
                              const sigset_t *__m)
 {
-	__typeof__(sizeof 0) __b = __builtin_object_size(__f, 0);
+	__typeof__(sizeof 0) __b = __bos(__f, 0);
 
 	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();

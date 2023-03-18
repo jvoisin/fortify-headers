@@ -21,4 +21,12 @@
 #define _FORTIFY_FN(fn) _FORTIFY_ORIG(__USER_LABEL_PREFIX__,fn); \
 	extern __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
 
+
+/* Use __builtin_dynamic_object_size with _FORTIFY_SOURCE>2, if available.  */
+#if _FORTIFY_SOURCE  > 2 && defined __has_builtin && __has_builtin (__builtin_dynamic_object_size)
+#define __bos(ptr, type) __builtin_dynamic_object_size (ptr, type)
+#else
+#define __bos(ptr, type) __builtin_object_size (ptr, type)
+#endif
+
 #endif
