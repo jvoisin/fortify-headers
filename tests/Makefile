@@ -1,10 +1,14 @@
 CC=../x86_64-linux-musl-native/bin/gcc
 CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
-TARGETS=test_memcpy_static_write \
-	test_memcpy_dynamic_write \
-	test_memcpy_static_read \
-	test_memcpy_dynamic_read
+TARGETS=test_memcpy_static_write  \
+	test_memcpy_dynamic_write  \
+	test_memcpy_static_read    \
+	test_memcpy_dynamic_read   \
+	test_memmove_static_write  \
+	test_memmove_dynamic_write \
+	test_memmove_static_read   \
+	test_memmove_dynamic_read
 
 .SILENT:
 
