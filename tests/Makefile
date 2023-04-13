@@ -8,7 +8,9 @@ TARGETS=test_memcpy_static_write  \
 	test_memmove_static_write  \
 	test_memmove_dynamic_write \
 	test_memmove_static_read   \
-	test_memmove_dynamic_read
+	test_memmove_dynamic_read  \
+	test_memset_static_write   \
+	test_memset_dynamic_write  \
 
 .SILENT:
 
