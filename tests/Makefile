@@ -11,6 +11,8 @@ TARGETS=test_memcpy_static_write  \
 	test_memmove_dynamic_read  \
 	test_memset_static_write   \
 	test_memset_dynamic_write  \
+	test_strcpy_static_write   \
+	test_strcat_static_write   \
 
 .SILENT:
 
