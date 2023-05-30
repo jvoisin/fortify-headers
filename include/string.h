@@ -36,6 +36,8 @@ extern "C" {
 #undef strncat
 #undef strncpy
 
+__access(write_only, 1)
+__access(read_only, 2, 3)
 _FORTIFY_FN(memcpy) void *memcpy(void *__od, const void *__os, size_t __n)
 {
 	size_t __bd = __bos(__od, 0);
@@ -53,6 +55,8 @@ _FORTIFY_FN(memcpy) void *memcpy(void *__od, const void *__os, size_t __n)
 	return __builtin_memcpy(__od, __os, __n);
 }
 
+__access(write_only, 1)
+__access(read_only, 2, 3)
 _FORTIFY_FN(memmove) void *memmove(void *__d, const void *__s, size_t __n)
 {
 	size_t __bd = __bos(__d, 0);
@@ -63,6 +67,7 @@ _FORTIFY_FN(memmove) void *memmove(void *__d, const void *__s, size_t __n)
 	return __orig_memmove(__d, __s, __n);
 }
 
+__access(write_only, 1)
 _FORTIFY_FN(memset) void *memset(void *__d, int __c, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
@@ -76,6 +81,8 @@ _FORTIFY_FN(memset) void *memset(void *__d, int __c, size_t __n)
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
  || defined(_BSD_SOURCE)
 #undef stpcpy
+__access(write_only, 1)
+__access(read_only, 2)
 _FORTIFY_FN(stpcpy) char *stpcpy(char *__d, const char *__s)
 {
 	size_t __b = __bos(__d, 0);
@@ -86,6 +93,8 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char *__d, const char *__s)
 }
 
 #undef stpncpy
+__access(write_only, 1)
+__access(read_only, 2, 3)
 _FORTIFY_FN(stpncpy) char *stpncpy(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
@@ -96,6 +105,8 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char *__d, const char *__s, size_t __n)
 }
 #endif
 
+__access (read_write, 1)
+__access (read_only, 2)
 _FORTIFY_FN(strcat) char *strcat(char *__d, const char *__s)
 {
 	size_t __b = __bos(__d, 0);
@@ -105,6 +116,8 @@ _FORTIFY_FN(strcat) char *strcat(char *__d, const char *__s)
 	return __orig_strcat(__d, __s);
 }
 
+__access (write_only, 1)
+__access (read_only, 2)
 _FORTIFY_FN(strcpy) char *strcpy(char *__d, const char *__s)
 {
 	size_t __n = strlen(__s) + 1;
@@ -121,6 +134,8 @@ _FORTIFY_FN(strcpy) char *strcpy(char *__d, const char *__s)
 	return __orig_strcpy(__d, __s);
 }
 
+__access (read_write, 1)
+__access (read_only, 2, 3)
 _FORTIFY_FN(strncat) char *strncat(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
@@ -137,6 +152,8 @@ _FORTIFY_FN(strncat) char *strncat(char *__d, const char *__s, size_t __n)
 	return __orig_strncat(__d, __s, __n);
 }
 
+__access (write_only, 1)
+__access (read_only, 2, 3)
 _FORTIFY_FN(strncpy) char *strncpy(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
@@ -148,6 +165,8 @@ _FORTIFY_FN(strncpy) char *strncpy(char *__d, const char *__s, size_t __n)
 
 #ifdef _GNU_SOURCE
 #undef mempcpy
+__access(write_only, 1)
+__access(read_only, 2, 3)
 _FORTIFY_FN(mempcpy) void *mempcpy(void *__d, const void *__s, size_t __n)
 {
 	size_t __bd = __bos(__d, 0);
@@ -162,6 +181,8 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void *__d, const void *__s, size_t __n)
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef strlcat
 #undef strlcpy
+__access (read_write, 1)
+__access (read_only, 2, 3)
 _FORTIFY_FN(strlcat) size_t strlcat(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
@@ -171,6 +192,8 @@ _FORTIFY_FN(strlcat) size_t strlcat(char *__d, const char *__s, size_t __n)
 	return __orig_strlcat(__d, __s, __n);
 }
 
+__access (write_only, 1)
+__access (read_only, 2, 3)
 _FORTIFY_FN(strlcpy) size_t strlcpy(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);

@@ -29,4 +29,8 @@
 #define __bos(ptr, type) __builtin_object_size (ptr, type)
 #endif
 
+#if defined __has_attribute && __has_attribute (access)
+#define __access(...) __attribute__ ((access (__VA_ARGS__)))
+#endif
+
 #endif
