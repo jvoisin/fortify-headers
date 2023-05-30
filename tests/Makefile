@@ -1,4 +1,5 @@
 CC=../x86_64-linux-musl-native/bin/gcc
+GCOV=../x86_64-linux-musl-native/bin/gcov
 CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
 TARGETS=test_memcpy_static_write  \
@@ -21,6 +22,12 @@ TARGETS=test_memcpy_static_write  \
 
 all: $(TARGETS) run
 
+coverage: CFLAGS += -fprofile-arcs -ftest-coverage
+coverage: all
+	$(GCOV) *.c
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output-directory coverage
+
 $(TARGETS): %: %.c
 	$(CC) $(CFLAGS) -o $@ $<
 
@@ -33,4 +40,5 @@ clean:
 	$(foreach EXE, $(TARGETS), \
 		rm -f ./$(EXE) \
 	)
+	rm -rf ./*.gcno ./*.gcda ./*.gcov ./coverage.info ./coverage
 
