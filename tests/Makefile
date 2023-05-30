@@ -15,6 +15,7 @@ TARGETS=test_memcpy_static_write  \
 	test_strcat_static_write   \
 	test_strcpy_overwrite_over \
 	test_strcpy_overwrite_under\
+	test_getcwd                \
 
 .SILENT:
 
