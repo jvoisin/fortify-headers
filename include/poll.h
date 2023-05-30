@@ -39,7 +39,7 @@ _FORTIFY_FN(poll) int poll(struct pollfd *__f, nfds_t __n, int __s)
 	return __orig_poll(__f, __n, __s);
 }
 
-#ifdef _GNU_SOURCE
+#if defined(_GNU_SOURCE) && !_REDIR_TIME64
 #undef ppoll
 _FORTIFY_FN(ppoll) int ppoll(struct pollfd *__f, nfds_t __n, const struct timespec *__s,
                              const sigset_t *__m)
