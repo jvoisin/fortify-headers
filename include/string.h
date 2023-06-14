@@ -156,8 +156,13 @@ __access (write_only, 1)
 __access (read_only, 2, 3)
 _FORTIFY_FN(strncpy) char *strncpy(char *__d, const char *__s, size_t __n)
 {
-	size_t __b = __bos(__d, 0);
+	/* trap if pointers are overlapping but not if dst == src.
+	 * gcc seems to like to generate code that relies on dst == src */
+	if ((__d < __s && __d + __n > __s) ||
+	    (__s < __d && __s + __n > __d))
+		__builtin_trap();
 
+	size_t __b = __bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strncpy(__d, __s, __n);

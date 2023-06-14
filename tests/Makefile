@@ -2,21 +2,24 @@ CC=../x86_64-linux-musl-native/bin/gcc
 GCOV=../x86_64-linux-musl-native/bin/gcov
 CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
-TARGETS=test_memcpy_static_write  \
-	test_memcpy_dynamic_write  \
-	test_memcpy_static_read    \
-	test_memcpy_dynamic_read   \
-	test_memmove_static_write  \
-	test_memmove_dynamic_write \
-	test_memmove_static_read   \
-	test_memmove_dynamic_read  \
-	test_memset_static_write   \
-	test_memset_dynamic_write  \
-	test_strcpy_static_write   \
-	test_strcat_static_write   \
-	test_strcpy_overwrite_over \
-	test_strcpy_overwrite_under\
-	test_getcwd                \
+TARGETS=test_memcpy_static_write     \
+	test_memcpy_dynamic_write    \
+	test_memcpy_static_read      \
+	test_memcpy_dynamic_read     \
+	test_memmove_static_write    \
+	test_memmove_dynamic_write   \
+	test_memmove_static_read     \
+	test_memmove_dynamic_read    \
+	test_memset_static_write     \
+	test_memset_dynamic_write    \
+	test_strcpy_static_write     \
+	test_strcat_static_write     \
+	test_strcpy_overwrite_over   \
+	test_strcpy_overwrite_under  \
+	test_strncpy_static_write    \
+	test_strncpy_overwrite_over  \
+	test_strncpy_overwrite_under \
+	test_getcwd                  \
 
 .SILENT:
 
