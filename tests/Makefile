@@ -32,6 +32,7 @@ TARGETS=test_memcpy_static_write     \
 	test_stpncpy_static_write    \
 	test_getcwd                  \
 	test_poll                    \
+	test_ppoll                   \
 
 .SILENT:
 
