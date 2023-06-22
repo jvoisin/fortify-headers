@@ -36,6 +36,7 @@ extern "C" {
 #undef snprintf
 #undef sprintf
 
+__access(write_only, 1, 2)
 _FORTIFY_FN(fgets) char *fgets(char *__s, int __n, FILE *__f)
 {
 	size_t __b = __bos(__s, 0);
