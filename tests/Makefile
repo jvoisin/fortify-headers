@@ -31,6 +31,7 @@ TARGETS=test_memcpy_static_write     \
 	test_stpncpy_overwrite_under \
 	test_stpncpy_static_write    \
 	test_getcwd                  \
+	test_poll                    \
 
 .SILENT:
 
