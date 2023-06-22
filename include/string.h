@@ -151,13 +151,12 @@ __access (read_only, 2, 3)
 _FORTIFY_FN(strncat) char *strncat(char *__d, const char *__s, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
-	size_t __sl, __dl;
 
 	if (__n > __b) {
-		__sl = strlen(__s);
-		__dl = strlen(__d);
+		size_t __sl = strlen(__s);
 		if (__sl > __n)
 			__sl = __n;
+		size_t __dl = strlen(__d);
 		if (__sl + __dl + 1 > __b)
 			__builtin_trap();
 	}
