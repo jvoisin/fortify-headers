@@ -22,6 +22,9 @@ TARGETS=test_memcpy_static_write     \
 	test_strncpy_overwrite_over  \
 	test_strncpy_overwrite_under \
 	test_strncpy_static_write    \
+	test_stpncpy_overwrite_over  \
+	test_stpncpy_overwrite_under \
+	test_stpncpy_static_write    \
 	test_getcwd                  \
 
 .SILENT:
