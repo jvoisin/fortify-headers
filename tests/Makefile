@@ -50,6 +50,8 @@ clang: clean all
 all: $(TARGETS) run
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
+coverage: CC=../x86_64-linux-musl-native/bin/gcc
+coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
 coverage: all
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
