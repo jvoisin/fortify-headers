@@ -6,7 +6,7 @@ on:
     - cron: '0 16 * * 5'
 
 jobs:
-  ci:
+  gcc:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out the code
@@ -16,4 +16,16 @@ jobs:
       - name: Extracting musl-based toolchain
         run: tar xzf ./x86_64-linux-musl-native.tgz
       - name: Running the testsuite
-        run: make -C tests | grep -zqv FAIL
+        run: make -C tests gcc | grep -zqv FAIL
+
+  clang:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v3
+      - name: Downloading musl-based toolchain
+        run: wget https://musl.cc/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+      - name: Running the testsuite
+        run: make -C tests clang | grep -zqv FAIL

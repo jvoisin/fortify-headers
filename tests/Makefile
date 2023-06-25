@@ -34,7 +34,7 @@ TARGETS= \
 	test_poll                    \
 	test_ppoll                   \
 
-#.SILENT:
+.SILENT:
 
 gcc: CC=../x86_64-linux-musl-native/bin/gcc
 gcc: GCOV=../x86_64-linux-musl-native/bin/gcov
