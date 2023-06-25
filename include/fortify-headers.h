@@ -52,6 +52,8 @@
 
 #if defined __has_attribute && __has_attribute (access)
 #define __access(...) __attribute__ ((access (__VA_ARGS__)))
+#else
+#define __access(...)
 #endif
 
 #endif

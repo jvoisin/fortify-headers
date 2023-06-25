@@ -1,5 +1,3 @@
-CC=../x86_64-linux-musl-native/bin/gcc
-GCOV=../x86_64-linux-musl-native/bin/gcov
 CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
 TARGETS= \
@@ -36,7 +34,18 @@ TARGETS= \
 	test_poll                    \
 	test_ppoll                   \
 
-.SILENT:
+#.SILENT:
+
+gcc: CC=../x86_64-linux-musl-native/bin/gcc
+gcc: GCOV=../x86_64-linux-musl-native/bin/gcov
+gcc: clean all
+
+clang: CC=clang
+clang: GCOV=gcov
+clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
+clang: CLFAGS+=-nostdlib
+clang: clean all
+
 
 all: $(TARGETS) run
 
@@ -51,7 +60,7 @@ $(TARGETS): %: %.c
 
 run: $(TARGETS)
 	$(foreach EXE, $(TARGETS), \
-		./$(EXE) 1 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL" ; \
+		timeout 1s ./$(EXE) 1 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL" ; \
 	)
 
 clean:
