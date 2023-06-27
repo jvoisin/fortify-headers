@@ -37,7 +37,7 @@ extern "C" {
 #undef strncat
 #undef strncpy
 
-__access(write_only, 1)
+__access(write_only, 1, 3)
 __access(read_only, 2, 3)
 _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
                                  const void * _FORTIFY_POS0 __os, size_t __n)
@@ -57,7 +57,7 @@ _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
 	return __builtin_memcpy(__od, __os, __n);
 }
 
-__access(write_only, 1)
+__access(write_only, 1, 3)
 __access(read_only, 2, 3)
 _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
@@ -70,7 +70,7 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 	return __orig_memmove(__d, __s, __n);
 }
 
-__access(write_only, 1)
+__access(write_only, 1, 3)
 _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 {
 	size_t __b = __bos(__d, 0);

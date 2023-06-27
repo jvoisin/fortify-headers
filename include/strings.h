@@ -31,6 +31,8 @@ extern "C" {
  || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE+0 < 700)
 #undef bcopy
 #undef bzero
+__access(write_only, 2, 3)
+__access(read_only, 1, 3)
 _FORTIFY_FN(bcopy) void bcopy(const void * _FORTIFY_POS0 __s,
                               void * _FORTIFY_POS0 __d, size_t __n)
 {
@@ -42,6 +44,7 @@ _FORTIFY_FN(bcopy) void bcopy(const void * _FORTIFY_POS0 __s,
 	return __orig_bcopy(__s, __d, __n);
 }
 
+__access(write_only, 1, 2)
 _FORTIFY_FN(bzero) void bzero(void * _FORTIFY_POS0 __s, size_t __n)
 {
 	size_t __b = __bos(__s, 0);
