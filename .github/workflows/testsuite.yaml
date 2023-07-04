@@ -20,8 +20,15 @@ jobs:
 
   clang:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [12, 13, 14]
     steps:
       - name: Checking out the code
         uses: actions/checkout@v3
+      - name: Setting up clang version
+        run: |
+          sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100
+          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
       - name: Running the testsuite
         run: make -C tests clang | grep -zqv FAIL
