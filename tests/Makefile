@@ -6,6 +6,9 @@ TARGETS= \
 	test_bcopy_dynamic_write     \
 	test_bcopy_static_read       \
 	test_bcopy_dynamic_read      \
+	test_bcopy_dynamic_write     \
+	test_bzero_dynamic_write     \
+	test_bzero_static_write      \
 	test_memcpy_static_write     \
 	test_memcpy_dynamic_write    \
 	test_memcpy_static_read      \
