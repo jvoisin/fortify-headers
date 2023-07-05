@@ -2,6 +2,10 @@ CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
 TARGETS= \
 	test_fgets                   \
+	test_bcopy_static_write      \
+	test_bcopy_dynamic_write     \
+	test_bcopy_static_read       \
+	test_bcopy_dynamic_read      \
 	test_memcpy_static_write     \
 	test_memcpy_dynamic_write    \
 	test_memcpy_static_read      \
