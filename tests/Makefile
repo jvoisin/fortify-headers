@@ -13,6 +13,8 @@ TARGETS= \
 	test_memcpy_dynamic_write    \
 	test_memcpy_static_read      \
 	test_memcpy_dynamic_read     \
+	test_memcpy_overwrite_over   \
+	test_memcpy_overwrite_under  \
         test_mempcpy_static_write    \
 	test_mempcpy_dynamic_write   \
 	test_mempcpy_static_read     \
