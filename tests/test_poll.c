@@ -9,6 +9,6 @@ int main(int argc, char** argv) {
   poll(buffer, 14, 0);
   CHK_FAIL_END
 
-  puts(buffer);
+  puts((const char*)buffer);
   return ret;
 }

@@ -10,6 +10,6 @@ int main(int argc, char** argv) {
   ppoll(buffer, 14, NULL, NULL);
   CHK_FAIL_END
 
-  puts(buffer);
+  puts((const char*)buffer);
   return ret;
 }
