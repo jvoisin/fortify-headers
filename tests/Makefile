@@ -51,6 +51,12 @@ TARGETS= \
 	test_readlink                \
 	test_ttyname_r               \
 	test_write                   \
+	test_fread_int_overflow      \
+	test_fread_overwrite         \
+	test_fwrite_int_overflow     \
+	test_fwrite_overwrite        \
+	test_vsnprintf               \
+	test_vsprintf                \
 
 .SILENT:
 
