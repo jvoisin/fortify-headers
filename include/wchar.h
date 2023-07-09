@@ -218,6 +218,7 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
 	return __r;
 }
 
+__access(write_only, 2, 3)
 _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
                                       const wchar_t *__ws, size_t __n)
 {
