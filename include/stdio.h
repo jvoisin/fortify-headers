@@ -29,13 +29,25 @@ __extension__
 extern "C" {
 #endif
 
+#undef fdopen
 #undef fgets
+#undef fmemopen
+#undef fopen
 #undef fread
 #undef fwrite
-#undef vsprintf
-#undef vsnprintf
+#undef popen
+#undef tmpfile
 #undef snprintf
 #undef sprintf
+#undef vsnprintf
+#undef vsprintf
+
+__access(read_only, 2)
+__malloc(malloc (fclose, 1))
+_FORTIFY_FN(fdopen) FILE *fdopen(int __f, const char* __m)
+{
+	return __orig_fdopen(__f, __m);
+}
 
 __access(write_only, 1, 2)
 _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
@@ -45,6 +57,20 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 	if ((size_t)__n > __b)
 		__builtin_trap();
 	return __orig_fgets(__s, __n, __f);
+}
+
+__malloc(malloc (fclose, 1))
+_FORTIFY_FN(fmemopen) FILE *fmemopen(void* __b, size_t __s, const char* __m)
+{
+	return __orig_fmemopen(__b, __s, __m);
+}
+
+__access(read_only, 1)
+__access(read_only, 2)
+__malloc(malloc (fclose, 1))
+_FORTIFY_FN(fopen) FILE *fopen(const char* __p, const char* __m)
+{
+	return __orig_fopen(__p, __m);
 }
 
 __access(write_only, 1)
@@ -71,6 +97,18 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 	if (__n * __m > __b)
 		__builtin_trap();
 	return __orig_fwrite(__d, __n, __m, __f);
+}
+
+__malloc(malloc (pclose, 1))
+_FORTIFY_FN(popen) FILE *popen(const char* __c, const char* __t)
+{
+	return __orig_popen(__c, __t);
+}
+
+__malloc(malloc (fclose, 1))
+_FORTIFY_FN(tmpfile) FILE *tmpfile(void)
+{
+	return __orig_tmpfile();
 }
 
 __access(read_write, 1, 2)

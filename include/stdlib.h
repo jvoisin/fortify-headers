@@ -36,6 +36,14 @@ __extension__
 extern "C" {
 #endif
 
+#undef malloc
+
+__malloc(malloc (free, 1))
+_FORTIFY_FN(malloc) void *malloc(size_t __s)
+{
+	return __orig_malloc(__s);
+}
+
 /* FIXME clang */
 #if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)) && !defined(__clang__)
 #undef realpath

@@ -57,6 +57,7 @@ TARGETS= \
 	test_fwrite_overwrite        \
 	test_vsnprintf               \
 	test_vsprintf                \
+	test_malloc                  \
 
 .SILENT:
 
