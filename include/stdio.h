@@ -116,6 +116,7 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
  */
 
 __access(read_write, 1, 2)
+__format(printf, 3, 4)
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
                                     const char *__f, ...)
 {
@@ -126,6 +127,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 	return __orig_snprintf(__s, __n, __f, __builtin_va_arg_pack());
 }
 
+__format(printf, 2, 3)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
 	size_t __b = __bos(__s, 0);

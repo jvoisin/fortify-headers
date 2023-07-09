@@ -60,6 +60,12 @@
 #define __access(...)
 #endif
 
+#if defined __has_attribute && __has_attribute (format)
+#define __format(...) __attribute__ ((format (__VA_ARGS__)))
+#else
+#define __format(...)
+#endif
+
 
 /* TODO(jvoisin) Figure a nice way to make use of __builtin_mul_overflow while ignoring the result. */
 /* TODO(jvoisin) Make use of C23's stdckdint header: https://gustedt.gitlabpages.inria.fr/c23-library/#stdckdint */

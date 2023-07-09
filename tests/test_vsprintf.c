@@ -12,7 +12,7 @@ int msg_valid(const char * format, ... ) {
   va_end (args);
 }
 
-int msg(int n, const char * format, ... ) {
+int msg(const char * format, ... ) {
   va_list args;
   va_start (args, format);
   CHK_FAIL_START
