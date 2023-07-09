@@ -5,10 +5,10 @@
 int main(int argc, char** argv) {
   char buffer[12] = {0};
 
-  getcwd(buffer, 10);
+  gethostname(buffer, 10);
 
   CHK_FAIL_START
-  getcwd(buffer, 14);
+  gethostname(buffer, 14);
   CHK_FAIL_END
 
   puts(buffer);

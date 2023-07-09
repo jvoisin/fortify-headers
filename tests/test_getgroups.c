@@ -3,14 +3,14 @@
 #include <unistd.h>
 
 int main(int argc, char** argv) {
-  char buffer[12] = {0};
+  gid_t list[12] = {0};
 
-  getcwd(buffer, 10);
+  getgroups(10, list);
 
   CHK_FAIL_START
-  getcwd(buffer, 14);
+  getgroups(14, list);
   CHK_FAIL_END
 
-  puts(buffer);
+  puts((const char*)list);
   return ret;
 }

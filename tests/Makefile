@@ -38,9 +38,19 @@ TARGETS= \
 	test_stpncpy_overwrite_over  \
 	test_stpncpy_overwrite_under \
 	test_stpncpy_static_write    \
+	test_confstr                 \
 	test_getcwd                  \
 	test_poll                    \
 	test_ppoll                   \
+	test_getdomainname           \
+	test_getgroups               \
+	test_gethostname             \
+	test_getlogin_r              \
+	test_pread                   \
+	test_read                    \
+	test_readlink                \
+	test_ttyname_r               \
+	test_write                   \
 
 .SILENT:
 
