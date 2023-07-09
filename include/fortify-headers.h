@@ -45,6 +45,10 @@
 
 /* Use __builtin_dynamic_object_size with _FORTIFY_SOURCE>2, if available.  */
 #if _FORTIFY_SOURCE  > 2 && defined __has_builtin && __has_builtin (__builtin_dynamic_object_size)
+/* 
+ * See:
+ * - https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html
+ */
 #define __bos(ptr, type) __builtin_dynamic_object_size (ptr, type)
 #else
 #define __bos(ptr, type) __builtin_object_size (ptr, type)
@@ -57,3 +61,20 @@
 #endif
 
 #endif
+
+
+/* TODO(jvoisin) Figure a nice way to make use of __builtin_mul_overflow while ignoring the result. */
+/* TODO(jvoisin) Make use of C23's stdckdint header: https://gustedt.gitlabpages.inria.fr/c23-library/#stdckdint */
+#if _FORTIFY_SOURCE > 2 && defined __has_builtin
+/*
+ * See:
+ * - https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
+ * - https://clang.llvm.org/docs/LanguageExtensions.html#checked-arithmetic-builtins
+ */
+#if __has_builtin (__builtin_mul_overflow_p)
+#define __bmo(x, y) (x != 0 && __builtin_mul_overflow_p(x, y, (__typeof__ ((x) + (y))) 0))
+#else /* !__builtin_mul_overflow_p */
+#define __bmo(x, y) (x != 0 && (x * y) / x != y)
+#endif /* __builtin_mul_overflow_p */
+
+#endif /* __has_builtin */

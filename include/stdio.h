@@ -53,7 +53,7 @@ _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
 {
 	size_t __b = __bos(__d, 0);
 
-	if (__n != 0 && (__n * __m) / __n != __m)
+	if (__bmo(__n, __m))
 		__builtin_trap();
 	if (__n * __m > __b)
 		__builtin_trap();
@@ -66,7 +66,7 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 {
 	size_t __b = __bos(__d, 0);
 
-	if (__n != 0 && (__n * __m) / __n != __m)
+	if (__bmo(__n, __m))
 		__builtin_trap();
 	if (__n * __m > __b)
 		__builtin_trap();
