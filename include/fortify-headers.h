@@ -60,8 +60,6 @@
 #define __access(...)
 #endif
 
-#endif
-
 
 /* TODO(jvoisin) Figure a nice way to make use of __builtin_mul_overflow while ignoring the result. */
 /* TODO(jvoisin) Make use of C23's stdckdint header: https://gustedt.gitlabpages.inria.fr/c23-library/#stdckdint */
@@ -78,3 +76,5 @@
 #endif /* __builtin_mul_overflow_p */
 
 #endif /* __has_builtin */
+
+#endif /* _FORTIFY_HEADERS_H */
