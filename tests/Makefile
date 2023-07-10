@@ -58,6 +58,10 @@ TARGETS= \
 	test_vsnprintf               \
 	test_vsprintf                \
 	test_malloc                  \
+	test_recv                    \
+	test_recvfrom                \
+	test_send                    \
+	test_sendto                  \
 
 .SILENT:
 
