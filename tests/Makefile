@@ -38,19 +38,30 @@ TARGETS= \
 	test_stpncpy_overwrite_over  \
 	test_stpncpy_overwrite_under \
 	test_stpncpy_static_write    \
-	test_confstr                 \
-	test_getcwd                  \
+	test_confstr_dynamic         \
+	test_confstr_static          \
+	test_getcwd_static           \
+	test_getcwd_dynamic          \
 	test_poll                    \
 	test_ppoll                   \
-	test_getdomainname           \
-	test_getgroups               \
-	test_gethostname             \
-	test_getlogin_r              \
-	test_pread                   \
-	test_read                    \
-	test_readlink                \
-	test_ttyname_r               \
-	test_write                   \
+	test_getdomainname_static    \
+	test_getdomainname_dynamic   \
+	test_getgroups_static        \
+	test_getgroups_dynamic       \
+	test_gethostname_static      \
+	test_gethostname_dynamic     \
+	test_getlogin_r_static       \
+	test_getlogin_r_dynamic      \
+	test_pread_static            \
+	test_pread_dynamic           \
+	test_read_static             \
+	test_read_dynamic            \
+	test_readlink_static         \
+	test_readlink_dynamic        \
+	test_ttyname_r_static        \
+	test_ttyname_r_dynamic       \
+	test_write_static            \
+	test_write_dynamic           \
 	test_fread_int_overflow      \
 	test_fread_overwrite         \
 	test_fwrite_int_overflow     \
