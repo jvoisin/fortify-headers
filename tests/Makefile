@@ -58,10 +58,14 @@ TARGETS= \
 	test_vsnprintf               \
 	test_vsprintf                \
 	test_malloc                  \
-	test_recv                    \
-	test_recvfrom                \
-	test_send                    \
-	test_sendto                  \
+	test_recv_static             \
+	test_recv_dynamic            \
+	test_recvfrom_static         \
+	test_recvfrom_dynamic        \
+	test_send_static             \
+	test_send_dynamic            \
+	test_sendto_static           \
+	test_sendto_dynamic          \
 	test_FD_CLR_negative         \
 	test_FD_CLR_SETSIZE          \
 	test_FD_SET_negative         \
