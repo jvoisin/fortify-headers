@@ -62,6 +62,10 @@ TARGETS= \
 	test_recvfrom                \
 	test_send                    \
 	test_sendto                  \
+	test_FD_CLR_negative         \
+	test_FD_CLR_SETSIZE          \
+	test_FD_SET_negative         \
+	test_FD_SET_SETSIZE          \
 
 .SILENT:
 
