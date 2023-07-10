@@ -1,32 +1,72 @@
 CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
 TARGETS= \
-	test_fgets                   \
-	test_bcopy_static_write      \
-	test_bcopy_static_read       \
+	test_FD_CLR_SETSIZE          \
+	test_FD_CLR_negative         \
+	test_FD_SET_SETSIZE          \
+	test_FD_SET_negative         \
 	test_bcopy_dynamic_read      \
 	test_bcopy_dynamic_write     \
+	test_bcopy_static_read       \
+	test_bcopy_static_write      \
 	test_bzero_dynamic_write     \
 	test_bzero_static_write      \
-	test_memcpy_static_write     \
-	test_memcpy_dynamic_write    \
-	test_memcpy_static_read      \
+	test_confstr_dynamic         \
+	test_confstr_static          \
+	test_fgets                   \
+	test_fread_int_overflow      \
+	test_fread_overwrite         \
+	test_fwrite_int_overflow     \
+	test_fwrite_overwrite        \
+	test_getcwd_dynamic          \
+	test_getcwd_static           \
+	test_getdomainname_dynamic   \
+	test_getdomainname_static    \
+	test_getgroups_dynamic       \
+	test_getgroups_static        \
+	test_gethostname_dynamic     \
+	test_gethostname_static      \
+	test_getlogin_r_dynamic      \
+	test_getlogin_r_static       \
+	test_malloc                  \
 	test_memcpy_dynamic_read     \
+	test_memcpy_dynamic_write    \
 	test_memcpy_overwrite_over   \
 	test_memcpy_overwrite_under  \
-        test_mempcpy_static_write    \
-	test_mempcpy_dynamic_write   \
-	test_mempcpy_static_read     \
-	test_mempcpy_dynamic_read    \
-	test_memmove_static_write    \
+	test_memcpy_static_read      \
+	test_memcpy_static_write     \
+	test_memmove_dynamic_read    \
 	test_memmove_dynamic_write   \
 	test_memmove_static_read     \
-	test_memmove_dynamic_read    \
-	test_memset_static_write     \
+	test_memmove_static_write    \
+	test_mempcpy_dynamic_read    \
+	test_mempcpy_dynamic_write   \
+	test_mempcpy_static_read     \
+	test_mempcpy_static_write    \
 	test_memset_dynamic_write    \
+	test_memset_static_write     \
+	test_poll                    \
+	test_ppoll                   \
+	test_pread_dynamic           \
+	test_pread_static            \
+	test_read_dynamic            \
+	test_read_static             \
+	test_readlink_dynamic        \
+	test_readlink_static         \
+	test_recv_dynamic            \
+	test_recv_static             \
+	test_recvfrom_dynamic        \
+	test_recvfrom_static         \
+	test_send_dynamic            \
+	test_send_static             \
+	test_sendto_dynamic          \
+	test_sendto_static           \
 	test_stpcpy_overwrite_over   \
 	test_stpcpy_overwrite_under  \
 	test_stpcpy_static_write     \
+	test_stpncpy_overwrite_over  \
+	test_stpncpy_overwrite_under \
+	test_stpncpy_static_write    \
 	test_strcat_static_write     \
 	test_strcpy_overwrite_over   \
 	test_strcpy_overwrite_under  \
@@ -35,52 +75,12 @@ TARGETS= \
 	test_strncpy_overwrite_over  \
 	test_strncpy_overwrite_under \
 	test_strncpy_static_write    \
-	test_stpncpy_overwrite_over  \
-	test_stpncpy_overwrite_under \
-	test_stpncpy_static_write    \
-	test_confstr_dynamic         \
-	test_confstr_static          \
-	test_getcwd_static           \
-	test_getcwd_dynamic          \
-	test_poll                    \
-	test_ppoll                   \
-	test_getdomainname_static    \
-	test_getdomainname_dynamic   \
-	test_getgroups_static        \
-	test_getgroups_dynamic       \
-	test_gethostname_static      \
-	test_gethostname_dynamic     \
-	test_getlogin_r_static       \
-	test_getlogin_r_dynamic      \
-	test_pread_static            \
-	test_pread_dynamic           \
-	test_read_static             \
-	test_read_dynamic            \
-	test_readlink_static         \
-	test_readlink_dynamic        \
-	test_ttyname_r_static        \
 	test_ttyname_r_dynamic       \
-	test_write_static            \
-	test_write_dynamic           \
-	test_fread_int_overflow      \
-	test_fread_overwrite         \
-	test_fwrite_int_overflow     \
-	test_fwrite_overwrite        \
+	test_ttyname_r_static        \
 	test_vsnprintf               \
 	test_vsprintf                \
-	test_malloc                  \
-	test_recv_static             \
-	test_recv_dynamic            \
-	test_recvfrom_static         \
-	test_recvfrom_dynamic        \
-	test_send_static             \
-	test_send_dynamic            \
-	test_sendto_static           \
-	test_sendto_dynamic          \
-	test_FD_CLR_negative         \
-	test_FD_CLR_SETSIZE          \
-	test_FD_SET_negative         \
-	test_FD_SET_SETSIZE          \
+	test_write_dynamic           \
+	test_write_static            \
 
 .SILENT:
 
