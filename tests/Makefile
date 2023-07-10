@@ -13,11 +13,14 @@ TARGETS= \
 	test_bzero_static_write      \
 	test_confstr_dynamic         \
 	test_confstr_static          \
-	test_fgets                   \
+	test_fgets_dynamic           \
+	test_fgets_static            \
 	test_fread_int_overflow      \
-	test_fread_overwrite         \
+	test_fread_overwrite_dynamic \
+	test_fread_overwrite_static  \
 	test_fwrite_int_overflow     \
-	test_fwrite_overwrite        \
+	test_fwrite_overwrite_dynamic \
+	test_fwrite_overwrite_static \
 	test_getcwd_dynamic          \
 	test_getcwd_static           \
 	test_getdomainname_dynamic   \
@@ -45,8 +48,10 @@ TARGETS= \
 	test_mempcpy_static_write    \
 	test_memset_dynamic_write    \
 	test_memset_static_write     \
-	test_poll                    \
-	test_ppoll                   \
+	test_poll_dynamic            \
+	test_poll_static             \
+	test_ppoll_dynamic           \
+	test_ppoll_static            \
 	test_pread_dynamic           \
 	test_pread_static            \
 	test_read_dynamic            \
@@ -77,7 +82,8 @@ TARGETS= \
 	test_strncpy_static_write    \
 	test_ttyname_r_dynamic       \
 	test_ttyname_r_static        \
-	test_vsnprintf               \
+	test_vsnprintf_dynamic       \
+	test_vsnprintf_static        \
 	test_vsprintf                \
 	test_write_dynamic           \
 	test_write_static            \
