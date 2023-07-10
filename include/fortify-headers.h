@@ -17,6 +17,11 @@
 #ifndef _FORTIFY_HEADERS_H
 #define _FORTIFY_HEADERS_H
 
+#if !defined __has_builtin
+#error a compiler with __has_builtin support is required
+#endif
+
+
 #ifdef __clang__
 
 /* clang uses overloads; see https://github.com/llvm/llvm-project/issues/53516 */
@@ -44,7 +49,7 @@
 
 
 /* Use __builtin_dynamic_object_size with _FORTIFY_SOURCE>2, if available.  */
-#if _FORTIFY_SOURCE  > 2 && defined __has_builtin && __has_builtin (__builtin_dynamic_object_size)
+#if _FORTIFY_SOURCE  > 2 && __has_builtin (__builtin_dynamic_object_size)
 /* 
  * See:
  * - https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html
@@ -54,28 +59,30 @@
 #define __bos(ptr, type) __builtin_object_size (ptr, type)
 #endif
 
-#if defined __has_attribute && __has_attribute (access)
+#if defined __has_attribute
+#if __has_attribute (access)
 #define __access(...) __attribute__ ((access (__VA_ARGS__)))
 #else
 #define __access(...)
 #endif
 
-#if defined __has_attribute && __has_attribute (format)
+#if __has_attribute (format)
 #define __format(...) __attribute__ ((format (__VA_ARGS__)))
 #else
 #define __format(...)
 #endif
 
-#if defined __has_attribute && __has_attribute (malloc)
+#if __has_attribute (malloc)
 #define __malloc(...) __attribute__ ((malloc, __VA_ARGS__))
 #else
 #define __malloc(...)
 #endif
 
+#endif /* __has_attribute */
+
 
 /* TODO(jvoisin) Figure a nice way to make use of __builtin_mul_overflow while ignoring the result. */
 /* TODO(jvoisin) Make use of C23's stdckdint header: https://gustedt.gitlabpages.inria.fr/c23-library/#stdckdint */
-#if _FORTIFY_SOURCE > 2 && defined __has_builtin
 /*
  * See:
  * - https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
@@ -86,7 +93,5 @@
 #else /* !__builtin_mul_overflow_p */
 #define __bmo(x, y) (x != 0 && (x * y) / x != y)
 #endif /* __builtin_mul_overflow_p */
-
-#endif /* __has_builtin */
 
 #endif /* _FORTIFY_HEADERS_H */
