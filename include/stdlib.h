@@ -37,12 +37,35 @@ extern "C" {
 #endif
 
 #undef malloc
+#undef realloc
 
 __malloc(malloc (free, 1))
+__alloc_size(1)
 _FORTIFY_FN(malloc) void *malloc(size_t __s)
 {
 	return __orig_malloc(__s);
 }
+
+__alloc_size(2)
+_FORTIFY_FN(realloc) void *realloc(void *__p, size_t __s)
+{
+	return __orig_realloc(__p, __s);
+}
+
+__alloc_size(1, 2)
+_FORTIFY_FN(calloc) void *calloc(size_t __n, size_t __s)
+{
+	return __orig_calloc(__n, __s);
+}
+
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#undef reallocarray
+__alloc_size (2, 3)
+_FORTIFY_FN(reallocarray) void* reallocarray(void* __p, size_t __n, size_t __s)
+{
+	return __orig_reallocarray(__p, __n, __s);
+}
+#endif
 
 /* FIXME clang */
 #if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)) && !defined(__clang__)
