@@ -30,6 +30,7 @@ extern "C" {
 #endif
 
 #undef memcpy
+#undef memchr
 #undef memmove
 #undef memset
 #undef strcat
@@ -79,6 +80,29 @@ _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 		__builtin_trap();
 	return __builtin_memset(__d, __c, __n);
 }
+
+__access(read_only, 1, 3)
+_FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t __n)
+{
+	size_t __b = __bos(__d, 0);
+
+	if (__n > __b)
+		__builtin_trap();
+	return __builtin_memchr(__d, __c, __n);
+}
+
+#if defined(_GNU_SOURCE)
+#undef memrchr
+__access(read_only, 1, 3)
+_FORTIFY_FN(memrchr) void *memrchr(const void * _FORTIFY_POS0 __d, int __c, size_t __n)
+{
+	size_t __b = __bos(__d, 0);
+
+	if (__n > __b)
+		__builtin_trap();
+	return __builtin_memrchr(__d, __c, __n);
+}
+#endif
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
