@@ -7,7 +7,7 @@
 int main(int argc, char** argv) {
   char buffer[12] = {0};
 
-  assert(sizeof(buffer - 2) * argc > sizeof(buffer));
+  assert((sizeof(buffer) - 2) * argc > sizeof(*buffer));
 
   CHK_FAIL_START
   fread(buffer, sizeof(buffer) - 2, argc, NULL);

@@ -7,7 +7,7 @@
 int main(int argc, char** argv) {
   char buffer[12] = {0};
 
-  assert(sizeof(buffer - 2) * 10 > sizeof(buffer));
+  assert((sizeof(buffer) - 2) * 10 > sizeof(buffer));
 
   CHK_FAIL_START
   fwrite(buffer, sizeof(buffer) - 2, 10, NULL);
