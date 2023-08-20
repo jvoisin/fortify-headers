@@ -114,7 +114,8 @@ coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
 coverage: $(TARGETS) run
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output-directory coverage
+	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info
+	genhtml cleaned-coverage.info --output-directory coverage
 
 $(TARGETS): %: %.c
 	$(CC) $(CFLAGS) -o $@ $<
