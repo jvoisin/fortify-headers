@@ -36,8 +36,6 @@ extern "C" {
 #undef fread
 #undef fwrite
 #undef popen
-#undef snprintf
-#undef sprintf
 #undef vsnprintf
 #undef vsprintf
 
@@ -120,6 +118,7 @@ _FORTIFY_FN(tmpfile) FILE *tmpfile(void)
 #endif
 
 __access(read_write, 1, 2)
+__format(printf, 3, 0)
 __diagnose_as_builtin(__builtin_vsnprintf, 1, 2, 3, 4)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
                                      const char *__f, __builtin_va_list __v)
@@ -131,6 +130,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 	return __orig_vsnprintf(__s, __n, __f, __v);
 }
 
+__format(printf, 2, 0)
 __diagnose_as_builtin(__builtin_vsprintf, 1, 2, 3)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
@@ -162,6 +162,9 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
  *    variables within the macro, which means more non-portable mess
  * 3) not implementing these under clang, which is what we do for now
  */
+
+#undef snprintf
+#undef sprintf
 
 __access(read_write, 1, 2)
 __format(printf, 3, 4)
