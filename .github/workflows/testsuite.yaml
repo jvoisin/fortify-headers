@@ -24,6 +24,7 @@ jobs:
         if: steps.cache-musl.outputs.cache-hit != 'true'
         run: tar xzf ./x86_64-linux-musl-native.tgz
       - name: Running the testsuite
+        shell: bash
         run: make -C tests gcc | grep -zqv FAIL
 
   clang:
@@ -51,4 +52,5 @@ jobs:
           sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
       - name: Running the testsuite
+        shell: bash
         run: make -C tests clang | grep -zqv FAIL
