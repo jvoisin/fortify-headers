@@ -101,6 +101,8 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 	return __orig_fwrite(__d, __n, __m, __f);
 }
 
+__access(read_only, 1)
+__access(read_only, 2)
 __malloc(malloc (pclose, 1))
 __diagnose_as_builtin(__builtin_fwrite, 1, 2)
 _FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTIFY_POS0 __t)
@@ -118,6 +120,7 @@ _FORTIFY_FN(tmpfile) FILE *tmpfile(void)
 #endif
 
 __access(read_write, 1, 2)
+__access(read_only, 3)
 __format(printf, 3, 0)
 __diagnose_as_builtin(__builtin_vsnprintf, 1, 2, 3, 4)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
@@ -131,6 +134,8 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 }
 
 __format(printf, 2, 0)
+__access(read_write, 1)
+__access(read_only, 2)
 __diagnose_as_builtin(__builtin_vsprintf, 1, 2, 3)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
@@ -167,6 +172,7 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
 #undef sprintf
 
 __access(read_write, 1, 2)
+__access(read_only, 3)
 __format(printf, 3, 4)
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
                                     const char *__f, ...)
@@ -179,6 +185,8 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 }
 
 __format(printf, 2, 3)
+__access(read_write, 1)
+__access(read_only, 2)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
 	size_t __b = __bos(__s, 0);
