@@ -32,6 +32,8 @@ TARGETS= \
 	test_getlogin_r_dynamic      \
 	test_getlogin_r_static       \
 	test_malloc                  \
+	test_memchr_dynamic_read     \
+	test_memchr_static_read      \
 	test_memcpy_dynamic_read     \
 	test_memcpy_dynamic_write    \
 	test_memcpy_overwrite_over   \
