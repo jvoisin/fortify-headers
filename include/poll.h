@@ -31,6 +31,7 @@ extern "C" {
 
 #undef poll
 
+__diagnose_as_builtin(__builtin_pollfd, 1, 2, 3)
 _FORTIFY_FN(poll) int poll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n, int __s)
 {
 	size_t __b = __bos(__f, 0);
@@ -42,6 +43,7 @@ _FORTIFY_FN(poll) int poll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n, int __
 
 #if defined(_GNU_SOURCE) && !_REDIR_TIME64
 #undef ppoll
+__diagnose_as_builtin(__builtin_ppollfd, 1, 2, 3, 4)
 _FORTIFY_FN(ppoll) int ppoll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n,
                              const struct timespec *__s, const sigset_t *__m)
 {

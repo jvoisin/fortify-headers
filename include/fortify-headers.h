@@ -93,6 +93,11 @@
 #define __alloc_size(...)
 #endif
 
+#if __has_attribute (__diagnose_as_builtin)
+#define __diagnose_as_builtin(...) __attribute__ ((__diagnose_as_builtin (__VA_ARGS__)))
+#else
+#define __diagnose_as_builtin(...)
+#endif
 
 #endif /* __has_attribute */
 

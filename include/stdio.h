@@ -42,12 +42,14 @@ extern "C" {
 #undef vsprintf
 
 __access(read_only, 2)
+__diagnose_as_builtin(__builtin_fdopen, 1, 2)
 _FORTIFY_FN(fdopen) FILE *fdopen(int __f, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fdopen(__f, __m);
 }
 
 __access(write_only, 1, 2)
+__diagnose_as_builtin(__builtin_fgets, 1, 2, 3)
 _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 {
 	size_t __b = __bos(__s, 0);
@@ -58,6 +60,7 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 }
 
 __malloc(malloc (fclose, 1))
+__diagnose_as_builtin(__builtin_fmemopen, 1, 2, 3)
 _FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fmemopen(__b, __s, __m);
@@ -66,12 +69,14 @@ _FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const 
 __access(read_only, 1)
 __access(read_only, 2)
 __malloc(malloc (fclose, 1))
+__diagnose_as_builtin(__builtin_fopen, 1, 2)
 _FORTIFY_FN(fopen) FILE *fopen(const char* _FORTIFY_POS0 __p, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fopen(__p, __m);
 }
 
 __access(write_only, 1)
+__diagnose_as_builtin(__builtin_fread, 1, 2, 3, 4)
 _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
                                 size_t __m, FILE *__f)
 {
@@ -85,6 +90,7 @@ _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
 }
 
 __access(read_only, 1)
+__diagnose_as_builtin(__builtin_fwrite, 1, 2, 3, 4)
 _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
                                   size_t __m, FILE *__f)
 {
@@ -98,6 +104,7 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 }
 
 __malloc(malloc (pclose, 1))
+__diagnose_as_builtin(__builtin_fwrite, 1, 2)
 _FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTIFY_POS0 __t)
 {
 	return __orig_popen(__c, __t);
@@ -113,6 +120,7 @@ _FORTIFY_FN(tmpfile) FILE *tmpfile(void)
 #endif
 
 __access(read_write, 1, 2)
+__diagnose_as_builtin(__builtin_vsnprintf, 1, 2, 3, 4)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
                                      const char *__f, __builtin_va_list __v)
 {
@@ -123,6 +131,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 	return __orig_vsnprintf(__s, __n, __f, __v);
 }
 
+__diagnose_as_builtin(__builtin_vsprintf, 1, 2, 3)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
 {
