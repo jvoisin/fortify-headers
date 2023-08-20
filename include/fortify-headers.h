@@ -24,12 +24,13 @@
 
 #ifdef __clang__
 
-/* clang uses overloads; see https://github.com/llvm/llvm-project/issues/53516 */
-#if __has_attribute(pass_dynamic_object_size)
+#if _FORTIFY_SOURCE  > 2 && __has_builtin (__builtin_dynamic_object_size) && __has_attribute(pass_dynamic_object_size)
 #define _FORTIFY_POSN(n) const __attribute__((pass_dynamic_object_size(n)))
 #else
 #define _FORTIFY_POSN(n) const __attribute__((pass_object_size(n)))
-#endif /* pass_dynamic_object_size) */
+#endif /* __builtin_dynamic_object_size && pass_dynamic_object_size */
+
+/* clang uses overloads; see https://github.com/llvm/llvm-project/issues/53516 */
 /* we can't use extern inline with overloads without making them external */
 #define _FORTIFY_INLINE static __inline__ \
 	__attribute__((__always_inline__,__artificial__,__overloadable__))
