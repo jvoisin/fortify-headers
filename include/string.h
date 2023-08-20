@@ -102,6 +102,17 @@ _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 	return __r;
 }
 
+__access(read_only, 1, 2)
+_FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
+{
+	size_t __b = __bos(__s, 0);
+
+	char* __r = __builtin_strrchr(__s, __c);
+	if (__r - __s > __b)
+		__builtin_trap();
+	return __r;
+}
+
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
  || defined(_BSD_SOURCE)

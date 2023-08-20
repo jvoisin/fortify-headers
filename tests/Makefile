@@ -84,6 +84,8 @@ TARGETS= \
 	test_strncpy_overwrite_over  \
 	test_strncpy_overwrite_under \
 	test_strncpy_static_write    \
+	test_strrchr_dynamic_read    \
+	test_strrchr_static_read     \
 	test_ttyname_r_dynamic       \
 	test_ttyname_r_static        \
 	test_vsnprintf_dynamic       \

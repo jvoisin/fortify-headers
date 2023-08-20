@@ -1,0 +1,17 @@
+#include "common.h"
+
+#include <string.h>
+
+int main(int argc, char** argv) {
+  char buffer[] = {'1', '2', '3', '4', '5'};
+  const char* padding = "ABCDEFGHIJKLMN";
+  strrchr(buffer, (int)'4');
+  puts(buffer);
+
+  CHK_FAIL_START
+  strrchr(buffer, (int)'A');
+  CHK_FAIL_END
+
+  puts(buffer);
+  return ret;
+}
