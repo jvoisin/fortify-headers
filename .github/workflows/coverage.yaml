@@ -39,7 +39,7 @@ jobs:
       - name: Installing lcov
         run: sudo apt install lcov
       - name: Running the testsuite
-        run: make -C tests clean coverage
+        run: make -C tests clean coverage run
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

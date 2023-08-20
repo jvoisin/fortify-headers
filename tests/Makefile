@@ -96,8 +96,7 @@ TARGETS= \
 .SILENT:
 
 gcc: CC=../x86_64-linux-musl-native/bin/gcc
-gcc: GCOV=../x86_64-linux-musl-native/bin/gcov
-gcc: clean all
+gcc: $(TARGETS)
 
 clang: CC=clang
 clang: GCOV=gcov
@@ -105,15 +104,14 @@ clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
 clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
 clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
 clang: CFLAGS+=-nostdinc
-clang: clean all
+clang: $(TARGETS)
 
-
-all: $(TARGETS) run
+all: gcc
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
 coverage: CC=../x86_64-linux-musl-native/bin/gcc
 coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
-coverage: all
+coverage: $(TARGETS) run
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output-directory coverage

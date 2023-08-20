@@ -30,9 +30,12 @@ jobs:
         run: |
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
+      - name: Build
+        shell: bash
+        run: make -C tests gcc
       - name: Running the testsuite
         shell: bash
-        run: make -C tests gcc | grep -zqv FAIL
+        run: make -C tests run | grep -zqv FAIL
 
   clang:
     runs-on: ubuntu-latest
@@ -58,6 +61,9 @@ jobs:
         run: |
           sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
+      - name: Build
+        shell: bash
+        run: make -C tests clang
       - name: Running the testsuite
         shell: bash
-        run: make -C tests clang | grep -zqv FAIL
+        run: make -C tests run | grep -zqv FAIL
