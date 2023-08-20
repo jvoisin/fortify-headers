@@ -75,6 +75,8 @@ TARGETS= \
 	test_stpncpy_overwrite_under \
 	test_stpncpy_static_write    \
 	test_strcat_static_write     \
+	test_strchr_dynamic_read     \
+	test_strchr_static_read      \
 	test_strcpy_overwrite_over   \
 	test_strcpy_overwrite_under  \
 	test_strcpy_static_write     \
