@@ -31,7 +31,6 @@ TARGETS= \
 	test_gethostname_static      \
 	test_getlogin_r_dynamic      \
 	test_getlogin_r_static       \
-	test_malloc                  \
 	test_memchr_dynamic_read     \
 	test_memchr_static_read      \
 	test_memcpy_dynamic_read     \
@@ -103,7 +102,9 @@ gcc: clean all
 clang: CC=clang
 clang: GCOV=gcov
 clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
-clang: CLFAGS+=-nostdlib
+clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
+clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
+clang: CFLAGS+=-nostdinc
 clang: clean all
 
 

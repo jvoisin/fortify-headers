@@ -38,6 +38,7 @@ extern "C" {
 
 #undef malloc
 #undef realloc
+#undef calloc
 
 __malloc(malloc (free, 1))
 __alloc_size(1)

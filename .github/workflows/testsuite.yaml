@@ -34,6 +34,18 @@ jobs:
     steps:
       - name: Checking out the code
         uses: actions/checkout@v3
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://musl.cc/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
       - name: Setting up clang version
         run: |
           sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100

@@ -25,7 +25,7 @@
 #ifdef __clang__
 
 /* clang uses overloads; see https://github.com/llvm/llvm-project/issues/53516 */
-#define _FORTIFY_POSN(n) const __attribute__((__pass_object_size__(n)))
+#define _FORTIFY_POSN(n) const __attribute__((pass_object_size(n)))
 /* we can't use extern inline with overloads without making them external */
 #define _FORTIFY_INLINE static __inline__ \
 	__attribute__((__always_inline__,__artificial__,__overloadable__))
@@ -38,6 +38,7 @@
 
 #endif /* __clang__ */
 
+/* https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html */
 #define _FORTIFY_POS0 _FORTIFY_POSN(0)
 #define _FORTIFY_POS1 _FORTIFY_POSN(1)
 #define _FORTIFY_POS2 _FORTIFY_POSN(2)
@@ -46,7 +47,6 @@
 #define _FORTIFY_ORIG(p,fn) __typeof__(fn) __orig_##fn __asm__(_FORTIFY_STR(p) #fn)
 #define _FORTIFY_FNB(fn) _FORTIFY_ORIG(__USER_LABEL_PREFIX__,fn)
 #define _FORTIFY_FN(fn) _FORTIFY_FNB(fn); _FORTIFY_INLINE
-
 
 /* Use __builtin_dynamic_object_size with _FORTIFY_SOURCE>2, if available.  */
 #if _FORTIFY_SOURCE  > 2 && __has_builtin (__builtin_dynamic_object_size)
@@ -73,7 +73,11 @@
 #endif
 
 #if __has_attribute (malloc)
+#ifdef __clang__
+#define __malloc(...) __attribute__ ((malloc))
+#else
 #define __malloc(...) __attribute__ ((malloc, __VA_ARGS__))
+#endif /* __clang__ */
 #else
 #define __malloc(...)
 #endif

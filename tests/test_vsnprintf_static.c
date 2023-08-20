@@ -10,6 +10,7 @@ int msg_valid(int n, const char * format, ... ) {
   va_start (args, format);
   vsnprintf(buffer, n, format, args);
   va_end (args);
+  return 0;
 }
 
 int msg(int n, const char * format, ... ) {

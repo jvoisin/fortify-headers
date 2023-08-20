@@ -36,15 +36,13 @@ extern "C" {
 #undef fread
 #undef fwrite
 #undef popen
-#undef tmpfile
 #undef snprintf
 #undef sprintf
 #undef vsnprintf
 #undef vsprintf
 
 __access(read_only, 2)
-__malloc(malloc (fclose, 1))
-_FORTIFY_FN(fdopen) FILE *fdopen(int __f, const char* __m)
+_FORTIFY_FN(fdopen) FILE *fdopen(int __f, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fdopen(__f, __m);
 }
@@ -60,7 +58,7 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 }
 
 __malloc(malloc (fclose, 1))
-_FORTIFY_FN(fmemopen) FILE *fmemopen(void* __b, size_t __s, const char* __m)
+_FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fmemopen(__b, __s, __m);
 }
@@ -68,7 +66,7 @@ _FORTIFY_FN(fmemopen) FILE *fmemopen(void* __b, size_t __s, const char* __m)
 __access(read_only, 1)
 __access(read_only, 2)
 __malloc(malloc (fclose, 1))
-_FORTIFY_FN(fopen) FILE *fopen(const char* __p, const char* __m)
+_FORTIFY_FN(fopen) FILE *fopen(const char* _FORTIFY_POS0 __p, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fopen(__p, __m);
 }
@@ -100,16 +98,19 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 }
 
 __malloc(malloc (pclose, 1))
-_FORTIFY_FN(popen) FILE *popen(const char* __c, const char* __t)
+_FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTIFY_POS0 __t)
 {
 	return __orig_popen(__c, __t);
 }
 
+#ifndef __clang__  /* FIXME */
+#undef tmpfile
 __malloc(malloc (fclose, 1))
 _FORTIFY_FN(tmpfile) FILE *tmpfile(void)
 {
 	return __orig_tmpfile();
 }
+#endif
 
 __access(read_write, 1, 2)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
