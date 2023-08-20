@@ -15,6 +15,8 @@ TARGETS= \
 	test_confstr_static          \
 	test_fgets_dynamic           \
 	test_fgets_static            \
+	test_fgetws_dynamic          \
+	test_fgetws_static           \
 	test_fread_int_overflow      \
 	test_fread_overwrite_dynamic \
 	test_fread_overwrite_static  \
@@ -31,6 +33,8 @@ TARGETS= \
 	test_gethostname_static      \
 	test_getlogin_r_dynamic      \
 	test_getlogin_r_static       \
+	test_mbsrtowcs_dynamic       \
+	test_mbsrtowcs_static        \
 	test_memchr_dynamic_read     \
 	test_memchr_static_read      \
 	test_memcpy_dynamic_read     \
