@@ -99,6 +99,14 @@
 #define __diagnose_as_builtin(...)
 #endif
 
+#if __has_attribute (__diagnose_if)
+#define __warning_if(cond, msg) __attribute__ ((__diagnose_if (cond, msg, "warning")))
+#define __error_if(cond, msg) __attribute__ ((__diagnose_if (cond, msg, "error")))
+#else
+#define __warning_if(cond, msg)
+#define __error_if(cond, msg)
+#endif
+
 #endif /* __has_attribute */
 
 /*
