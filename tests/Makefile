@@ -35,6 +35,8 @@ TARGETS= \
 	test_getlogin_r_static       \
 	test_mbsrtowcs_dynamic       \
 	test_mbsrtowcs_static        \
+	test_mbstowcs_dynamic        \
+	test_mbstowcs_static         \
 	test_memchr_dynamic_read     \
 	test_memchr_static_read      \
 	test_memcpy_dynamic_read     \
