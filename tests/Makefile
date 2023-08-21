@@ -91,6 +91,7 @@ TARGETS= \
 	test_strrchr_static_read     \
 	test_ttyname_r_dynamic       \
 	test_ttyname_r_static        \
+	test_umask                   \
 	test_vsnprintf_dynamic       \
 	test_vsnprintf_static        \
 	test_vsprintf                \
