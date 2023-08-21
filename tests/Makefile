@@ -37,6 +37,8 @@ TARGETS= \
 	test_mbsrtowcs_static        \
 	test_mbstowcs_dynamic        \
 	test_mbstowcs_static         \
+	test_wmemset_dynamic         \
+	test_wmemset_static          \
 	test_memchr_dynamic_read     \
 	test_memchr_static_read      \
 	test_memcpy_dynamic_read     \
