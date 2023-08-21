@@ -101,10 +101,12 @@
 
 #endif /* __has_attribute */
 
-
-/* TODO(jvoisin) Figure a nice way to make use of __builtin_mul_overflow while ignoring the result. */
-/* TODO(jvoisin) Make use of C23's stdckdint header: https://gustedt.gitlabpages.inria.fr/c23-library/#stdckdint */
 /*
+ * We're not making use of C23's <stdckdint.h> since:
+ *   - there is no elegant way to make it ignore the results.
+ *   - it's tricky to make it type-agnostic when we don't care about the result.
+ * We're not making use of __builtin_mul_overflow for the same reasons.
+ *
  * See:
  * - https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
  * - https://clang.llvm.org/docs/LanguageExtensions.html#checked-arithmetic-builtins
