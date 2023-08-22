@@ -180,6 +180,17 @@ _FORTIFY_FN(write) ssize_t write(int __f, const void * _FORTIFY_POS0 __s,
 	return __orig_write(__f, __s, __n);
 }
 
+__diagnose_as_builtin(__builtin_pwrite, 1, 2, 3, 4)
+_FORTIFY_FN(pwrite) ssize_t pwrite(int __f, const void * _FORTIFY_POS0 __s,
+                                 size_t __n, off_t __o)
+{
+	size_t __b = __bos(__s, 0);
+
+	if (__n > __b)
+		__builtin_trap();
+	return __orig_pwrite(__f, __s, __n, __o);
+}
+
 #ifdef __cplusplus
 }
 #endif
