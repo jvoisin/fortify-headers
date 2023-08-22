@@ -21,6 +21,9 @@
 #error a compiler with __has_builtin support is required
 #endif
 
+#if ! __has_builtin(__builtin_trap)
+#define __builtin_trap abort
+#endif
 
 #ifdef __clang__
 
