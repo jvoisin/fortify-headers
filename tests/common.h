@@ -50,7 +50,7 @@ set_fortify_handler (void)
 }
 
 #define FAIL() \
-  do { fprintf (stderr, "Failure on line %d\n", __LINE__); ret = 1; } while (0)
+  do { fprintf (stderr, "Failure in %s:%d\n", __FILE__, __LINE__); ret = 1; } while (0)
 #define CHK_FAIL_START \
   chk_fail_ok = 1;                              \
   if (! setjmp (chk_fail_buf))                  \
