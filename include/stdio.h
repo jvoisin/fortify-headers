@@ -153,7 +153,6 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
 	return __r;
 }
 
-#if defined(__has_builtin)
 #if __has_builtin(__builtin_va_arg_pack)
 
 /* clang is missing __builtin_va_arg_pack, so we cannot use these impls
@@ -203,7 +202,6 @@ _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 }
 
 #endif /* __has_builtin(__builtin_va_arg_pack) */
-#endif /* defined(__has_builtin) */
 
 #ifdef __cplusplus
 }
