@@ -102,6 +102,8 @@ TARGETS= \
 	test_vsnprintf_static        \
 	test_vsprintf                \
 	test_write_dynamic           \
+	test_wmemmove_dynamic_write  \
+	test_wmemmove_static_write   \
 	test_write_static            \
 
 .SILENT:
