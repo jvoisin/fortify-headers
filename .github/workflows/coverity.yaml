@@ -13,7 +13,20 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends php-dev curl ca-certificates make gcc
+          DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends curl ca-certificates make
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://musl.cc/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+
       - name: Download Coverity Build Tool
         run: |
           curl https://scan.coverity.com/download/linux64 --form token=$TOKEN --form project=jvoisin/fortify-headers -o cov-analysis-linux64.tar.gz
