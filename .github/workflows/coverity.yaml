@@ -13,7 +13,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends curl ca-certificates make
+          DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends curl ca-certificates make wget
       - name: Cache musl toolchain
         uses: actions/cache@v3
         id: cache-musl
