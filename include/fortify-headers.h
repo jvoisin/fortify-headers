@@ -25,6 +25,10 @@
 #define __builtin_trap abort
 #endif
 
+#if _FORTIFY_SOURCE > 3
+#warning _FORTIFY_SOURCE > 3 is treated as 3
+#endif
+
 #ifdef __clang__
 
 #if _FORTIFY_SOURCE  > 2 && __has_builtin (__builtin_dynamic_object_size) && __has_attribute(pass_dynamic_object_size)
