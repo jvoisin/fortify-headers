@@ -37,8 +37,6 @@ TARGETS= \
 	test_mbsrtowcs_static        \
 	test_mbstowcs_dynamic        \
 	test_mbstowcs_static         \
-	test_wmemset_dynamic         \
-	test_wmemset_static          \
 	test_memchr_dynamic_read     \
 	test_memchr_static_read      \
 	test_memcpy_dynamic_read     \
@@ -101,11 +99,17 @@ TARGETS= \
 	test_vsnprintf_dynamic       \
 	test_vsnprintf_static        \
 	test_vsprintf                \
-	test_write_dynamic           \
-	test_wmemmove_dynamic_write  \
-	test_wmemmove_static_write   \
+	test_wcscat_static_write     \
+	test_wcscpy_static_write     \
+	test_wcsncpy_static_write    \
+	test_wcsncat_static_write    \
 	test_wmemcpy_dynamic_write   \
 	test_wmemcpy_static_write    \
+	test_wmemmove_dynamic_write  \
+	test_wmemmove_static_write   \
+	test_wmemset_dynamic         \
+	test_wmemset_static          \
+	test_write_dynamic           \
 	test_write_static            \
 
 .SILENT:
