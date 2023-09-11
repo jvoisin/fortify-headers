@@ -42,6 +42,7 @@ extern "C" {
 
 __malloc(malloc (free, 1))
 __alloc_size(1)
+__warn_unused_result
 __diagnose_as_builtin(__builtin_malloc, 1)
 _FORTIFY_FN(malloc) void *malloc(size_t __s)
 {
@@ -49,6 +50,7 @@ _FORTIFY_FN(malloc) void *malloc(size_t __s)
 }
 
 __alloc_size(2)
+__warn_unused_result
 __diagnose_as_builtin(__builtin_realloc, 1, 2)
 _FORTIFY_FN(realloc) void *realloc(void *__p, size_t __s)
 {
@@ -56,6 +58,7 @@ _FORTIFY_FN(realloc) void *realloc(void *__p, size_t __s)
 }
 
 __alloc_size(1, 2)
+__warn_unused_result
 __diagnose_as_builtin(__builtin_calloc, 1, 2)
 _FORTIFY_FN(calloc) void *calloc(size_t __n, size_t __s)
 {
@@ -65,6 +68,7 @@ _FORTIFY_FN(calloc) void *calloc(size_t __n, size_t __s)
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef reallocarray
 __alloc_size (2, 3)
+__warn_unused_result
 __diagnose_as_builtin(__builtin_reallocarray, 1, 2, 3)
 _FORTIFY_FN(reallocarray) void* reallocarray(void* __p, size_t __n, size_t __s)
 {

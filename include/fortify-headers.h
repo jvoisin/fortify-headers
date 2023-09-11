@@ -110,6 +110,13 @@
 #define __error_if(cond, msg)
 #endif
 
+#if __has_attribute (warn_unused_result)
+#define __warn_unused_result __attribute__ ((warn_unused_result))
+#else
+#define __warn_unused_result
+#endif
+
+
 #endif /* __has_attribute */
 
 /*
