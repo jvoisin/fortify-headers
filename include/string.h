@@ -49,10 +49,7 @@ _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
 	char *__d = (char *)__od;
 	const char *__s = (const char *)__os;
 
-	/* trap if pointers are overlapping but not if dst == src.
-	 * gcc seems to like to generate code that relies on dst == src */
-	if ((__d < __s && __d + __n > __s) ||
-	    (__s < __d && __s + __n > __d))
+	if __fh_overlap(__d, __s, __n)
 		__builtin_trap();
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -131,10 +128,7 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
 	size_t __n = strlen(__s) + 1;
 
-	/* trap if pointers are overlapping but not if dst == src.
-	 * gcc seems to like to generate code that relies on dst == src */
-	if ((__d < __s && __d + __n > __s) ||
-	    (__s < __d && __s + __n > __d))
+	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
 	size_t __b = __bos(__d, 0);
@@ -150,10 +144,7 @@ __diagnose_as_builtin(__builtin_stpncpy, 1, 2, 3)
 _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
-	/* trap if pointers are overlapping but not if dst == src.
-	 * gcc seems to like to generate code that relies on dst == src */
-	if ((__d < __s && __d + __n > __s) ||
-	    (__s < __d && __s + __n > __d))
+	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
 	size_t __b = __bos(__d, 0);
@@ -182,10 +173,7 @@ _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
 	size_t __n = strlen(__s) + 1;
 
-	/* trap if pointers are overlapping but not if dst == src.
-	 * gcc seems to like to generate code that relies on dst == src */
-	if ((__d < __s && __d + __n > __s) ||
-	    (__s < __d && __s + __n > __d))
+	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
 	size_t __b = __bos(__d, 0);
@@ -219,10 +207,7 @@ __diagnose_as_builtin(__builtin_strncpy, 1, 2, 3)
 _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
                                    const char *__s, size_t __n)
 {
-	/* trap if pointers are overlapping but not if dst == src.
-	 * gcc seems to like to generate code that relies on dst == src */
-	if ((__d < __s && __d + __n > __s) ||
-	    (__s < __d && __s + __n > __d))
+	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
 	size_t __b = __bos(__d, 0);

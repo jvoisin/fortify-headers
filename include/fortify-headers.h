@@ -123,6 +123,15 @@
 
 #endif /* __has_attribute */
 
+//TODO(jvoisin) Add a check for overflows
+/* check if pointers are overlapping but not if dst == src,
+ * since gcc seems to like to generate code that relies on dst == src */
+#define __fh_overlap(a, b, l) \
+	( \
+		((a) < (b) && (b) < (a) + (size_t)(l)) \
+	     || ((b) < (a) && (a) < (b) + (size_t)(l)) \
+        )
+
 /*
  * We're not making use of C23's <stdckdint.h> since:
  *   - there is no elegant way to make it ignore the results.
