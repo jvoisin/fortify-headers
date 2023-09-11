@@ -80,6 +80,7 @@ _FORTIFY_FN(reallocarray) void* reallocarray(void* __p, size_t __n, size_t __s)
 #if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)) && !defined(__clang__)
 #undef realpath
 __diagnose_as_builtin(__builtin_realpath, 1, 2)
+__warning_if(__p == NULL, "'realpath' called with path set to `NULL`; did you invert the arguments?")
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
 #ifndef PATH_MAX
