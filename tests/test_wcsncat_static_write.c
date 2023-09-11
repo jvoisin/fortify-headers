@@ -5,7 +5,6 @@
 int main(int argc, char** argv) {
   wchar_t buffer[8] = {0};
   wcsncat(buffer, L"αβγδεζηθικλμνξοπρστυφχψω", 2);
-  puts(buffer);
 
   CHK_FAIL_START
   wcsncat(buffer, L"αβγδεζηθικλμνξοπρστυφχψω", 1337);
