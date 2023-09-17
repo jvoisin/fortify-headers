@@ -88,7 +88,9 @@ TARGETS= \
 	test_strcpy_overwrite_over   \
 	test_strcpy_overwrite_under  \
 	test_strcpy_static_write     \
+	test_strcpy_dynamic_write    \
 	test_strncat_static_write    \
+	test_strncat_dynamic_write   \
 	test_strncpy_overwrite_over  \
 	test_strncpy_overwrite_under \
 	test_strncpy_static_write    \
