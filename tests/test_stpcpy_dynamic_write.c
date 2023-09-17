@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
   puts(buffer);
 
   CHK_FAIL_START
-  stpcpy(buffer, "1234567890");
+  stpcpy(buffer, argv[1]);
   CHK_FAIL_END
 
   puts(buffer);

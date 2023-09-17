@@ -78,6 +78,7 @@ TARGETS= \
 	test_stpcpy_overwrite_over   \
 	test_stpcpy_overwrite_under  \
 	test_stpcpy_static_write     \
+	test_stpcpy_dynamic_write    \
 	test_stpncpy_overwrite_over  \
 	test_stpncpy_overwrite_under \
 	test_stpncpy_static_write    \
@@ -141,7 +142,7 @@ $(TARGETS): %: %.c
 
 run: $(TARGETS)
 	$(foreach EXE, $(TARGETS), \
-		timeout 1s ./$(EXE) 1 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL" ; \
+		timeout 1s ./$(EXE) 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 	)
 
 clean:
