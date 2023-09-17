@@ -75,22 +75,28 @@ TARGETS= \
 	test_send_static             \
 	test_sendto_dynamic          \
 	test_sendto_static           \
+	test_stpcpy_dynamic_write    \
 	test_stpcpy_overwrite_over   \
 	test_stpcpy_overwrite_under  \
 	test_stpcpy_static_write     \
-	test_stpcpy_dynamic_write    \
+	test_stpncpy_dynamic_write   \
 	test_stpncpy_overwrite_over  \
 	test_stpncpy_overwrite_under \
 	test_stpncpy_static_write    \
 	test_strcat_static_write     \
 	test_strchr_dynamic_read     \
 	test_strchr_static_read      \
+	test_strcpy_dynamic_write    \
 	test_strcpy_overwrite_over   \
 	test_strcpy_overwrite_under  \
 	test_strcpy_static_write     \
-	test_strcpy_dynamic_write    \
-	test_strncat_static_write    \
+	test_strlcat_dynamic_write   \
+	test_strlcat_static_write    \
+	test_strlcpy_dynamic_write   \
+	test_strlcpy_static_write    \
 	test_strncat_dynamic_write   \
+	test_strncat_static_write    \
+	test_strncpy_dynamic_write   \
 	test_strncpy_overwrite_over  \
 	test_strncpy_overwrite_under \
 	test_strncpy_static_write    \
@@ -104,8 +110,8 @@ TARGETS= \
 	test_vsprintf                \
 	test_wcscat_static_write     \
 	test_wcscpy_static_write     \
-	test_wcsncpy_static_write    \
 	test_wcsncat_static_write    \
+	test_wcsncpy_static_write    \
 	test_wmemcpy_dynamic_write   \
 	test_wmemcpy_static_write    \
 	test_wmemmove_dynamic_write  \
