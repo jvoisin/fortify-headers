@@ -191,9 +191,7 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 	size_t __b = __bos(__d, 0);
 
 	if (__n > __b) {
-		size_t __sl = strlen(__s);
-		if (__sl > __n)
-			__sl = __n;
+		size_t __sl = strnlen(__s, __n);
 		size_t __dl = strlen(__d);
 		if (__sl + __dl + 1 > __b)
 			__builtin_trap();
