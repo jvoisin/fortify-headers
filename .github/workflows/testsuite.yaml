@@ -35,7 +35,7 @@ jobs:
         run: make -C tests gcc
       - name: Running the testsuite
         shell: bash
-        run: make -C tests run | grep -zqv FAIL
+        run: make -C tests run
 
   clang:
     runs-on: ubuntu-latest
@@ -64,6 +64,9 @@ jobs:
       - name: Build
         shell: bash
         run: make -C tests clang
-      - name: Running the testsuite
+      - name: Running the compile-time testsuite
         shell: bash
-        run: make -C tests run | grep -zqv FAIL
+        run: make -C tests clang
+      - name: Running the run-time testsuite
+        shell: bash
+        run: make -C tests run

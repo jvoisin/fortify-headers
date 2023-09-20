@@ -1,6 +1,11 @@
 CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
-TARGETS= \
+COMPTIME_TARGETS= \
+	test_memcpy_overwrite_under  \
+	test_memcpy_static_write     \
+
+
+RUNTIME_TARGETS= \
 	test_FD_CLR_SETSIZE          \
 	test_FD_CLR_negative         \
 	test_FD_SET_SETSIZE          \
@@ -42,9 +47,7 @@ TARGETS= \
 	test_memcpy_dynamic_read     \
 	test_memcpy_dynamic_write    \
 	test_memcpy_overwrite_over   \
-	test_memcpy_overwrite_under  \
 	test_memcpy_static_read      \
-	test_memcpy_static_write     \
 	test_memmove_dynamic_read    \
 	test_memmove_dynamic_write   \
 	test_memmove_static_read     \
@@ -124,37 +127,42 @@ TARGETS= \
 .SILENT:
 
 gcc: CC=../x86_64-linux-musl-native/bin/gcc
-gcc: $(TARGETS)
+gcc: $(RUNTIME_TARGETS)
 
 clang: CC=clang
-clang: GCOV=gcov
 clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
 clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
 clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
 clang: CFLAGS+=-nostdinc
-clang: $(TARGETS)
-
-all: gcc
+clang: comptime $(RUNTIME_TARGETS)
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
 coverage: CC=../x86_64-linux-musl-native/bin/gcc
 coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
-coverage: $(TARGETS) run
+coverage: $(RUNTIME_TARGETS) run
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
 	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info
 	genhtml cleaned-coverage.info --output-directory coverage
 
-$(TARGETS): %: %.c
+all: gcc
+
+
+$(RUNTIME_TARGETS): %: %.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-run: $(TARGETS)
-	$(foreach EXE, $(TARGETS), \
+run: $(RUNTIME_TARGETS)
+	$(foreach EXE, $(RUNTIME_TARGETS), \
 		timeout 1s ./$(EXE) 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 	)
 
+comptime:  # only works on clang, as gcc doesn't have the diagnose_if attribute
+	$(foreach EXE, $(COMPTIME_TARGETS), \
+		($(CC) $(CFLAGS) -o ./$(EXE) ./$(EXE).c 1>/dev/null 2>/dev/null && echo "$(EXE) FAIL" || echo "$(EXE) OK") || true ;\
+	)
+
 clean:
-	$(foreach EXE, $(TARGETS), \
+	$(foreach EXE, $(RUNTIME_TARGETS) $(COMPTIME_TARGETS), \
 		rm -f ./$(EXE) \
 	)
 	rm -rf ./*.gcno ./*.gcda ./*.gcov ./coverage.info ./coverage

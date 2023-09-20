@@ -43,6 +43,7 @@ __access(read_only, 2, 3)
 __diagnose_as_builtin(__builtin_memcpy, 1, 2, 3)
 _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
                                  const void * _FORTIFY_POS0 __os, size_t __n)
+__error_if((__bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the size of `d`.")
 {
 	size_t __bd = __bos(__od, 0);
 	size_t __bs = __bos(__os, 0);
@@ -72,8 +73,8 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 
 __access(write_only, 1, 3)
 __diagnose_as_builtin(__builtin_memset, 1, 2, 3)
-__warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert the arguments?")
 _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
+__warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert the arguments?")
 {
 	size_t __b = __bos(__d, 0);
 
