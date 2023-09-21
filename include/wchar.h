@@ -56,7 +56,6 @@ extern "C" {
 #undef wmemmove
 #undef wmemset
 
-__diagnose_as_builtin(__builtin_fgetws, 1, 2, 3)
 _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t * _FORTIFY_POS0 __s,
                                     int __n, FILE *__f)
 {
@@ -70,7 +69,6 @@ _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t * _FORTIFY_POS0 __s,
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE)  || defined(_BSD_SOURCE)
 #undef mbsnrtowcs
-__diagnose_as_builtin(__builtin_mbsnrtowcs, 1, 2, 3, 4, 5)
 _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t * _FORTIFY_POS0 __d,
                                           const char **__s, size_t __n,
                                           size_t __wn, mbstate_t *__st)
@@ -92,7 +90,6 @@ _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t * _FORTIFY_POS0 __d,
 }
 #endif
 
-__diagnose_as_builtin(__builtin_mbsrtowcs, 1, 2, 3, 4)
 _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t * _FORTIFY_POS0 __d,
                                         const char **__s, size_t __wn,
                                         mbstate_t *__st)
@@ -107,7 +104,6 @@ _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t * _FORTIFY_POS0 __d,
 	return __r;
 }
 
-__diagnose_as_builtin(__builtin_mbstowcs, 1, 2, 3)
 _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
                                       const char *__s, size_t __wn)
 {
@@ -120,7 +116,6 @@ _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
 
 /* FIXME clang */
 #ifndef __clang__
-__diagnose_as_builtin(__builtin_wcrtomb, 1, 2, 3)
 _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 {
 	if (__s && MB_LEN_MAX > __bos(__s, 2)) {
@@ -139,7 +134,6 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 }
 #endif
 
-__diagnose_as_builtin(__builtin_wcscat, 1, 2)
 _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t * _FORTIFY_POS0 __d,
                                     const wchar_t *__s)
 {
@@ -150,7 +144,6 @@ _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t * _FORTIFY_POS0 __d,
 	return __orig_wcscat(__d, __s);
 }
 
-__diagnose_as_builtin(__builtin_wcscpy, 1, 2)
 _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
                                     const wchar_t *__s)
 {
@@ -161,7 +154,6 @@ _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
 	return __orig_wcscpy(__d, __s);
 }
 
-__diagnose_as_builtin(__builtin_wcsncat, 1, 2, 3)
 _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
@@ -179,7 +171,6 @@ _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
 	return __orig_wcsncat(__d, __s, __n);
 }
 
-__diagnose_as_builtin(__builtin_wcsncpy, 1, 2, 3)
 _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
@@ -193,7 +184,6 @@ _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE)  || defined(_BSD_SOURCE)
 #undef wcsnrtombs
-__diagnose_as_builtin(__builtin_wcsntombs, 1, 2, 3, 4, 5)
 _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
                                           const wchar_t **__s, size_t __wn,
                                           size_t __n, mbstate_t *__st)
@@ -215,7 +205,6 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
 }
 #endif
 
-__diagnose_as_builtin(__builtin_wcsrtombs, 1, 2, 3, 4)
 _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
                                         const wchar_t **__s, size_t __n,
                                         mbstate_t *__st)
@@ -230,7 +219,6 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
 }
 
 __access(write_only, 1, 3)
-__diagnose_as_builtin(__builtin_wcstombs, 1, 2, 3)
 _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
                                       const wchar_t *__ws, size_t __n)
 {
@@ -241,7 +229,6 @@ _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
 	return __orig_wcstombs(__s, __ws, __n);
 }
 
-__diagnose_as_builtin(__builtin_wctomb, 1, 2)
 _FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 {
 	size_t __b = __bos(__s, 0);
@@ -251,7 +238,6 @@ _FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 	return __orig_wctomb(__s, __w);
 }
 
-__diagnose_as_builtin(__builtin_wmemcpy, 1, 2, 3)
 _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
@@ -262,7 +248,6 @@ _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
 	return __orig_wmemcpy(__d, __s, __n);
 }
 
-__diagnose_as_builtin(__builtin_wmemmove, 1, 2, 3)
 _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
                                         const wchar_t *__s, size_t __n)
 {
@@ -273,7 +258,6 @@ _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
 	return __orig_wmemmove(__d, __s, __n);
 }
 
-__diagnose_as_builtin(__builtin_wmemset, 1, 2, 3)
 _FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t * _FORTIFY_POS0 __s,
                                       wchar_t __c, size_t __n)
 {

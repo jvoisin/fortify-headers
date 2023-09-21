@@ -40,7 +40,9 @@ extern "C" {
 
 __access(write_only, 1, 3)
 __access(read_only, 2, 3)
+#if __has_builtin(__builtin_mempcpy)
 __diagnose_as_builtin(__builtin_memcpy, 1, 2, 3)
+#endif
 _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
                                  const void * _FORTIFY_POS0 __os, size_t __n)
 __error_if((__bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the size of `d`.")
@@ -59,7 +61,9 @@ __error_if((__bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the siz
 
 __access(write_only, 1, 3)
 __access(read_only, 2, 3)
+#if __has_builtin(__builtin_memmove)
 __diagnose_as_builtin(__builtin_memmove, 1, 2, 3)
+#endif
 _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
@@ -72,7 +76,9 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 }
 
 __access(write_only, 1, 3)
+#if __has_builtin(__builtin_memset)
 __diagnose_as_builtin(__builtin_memset, 1, 2, 3)
+#endif
 _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert the arguments?")
 {
@@ -84,7 +90,9 @@ __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert 
 }
 
 __access(read_only, 1, 3)
+#if __has_builtin(__builtin_memchr)
 __diagnose_as_builtin(__builtin_memchr, 1, 2, 3)
+#endif
 _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
@@ -95,7 +103,6 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 }
 
 __access(read_only, 1, 2)
-__diagnose_as_builtin(__builtin_strchr, 1, 2, 3)
 _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 {
 	size_t __b = __bos(__s, 0);
@@ -107,7 +114,6 @@ _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 }
 
 __access(read_only, 1, 2)
-__diagnose_as_builtin(__builtin_strrchr, 1, 2, 3)
 _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
 {
 	size_t __b = __bos(__s, 0);
@@ -124,7 +130,9 @@ _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
 #undef stpcpy
 __access(write_only, 1)
 __access(read_only, 2)
+#if __has_builtin(__builtin_stpcpy)
 __diagnose_as_builtin(__builtin_stpcpy, 1, 2)
+#endif
 _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
 	size_t __n = strlen(__s) + 1;
@@ -141,7 +149,9 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 #undef stpncpy
 __access(write_only, 1)
 __access(read_only, 2, 3)
+#if __has_builtin(__builtin_stpncpy)
 __diagnose_as_builtin(__builtin_stpncpy, 1, 2, 3)
+#endif
 _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
@@ -157,7 +167,9 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 
 __access (read_write, 1)
 __access (read_only, 2)
+#if __has_builtin(__builtin_strcat)
 __diagnose_as_builtin(__builtin_strcat, 1, 2)
+#endif
 _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 {
 	size_t __b = __bos(__d, 0);
@@ -169,7 +181,9 @@ _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 
 __access (write_only, 1)
 __access (read_only, 2)
+#if __has_builtin(__builtin_strcpy)
 __diagnose_as_builtin(__builtin_strcpy, 1, 2)
+#endif
 _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
 	size_t __n = strlen(__s) + 1;
@@ -185,7 +199,9 @@ _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 
 __access (read_write, 1)
 __access (read_only, 2, 3)
+#if __has_builtin(__builtin_strncat)
 __diagnose_as_builtin(__builtin_strncat, 1, 2, 3)
+#endif
 _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
@@ -202,7 +218,9 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 
 __access (write_only, 1)
 __access (read_only, 2, 3)
+#if __has_builtin(__builtin_strncpy)
 __diagnose_as_builtin(__builtin_strncpy, 1, 2, 3)
+#endif
 _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
                                    const char *__s, size_t __n)
 {
@@ -219,7 +237,9 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 #undef mempcpy
 __access(write_only, 1)
 __access(read_only, 2, 3)
+#if __has_builtin(__builtin_mempcpy)
 __diagnose_as_builtin(__builtin_mempcpy, 1, 2, 3)
+#endif
 _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
@@ -237,7 +257,6 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 #undef strlcpy
 __access (read_write, 1)
 __access (read_only, 2, 3)
-__diagnose_as_builtin(__builtin_strlcat, 1, 2, 3)
 _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
@@ -250,7 +269,6 @@ _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
 
 __access (write_only, 1)
 __access (read_only, 2, 3)
-__diagnose_as_builtin(__builtin_strlcpy, 1, 2, 3)
 _FORTIFY_FN(strlcpy) size_t strlcpy(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
