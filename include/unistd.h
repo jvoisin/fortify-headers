@@ -42,6 +42,9 @@ extern "C" {
 #undef write
 
 __access(write_only, 2, 3)
+#if __has_builtin(__builtin_confstr)
+__diagnose_as_builtin(__builtin_confstr, 1, 2, 3)
+#endif
 _FORTIFY_FN(confstr) size_t confstr(int __n, char * _FORTIFY_POS0 __s, size_t __l)
 {
 	size_t __b = __bos(__s, 0);
@@ -53,6 +56,9 @@ _FORTIFY_FN(confstr) size_t confstr(int __n, char * _FORTIFY_POS0 __s, size_t __
 }
 
 __access(write_only, 1, 2)
+#if __has_builtin(__builtin_getcwd)
+__diagnose_as_builtin(__builtin_getcwd, 1, 2)
+#endif
 _FORTIFY_FN(getcwd) char *getcwd(char * _FORTIFY_POS0 __s, size_t __l)
 {
 	size_t __b = __bos(__s, 0);
@@ -65,6 +71,9 @@ _FORTIFY_FN(getcwd) char *getcwd(char * _FORTIFY_POS0 __s, size_t __l)
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef getdomainname
 __access(write_only, 1, 2)
+#if __has_builtin(__builtin_getdomainname)
+__diagnose_as_builtin(__builtin_getdomainname, 1, 2)
+#endif
 _FORTIFY_FN(getdomainname) int getdomainname(char * _FORTIFY_POS0 __s, size_t __l)
 {
 	size_t __b = __bos(__s, 0);
@@ -75,6 +84,9 @@ _FORTIFY_FN(getdomainname) int getdomainname(char * _FORTIFY_POS0 __s, size_t __
 }
 #endif
 
+#if __has_builtin(__builtin_getgroups)
+__diagnose_as_builtin(__builtin_getgroups, 1, 2)
+#endif
 _FORTIFY_FN(getgroups) int getgroups(int __l, gid_t * _FORTIFY_POS0 __s)
 {
 	size_t __b = __bos(__s, 0);
@@ -85,6 +97,9 @@ _FORTIFY_FN(getgroups) int getgroups(int __l, gid_t * _FORTIFY_POS0 __s)
 }
 
 __access(write_only, 1, 2)
+#if __has_builtin(__builtin_gethostname)
+__diagnose_as_builtin(__builtin_gethostname, 1, 2)
+#endif
 _FORTIFY_FN(gethostname) int gethostname(char * _FORTIFY_POS0 __s, size_t __l)
 {
 	size_t __b = __bos(__s, 0);
@@ -95,6 +110,9 @@ _FORTIFY_FN(gethostname) int gethostname(char * _FORTIFY_POS0 __s, size_t __l)
 }
 
 __access(write_only, 1, 2)
+#if __has_builtin(__builtin_getlogin_r)
+__diagnose_as_builtin(__builtin_getlogin_r, 1, 2)
+#endif
 _FORTIFY_FN(getlogin_r) int getlogin_r(char * _FORTIFY_POS0 __s, size_t __l)
 {
 	size_t __b = __bos(__s, 0);
@@ -104,6 +122,9 @@ _FORTIFY_FN(getlogin_r) int getlogin_r(char * _FORTIFY_POS0 __s, size_t __l)
 	return __orig_getlogin_r(__s, __l);
 }
 
+#if __has_builtin(__builtin_pread)
+__diagnose_as_builtin(__builtin_pread, 1, 2, 3, 4)
+#endif
 _FORTIFY_FN(pread) ssize_t pread(int __f, void * _FORTIFY_POS0 __s,
                                  size_t __n, off_t __o)
 {
@@ -115,6 +136,9 @@ _FORTIFY_FN(pread) ssize_t pread(int __f, void * _FORTIFY_POS0 __s,
 }
 
 __access(write_only, 2, 3)
+#if __has_builtin(__builtin_read)
+__diagnose_as_builtin(__builtin_read, 1, 2, 3)
+#endif
 _FORTIFY_FN(read) ssize_t read(int __f, void * _FORTIFY_POS0 __s, size_t __n)
 {
 	size_t __b = __bos(__s, 0);
@@ -125,6 +149,9 @@ _FORTIFY_FN(read) ssize_t read(int __f, void * _FORTIFY_POS0 __s, size_t __n)
 }
 
 __access(write_only, 2, 3)
+#if __has_builtin(__builtin_readlink)
+__diagnose_as_builtin(__builtin_readlink, 1, 2, 3)
+#endif
 _FORTIFY_FN(readlink) ssize_t readlink(const char *__p,
                                        char * _FORTIFY_POS0 __s, size_t __n)
 {
@@ -136,6 +163,9 @@ _FORTIFY_FN(readlink) ssize_t readlink(const char *__p,
 }
 
 __access(write_only, 3, 4)
+#if __has_builtin(__builtin_readlinkat)
+__diagnose_as_builtin(__builtin_readlinkat, 1, 2, 3, 4)
+#endif
 _FORTIFY_FN(readlinkat) ssize_t readlinkat(int __f, const char *__p,
                                            char * _FORTIFY_POS0 __s, size_t __n)
 {
@@ -147,6 +177,9 @@ _FORTIFY_FN(readlinkat) ssize_t readlinkat(int __f, const char *__p,
 }
 
 __access(write_only, 2, 3)
+#if __has_builtin(__builtin_ttyname_r)
+__diagnose_as_builtin(__builtin_ttyname_r, 1, 2, 3)
+#endif
 _FORTIFY_FN(ttyname_r) int ttyname_r(int __f, char * _FORTIFY_POS0 __s,
                                      size_t __n)
 {
@@ -158,6 +191,9 @@ _FORTIFY_FN(ttyname_r) int ttyname_r(int __f, char * _FORTIFY_POS0 __s,
 }
 
 __access(read_only, 2, 3)
+#if __has_builtin(__builtin_write)
+__diagnose_as_builtin(__builtin_write, 1, 2, 3)
+#endif
 _FORTIFY_FN(write) ssize_t write(int __f, const void * _FORTIFY_POS0 __s,
                                  size_t __n)
 {
@@ -168,6 +204,9 @@ _FORTIFY_FN(write) ssize_t write(int __f, const void * _FORTIFY_POS0 __s,
 	return __orig_write(__f, __s, __n);
 }
 
+#if __has_builtin(__builtin_pwrite)
+__diagnose_as_builtin(__builtin_pwrite, 1, 2, 3, 4)
+#endif
 _FORTIFY_FN(pwrite) ssize_t pwrite(int __f, const void * _FORTIFY_POS0 __s,
                                  size_t __n, off_t __o)
 {

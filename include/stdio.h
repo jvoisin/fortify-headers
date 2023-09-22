@@ -40,12 +40,18 @@ extern "C" {
 #undef vsprintf
 
 __access(read_only, 2)
+#if __has_builtin(__builtin_fdopen)
+__diagnose_as_builtin(__builtin_fdopen, 1, 2)
+#endif
 _FORTIFY_FN(fdopen) FILE *fdopen(int __f, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fdopen(__f, __m);
 }
 
 __access(write_only, 1, 2)
+#if __has_builtin(__builtin_fgets)
+__diagnose_as_builtin(__builtin_fgets, 1, 2, 3)
+#endif
 _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 {
 	size_t __b = __bos(__s, 0);
@@ -56,6 +62,9 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 }
 
 __malloc(malloc (fclose, 1))
+#if __has_builtin(__builtin_fmemopen)
+__diagnose_as_builtin(__builtin_fmemopen, 1, 2, 3)
+#endif
 _FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fmemopen(__b, __s, __m);
@@ -64,12 +73,18 @@ _FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const 
 __access(read_only, 1)
 __access(read_only, 2)
 __malloc(malloc (fclose, 1))
+#if __has_builtin(__builtin_fopen)
+__diagnose_as_builtin(__builtin_fopen, 1, 2)
+#endif
 _FORTIFY_FN(fopen) FILE *fopen(const char* _FORTIFY_POS0 __p, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fopen(__p, __m);
 }
 
 __access(write_only, 1)
+#if __has_builtin(__builtin_fread)
+__diagnose_as_builtin(__builtin_fread, 1, 2, 3, 4)
+#endif
 _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
                                 size_t __m, FILE *__f)
 {
@@ -83,6 +98,9 @@ _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
 }
 
 __access(read_only, 1)
+#if __has_builtin(__builtin_fwrite)
+__diagnose_as_builtin(__builtin_fwrite, 1, 2, 3, 4)
+#endif
 _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
                                   size_t __m, FILE *__f)
 {
@@ -98,6 +116,9 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 __access(read_only, 1)
 __access(read_only, 2)
 __malloc(malloc (pclose, 1))
+#if __has_builtin(__builtin_popen)
+__diagnose_as_builtin(__builtin_popen, 1, 2)
+#endif
 _FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTIFY_POS0 __t)
 {
 	return __orig_popen(__c, __t);
@@ -106,6 +127,9 @@ _FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTI
 #ifndef __clang__  /* FIXME */
 #undef tmpfile
 __malloc(malloc (fclose, 1))
+#if __has_builtin(__builtin_tmpfile)
+__diagnose_as_builtin(__builtin_tmpfile)
+#endif
 _FORTIFY_FN(tmpfile) FILE *tmpfile(void)
 {
 	return __orig_tmpfile();
@@ -162,6 +186,8 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
  *    have the __chk variants, we'd need to implement a body with intermediate
  *    variables within the macro, which means more non-portable mess
  * 3) not implementing these under clang, which is what we do for now
+ *
+ * TODO: add __diagnose_as_builtin
  */
 
 #undef snprintf

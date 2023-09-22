@@ -257,6 +257,9 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 #undef strlcpy
 __access (read_write, 1)
 __access (read_only, 2, 3)
+#if __has_builtin(__builtin_strlcat)
+__diagnose_as_builtin(__builtin_strlcat, 1, 2, 3)
+#endif
 _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
@@ -269,6 +272,9 @@ _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
 
 __access (write_only, 1)
 __access (read_only, 2, 3)
+#if __has_builtin(__builtin_strlcpy)
+__diagnose_as_builtin(__builtin_strlcpy, 1, 2, 3)
+#endif
 _FORTIFY_FN(strlcpy) size_t strlcpy(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
