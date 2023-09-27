@@ -165,7 +165,7 @@ __diagnose_as_builtin(__builtin_vsprintf, 1, 2, 3)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
 {
-#if __has_builtin(__builtin___vsnprintf_chk) && USE_NATIVE_CHK
+#if __has_builtin(__builtin___vsprintf_chk) && USE_NATIVE_CHK
 	return __builtin___vsprintf_chk(__s, _FORTIFY_SOURCE, __bos(__s, 0), __f, __v,);
 #else
 	size_t __b = __bos(__s, 0);
@@ -208,11 +208,15 @@ __format(printf, 3, 4)
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
                                     const char *__f, ...)
 {
+#if __has_builtin(__builtin___snprintf_chk) && USE_NATIVE_CHK
+	return __builtin___snprintf_chk(__s, __n, _FORTIFY_SOURCE, __bos(__s, 0), __f, __builtin_va_arg_pack());
+#else
 	size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_snprintf(__s, __n, __f, __builtin_va_arg_pack());
+#endif
 }
 
 __format(printf, 2, 3)
@@ -220,6 +224,9 @@ __access(read_write, 1)
 __access(read_only, 2)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
+#if __has_builtin(__builtin___sprintf_chk) && USE_NATIVE_CHK
+	return __builtin___sprintf_chk(__s, _FORTIFY_SOURCE, __bos(__s, 0), __f, __builtin_va_arg_pack());
+#else
 	size_t __b = __bos(__s, 0);
 	int __r;
 
@@ -231,6 +238,7 @@ _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 		__r = __orig_sprintf(__s, __f, __builtin_va_arg_pack());
 	}
 	return __r;
+#endif
 }
 
 #endif /* __has_builtin(__builtin_va_arg_pack) */
