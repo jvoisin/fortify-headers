@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         version: [9, 10, 11, 12]
+        use_native_chk: [true, false]
     steps:
       - name: Checking out the code
         uses: actions/checkout@v3
@@ -30,18 +31,21 @@ jobs:
         run: |
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
-      - name: Build
+      - name: Build with native chk
+        if: ${{ matrix.use_native_chk == true }}
         shell: bash
-        run: make -C tests gcc
-      - name: Running the testsuite
+        run: make CFLAGS=-DUSE_NATIVE_CHK -C tests gcc
+      - name: Build without native chk, and run the testsuite
+        if: ${{ matrix.use_native_chk == false }}
         shell: bash
-        run: make -C tests run
+        run: make -C tests gcc run
 
   clang:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [12, 13, 14, 15]
+        version: [13, 14, 15]
+        use_native_chk: [true, false]
     steps:
       - name: Checking out the code
         uses: actions/checkout@v3
@@ -61,12 +65,11 @@ jobs:
         run: |
           sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
-      - name: Build
+      - name: Build with native chk
+        if: ${{ matrix.use_native_chk == true }}
         shell: bash
-        run: make -C tests clang
-      - name: Running the compile-time testsuite
+        run: make CFLAGS=-DUSE_NATIVE_CHK -C tests clang
+      - name: Building and running without native chk
+        if: ${{ matrix.use_native_chk == false }}
         shell: bash
-        run: make -C tests clang
-      - name: Running the run-time testsuite
-        shell: bash
-        run: make -C tests run
+        run: make -C tests clang run

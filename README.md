@@ -27,6 +27,9 @@ on Clang. It was initially intended to be used on
 - It has a [comprehensive suite of tests](https://github.com/jvoisin/fortify-headers/tree/master/tests),
   running both on Clang and on GCC for every commit, with
   [significant coverage](https://jvoisin.github.io/fortify-headers/)
+- Defining `USE_NATIVE_CHK` will make use of compiler-provided builtin `_chk`
+  functions, which might be a bit better in term of diagnostics,
+  but won't necesarily provide the same amount of security checks.
 
 
 # Sample usage
