@@ -64,6 +64,7 @@ RUNTIME_TARGETS= \
 	test_ppoll_static            \
 	test_pread_dynamic           \
 	test_pread_static            \
+	test_printf                  \
 	test_pwrite_dynamic          \
 	test_pwrite_static           \
 	test_read_dynamic            \

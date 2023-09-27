@@ -38,6 +38,7 @@ extern "C" {
 #undef popen
 #undef vsnprintf
 #undef vsprintf
+#undef printf
 
 __access(read_only, 2)
 #if __has_builtin(__builtin_fdopen)
@@ -238,6 +239,17 @@ _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 		__r = __orig_sprintf(__s, __f, __builtin_va_arg_pack());
 	}
 	return __r;
+#endif
+}
+
+__format(printf, 1, 2)
+__access(read_only, 1)
+_FORTIFY_FN(printf) int printf(const char *__f, ...)
+{
+#if __has_builtin(__builtin___printf_chk) && USE_NATIVE_CHK
+	return __builtin___printf_chk(_FORTIFY_SOURCE, __f, __builtin_va_arg_pack());
+#else
+	return __orig_printf(__f, __builtin_va_arg_pack());
 #endif
 }
 
