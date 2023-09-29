@@ -35,6 +35,7 @@ extern "C" {
 #undef memset
 #undef strcat
 #undef strcpy
+#undef strlen
 #undef strncat
 #undef strncpy
 
@@ -234,6 +235,22 @@ _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strcpy(__d, __s);
+#endif
+}
+
+__access (read_only, 1)
+#if __has_builtin(__builtin_strlen)
+__diagnose_as_builtin(__builtin_strlen, 1)
+#endif
+_FORTIFY_FN(strlen) size_t strlen(const char * _FORTIFY_POS0 __s)
+{
+#if __has_builtin(__builtin___strlen_chk) && USE_NATIVE_CHK
+	return __builtin___strlen_chk(__s, __bos(__s, 0));
+#else
+	size_t ret = __orig_strlen(__s);
+	if (ret > __bos(__s, 0) - 1)
+		__builtin_trap();
+	return ret;
 #endif
 }
 

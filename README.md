@@ -97,6 +97,7 @@ At this point, the program will safely crash.
 - `strcpy`
 - `strlcat`
 - `strlcpy`
+- `strlen`
 - `strncat`
 - `strncpy`
 - `strrchr`
