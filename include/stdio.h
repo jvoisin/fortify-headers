@@ -147,7 +147,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
                                      const char *__f, __builtin_va_list __v)
 {
 #if __has_builtin(__builtin___vsnprintf_chk) && USE_NATIVE_CHK
-	return __builtin___vsnprintf_chk(__s, __n, _FORTIFY_SOURCE, __bos(__s, 0), __f, __v,);
+	return __builtin___vsnprintf_chk(__s, __n, _FORTIFY_SOURCE, __bos(__s, 0), __f, __v);
 #else
 	size_t __b = __bos(__s, 0);
 
@@ -167,7 +167,7 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
 {
 #if __has_builtin(__builtin___vsprintf_chk) && USE_NATIVE_CHK
-	return __builtin___vsprintf_chk(__s, _FORTIFY_SOURCE, __bos(__s, 0), __f, __v,);
+	return __builtin___vsprintf_chk(__s, _FORTIFY_SOURCE, __bos(__s, 0), __f, __v);
 #else
 	size_t __b = __bos(__s, 0);
 	int __r;

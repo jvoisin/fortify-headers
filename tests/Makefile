@@ -1,4 +1,4 @@
-CFLAGS=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
+CFLAGS+=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2
 
 COMPTIME_TARGETS= \
 	test_memcpy_overwrite_under  \

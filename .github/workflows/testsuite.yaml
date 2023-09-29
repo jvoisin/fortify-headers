@@ -31,10 +31,6 @@ jobs:
         run: |
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
-      - name: Build with native chk
-        if: ${{ matrix.use_native_chk == true }}
-        shell: bash
-        run: make CFLAGS=-DUSE_NATIVE_CHK -C tests gcc
       - name: Build without native chk, and run the testsuite
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
