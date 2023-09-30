@@ -36,9 +36,10 @@ extern "C" {
 #undef fread
 #undef fwrite
 #undef popen
+#undef printf
+#undef vprintf
 #undef vsnprintf
 #undef vsprintf
-#undef printf
 
 __access(read_only, 2)
 #if __has_builtin(__builtin_fdopen)
@@ -182,6 +183,22 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
 	return __r;
 #endif
 }
+
+#ifndef __clang__  /* FIXME */
+__access(read_only, 1)
+__format(printf, 1, 0)
+#if __has_builtin(__builtin_vprintf)
+__diagnose_as_builtin(__builtin_vprintf, 1, 2)
+#endif
+_FORTIFY_FN(vprintf) int vprintf(const char *__f, __builtin_va_list __v)
+{
+#if __has_builtin(__builtin___vprintf_chk) && USE_NATIVE_CHK
+	return __builtin___vprintf_chk(_FORTIFY_SOURCE, __f, __v);
+#else
+	return __orig_vprintf(__f, __v);
+#endif
+}
+#endif
 
 
 #if __has_builtin(__builtin_va_arg_pack)
