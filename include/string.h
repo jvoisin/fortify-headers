@@ -73,7 +73,7 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
 #if __has_builtin(__builtin___memmove_chk) && USE_NATIVE_CHK
-	return __builtin___memcpy_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___memmove_chk(__d, __s, __n, __bos(__d, 0));
 #else
 	size_t __bd = __bos(__d, 0);
 	size_t __bs = __bos(__s, 0);
