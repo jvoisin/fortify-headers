@@ -22,6 +22,7 @@ RUNTIME_TARGETS= \
 	test_fgets_static            \
 	test_fgetws_dynamic          \
 	test_fgetws_static           \
+	test_fprintf                 \
 	test_fread_int_overflow      \
 	test_fread_overwrite_dynamic \
 	test_fread_overwrite_static  \

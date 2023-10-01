@@ -36,8 +36,6 @@ extern "C" {
 #undef fread
 #undef fwrite
 #undef popen
-#undef printf
-#undef vprintf
 #undef vsnprintf
 #undef vsprintf
 
@@ -185,6 +183,7 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
 }
 
 #ifndef __clang__  /* FIXME */
+#undef vprintf
 __access(read_only, 1)
 __format(printf, 1, 0)
 #if __has_builtin(__builtin_vprintf)
@@ -198,7 +197,7 @@ _FORTIFY_FN(vprintf) int vprintf(const char *__f, __builtin_va_list __v)
 	return __orig_vprintf(__f, __v);
 #endif
 }
-#endif
+#endif  // __clang__
 
 
 #if __has_builtin(__builtin_va_arg_pack)
@@ -219,6 +218,8 @@ _FORTIFY_FN(vprintf) int vprintf(const char *__f, __builtin_va_list __v)
 
 #undef snprintf
 #undef sprintf
+#undef printf
+#undef fprintf
 
 __access(read_write, 1, 2)
 __access(read_only, 3)
@@ -267,6 +268,20 @@ _FORTIFY_FN(printf) int printf(const char *__f, ...)
 	return __builtin___printf_chk(_FORTIFY_SOURCE, __f, __builtin_va_arg_pack());
 #else
 	return __orig_printf(__f, __builtin_va_arg_pack());
+#endif
+}
+
+__access(read_only, 2)
+__format(printf, 2, 0)
+#if __has_builtin(__builtin_fprintf)
+__diagnose_as_builtin(__builtin_fprintf, 2, 3)
+#endif
+_FORTIFY_FN(fprintf) int fprintf(FILE *__s, const char *__f, ...)
+{
+#if __has_builtin(__builtin___fprintf_chk) && USE_NATIVE_CHK
+	return __builtin___fprintf_chk(_FORTIFY_SOURCE, __s, __f, __builtin_va_arg_pack());
+#else
+	return __orig_fprintf(__s, __f, __builtin_va_arg_pack());
 #endif
 }
 
