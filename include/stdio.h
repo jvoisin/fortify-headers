@@ -183,7 +183,23 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
 }
 
 #ifndef __clang__  /* FIXME */
+#undef vfprintf
 #undef vprintf
+
+__access(read_only, 2)
+__format(printf, 2, 0)
+#if __has_builtin(__builtin_vfprintf)
+__diagnose_as_builtin(__builtin_vfprintf, 2, 3)
+#endif
+_FORTIFY_FN(vfprintf) int vfprintf(FILE * __s, const char *__f, __builtin_va_list __v)
+{
+#if __has_builtin(__builtin___vfprintf_chk) && USE_NATIVE_CHK
+	return __builtin___vfprintf_chk(__s, _FORTIFY_SOURCE, __f, __v);
+#else
+	return __orig_vfprintf(__s, __f, __v);
+#endif
+}
+
 __access(read_only, 1)
 __format(printf, 1, 0)
 #if __has_builtin(__builtin_vprintf)

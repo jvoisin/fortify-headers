@@ -114,6 +114,7 @@ RUNTIME_TARGETS= \
 	test_vsnprintf_dynamic       \
 	test_vsnprintf_static        \
 	test_vsprintf                \
+	test_vfprintf                \
 	test_vprintf                 \
 	test_wcscat_static_write     \
 	test_wcscpy_static_write     \
