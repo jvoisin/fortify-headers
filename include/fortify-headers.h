@@ -94,7 +94,7 @@
 #define __malloc(...)
 #endif
 
-#if __has_attribute (alloc_size)
+#if __has_attribute (alloc_size) && !defined(__alloc_size)
 #define __alloc_size(...) __attribute__ ((alloc_size (__VA_ARGS__)))
 #else
 #define __alloc_size(...)
