@@ -49,12 +49,23 @@ _STI void __fortify_FD_SET(int __f, fd_set * _FORTIFY_POS0 __s)
 	FD_SET(__f, __s);
 }
 
+_STI int __fortify_FD_ISSET(int __f, fd_set * _FORTIFY_POS0 __s)
+{
+	size_t __b = __bos(__s, 0);
+
+	if (__f < 0 || __f >= FD_SETSIZE || __b < sizeof(fd_set))
+		__builtin_trap();
+	return FD_ISSET(__f, __s);
+}
+
 #undef _STI
 
 #undef FD_CLR
 #define FD_CLR(fd, set) __fortify_FD_CLR(fd, set)
 #undef FD_SET
 #define FD_SET(fd, set) __fortify_FD_SET(fd, set)
+#undef FD_ISSET
+#define FD_ISSET(fd, set) __fortify_FD_ISSET(fd, set)
 
 #ifdef __cplusplus
 }

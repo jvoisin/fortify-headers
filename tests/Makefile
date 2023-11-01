@@ -10,6 +10,8 @@ RUNTIME_TARGETS= \
 	test_FD_CLR_negative         \
 	test_FD_SET_SETSIZE          \
 	test_FD_SET_negative         \
+	test_FD_ISSET_SETSIZE        \
+	test_FD_ISSET_negative       \
 	test_bcopy_dynamic_read      \
 	test_bcopy_dynamic_write     \
 	test_bcopy_static_read       \
