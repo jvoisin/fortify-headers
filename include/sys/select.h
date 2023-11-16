@@ -67,6 +67,18 @@ _STI int __fortify_FD_ISSET(int __f, fd_set * _FORTIFY_POS0 __s)
 #undef FD_ISSET
 #define FD_ISSET(fd, set) __fortify_FD_ISSET(fd, set)
 
+#ifndef __clang__
+#undef select
+_FORTIFY_FN(select) int select(int nfds, fd_set* readfds,
+                  fd_set* writefds,
+                  fd_set* exceptfds,
+                  struct timeval *timeout){
+	if (nfds > FD_SETSIZE + 1)
+		__builtin_trap();
+	return __orig_select(nfds, readfds, writefds, exceptfds, timeout);
+}
+#endif
+
 #ifdef __cplusplus
 }
 #endif

@@ -78,6 +78,8 @@ RUNTIME_TARGETS= \
 	test_recv_static             \
 	test_recvfrom_dynamic        \
 	test_recvfrom_static         \
+	test_select_dynamic          \
+	test_select_static           \
 	test_send_dynamic            \
 	test_send_static             \
 	test_sendto_dynamic          \
