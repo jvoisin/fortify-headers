@@ -1,9 +1,8 @@
 # What is it?
 
 This is a standalone implementation of
-[fortify source]( http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html )
-based on [the one](https://git.2f30.org/fortify-headers/) from
-[sin](https://u.2f30.org/sin/). It provides compile time buffer checks.
+[fortify source]( http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html ).
+It provides compile time buffer checks.
 It is libc-agnostic and simply overlays the system headers by using the
 [`#include_next`](https://gcc.gnu.org/onlinedocs/cpp/Wrapper-Headers.html)
 extension found in GCC, and
