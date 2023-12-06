@@ -232,6 +232,10 @@ _FORTIFY_FN(vprintf) int vprintf(const char *__f, __builtin_va_list __v)
  * TODO: add __diagnose_as_builtin
  */
 
+// See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110834
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+
 #undef snprintf
 #undef sprintf
 #undef printf
@@ -301,6 +305,7 @@ _FORTIFY_FN(fprintf) int fprintf(FILE *__s, const char *__f, ...)
 #endif
 }
 
+#pragma GCC diagnostic pop
 #endif /* __has_builtin(__builtin_va_arg_pack) */
 
 #ifdef __cplusplus
