@@ -71,6 +71,8 @@ RUNTIME_TARGETS= \
 	test_printf                  \
 	test_pwrite_dynamic          \
 	test_pwrite_static           \
+	test_qsort_dynamic           \
+	test_qsort_static            \
 	test_read_dynamic            \
 	test_read_static             \
 	test_readlink_dynamic        \

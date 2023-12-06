@@ -37,6 +37,23 @@ __extension__
 extern "C" {
 #endif
 
+#undef qsort
+#if __has_builtin(__builtin_qsort)
+__diagnose_as_builtin(__builtin_qsort, 1, 2, 3, 4)
+#endif
+__access(read_write, 1)
+_FORTIFY_FN(qsort) void qsort(void * _FORTIFY_POS0 base, size_t nmemb, size_t size,
+	int (*compar)(const void *, const void *))
+{
+	size_t __b = __bos(base, 0);
+
+	if (__bmo(nmemb, size))
+		__builtin_trap();
+	if (nmemb * size> __b)
+		__builtin_trap();
+
+	return __orig_qsort(base, nmemb, size, compar);
+}
 
 /* FIXME clang */
 #if !defined(__clang__)
