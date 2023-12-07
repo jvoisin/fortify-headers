@@ -18,6 +18,7 @@ RUNTIME_TARGETS= \
 	test_bcopy_static_write      \
 	test_bzero_dynamic_write     \
 	test_bzero_static_write      \
+	test_compile                 \
 	test_confstr_dynamic         \
 	test_confstr_static          \
 	test_fgets_dynamic           \

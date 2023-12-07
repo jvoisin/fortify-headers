@@ -23,6 +23,7 @@ __extension__
 #include_next <stdlib.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
@@ -36,6 +37,9 @@ __extension__
 extern "C" {
 #endif
 
+
+/* FIXME clang */
+#if !defined(__clang__)
 #undef malloc
 #undef realloc
 #undef calloc
@@ -84,8 +88,7 @@ _FORTIFY_FN(reallocarray) void* reallocarray(void* __p, size_t __n, size_t __s)
 }
 #endif
 
-/* FIXME clang */
-#if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)) && !defined(__clang__)
+#if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE))
 #undef realpath
 __warning_if(__p == NULL, "'realpath' called with path set to `NULL`; did you invert the arguments?")
 #if __has_builtin(__builtin_realpath)
@@ -118,6 +121,8 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 }
 #endif
 
-#endif
+#endif // clang
+
+#endif // _FORTIFY_SOURCE
 
 #endif
