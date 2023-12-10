@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [9, 10, 11, 12]
+        version: [9, 10, 11, 12, 13]
         use_native_chk: [true, false]
     steps:
       - name: Checking out the code
