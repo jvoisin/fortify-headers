@@ -34,46 +34,46 @@ extern "C" {
 #undef send
 #undef sendto
 
-__access(write_only, 2, 3)
+__fh_access(write_only, 2, 3)
 _FORTIFY_FN(recv) ssize_t recv(int __f, void * _FORTIFY_POS0 __s, size_t __n,
                                int __fl)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_recv(__f, __s, __n, __fl);
 }
 
-__access(write_only, 2, 3)
+__fh_access(write_only, 2, 3)
 _FORTIFY_FN(recvfrom) ssize_t recvfrom(int __f, void * _FORTIFY_POS0 __s,
                                        size_t __n, int __fl,
                                        struct sockaddr *__a, socklen_t *__l)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_recvfrom(__f, __s, __n, __fl, __a, __l);
 }
 
-__access(read_only, 2, 3)
+__fh_access(read_only, 2, 3)
 _FORTIFY_FN(send) ssize_t send(int __f, const void * _FORTIFY_POS0 __s,
                                size_t __n, int __fl)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_send(__f, __s, __n, __fl);
 }
 
-__access(read_only, 2, 3)
+__fh_access(read_only, 2, 3)
 _FORTIFY_FN(sendto) ssize_t sendto(int __f, const void * _FORTIFY_POS0 __s,
                                    size_t __n, int __fl,
                                    const struct sockaddr *__a, socklen_t __l)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();

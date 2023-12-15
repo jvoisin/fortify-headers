@@ -71,38 +71,38 @@
  * See:
  * - https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html
  */
-#define __bos(ptr, type) __builtin_dynamic_object_size (ptr, type)
+#define __fh_bos(ptr, type) __builtin_dynamic_object_size (ptr, type)
 #else
-#define __bos(ptr, type) __builtin_object_size (ptr, type)
+#define __fh_bos(ptr, type) __builtin_object_size (ptr, type)
 #endif
 
 #if defined __has_attribute
 #if __has_attribute (access)
-#define __access(...) __attribute__ ((access (__VA_ARGS__)))
+#define __fh_access(...) __attribute__ ((access (__VA_ARGS__)))
 #else
-#define __access(...)
+#define __fh_access(...)
 #endif
 
 #if __has_attribute (format)
-#define __format(...) __attribute__ ((format (__VA_ARGS__)))
+#define __fh_format(...) __attribute__ ((format (__VA_ARGS__)))
 #else
-#define __format(...)
+#define __fh_format(...)
 #endif
 
 #if __has_attribute (malloc)
 #ifdef __clang__
-#define __malloc(...) __attribute__ ((malloc))
+#define __fh_malloc(...) __attribute__ ((malloc))
 #else
-#define __malloc(...) __attribute__ ((malloc, __VA_ARGS__))
+#define __fh_malloc(...) __attribute__ ((malloc, __VA_ARGS__))
 #endif /* __clang__ */
 #else
-#define __malloc(...)
+#define __fh_malloc(...)
 #endif
 
-#if __has_attribute (alloc_size) && !defined(__alloc_size)
-#define __alloc_size(...) __attribute__ ((alloc_size (__VA_ARGS__)))
+#if __has_attribute (alloc_size) && !defined(__fh_alloc_size)
+#define __fh_alloc_size(...) __attribute__ ((alloc_size (__VA_ARGS__)))
 #else
-#define __alloc_size(...)
+#define __fh_alloc_size(...)
 #endif
 
 #if __has_attribute (diagnose_as_builtin)

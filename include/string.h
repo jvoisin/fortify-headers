@@ -39,20 +39,20 @@ extern "C" {
 #undef strncat
 #undef strncpy
 
-__access(write_only, 1, 3)
-__access(read_only, 2, 3)
+__fh_access(write_only, 1, 3)
+__fh_access(read_only, 2, 3)
 #if __has_builtin(__builtin_mempcpy)
 __diagnose_as_builtin(__builtin_memcpy, 1, 2, 3)
 #endif
 _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
                                  const void * _FORTIFY_POS0 __os, size_t __n)
-__error_if((__bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the size of `d`.")
+__error_if((__fh_bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the size of `d`.")
 {
 #if __has_builtin(__builtin___memcpy_chk) && USE_NATIVE_CHK
-	return __builtin___memcpy_chk(__od, __os, __n, __bos(__od, 0));
+	return __builtin___memcpy_chk(__od, __os, __n, __fh_bos(__od, 0));
 #else
-	__fh_size_t __bd = __bos(__od, 0);
-	__fh_size_t __bs = __bos(__os, 0);
+	__fh_size_t __bd = __fh_bos(__od, 0);
+	__fh_size_t __bs = __fh_bos(__os, 0);
 	char *__d = (char *)__od;
 	const char *__s = (const char *)__os;
 
@@ -64,8 +64,8 @@ __error_if((__bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the siz
 #endif
 }
 
-__access(write_only, 1, 3)
-__access(read_only, 2, 3)
+__fh_access(write_only, 1, 3)
+__fh_access(read_only, 2, 3)
 #if __has_builtin(__builtin_memmove)
 __diagnose_as_builtin(__builtin_memmove, 1, 2, 3)
 #endif
@@ -73,10 +73,10 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
 #if __has_builtin(__builtin___memmove_chk) && USE_NATIVE_CHK
-	return __builtin___memmove_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___memmove_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __bd = __bos(__d, 0);
-	__fh_size_t __bs = __bos(__s, 0);
+	__fh_size_t __bd = __fh_bos(__d, 0);
+	__fh_size_t __bs = __fh_bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -84,7 +84,7 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 #endif
 }
 
-__access(write_only, 1, 3)
+__fh_access(write_only, 1, 3)
 #if __has_builtin(__builtin_memset)
 __diagnose_as_builtin(__builtin_memset, 1, 2, 3)
 #endif
@@ -92,9 +92,9 @@ _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert the arguments?")
 {
 #if __has_builtin(__builtin___memset_chk) && USE_NATIVE_CHK
-	return __builtin___memset_chk(__d, __c, __n, __bos(__d, 0));
+	return __builtin___memset_chk(__d, __c, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -102,16 +102,16 @@ __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert 
 #endif
 }
 
-__access(read_only, 1, 3)
+__fh_access(read_only, 1, 3)
 #if __has_builtin(__builtin_memchr)
 __diagnose_as_builtin(__builtin_memchr, 1, 2, 3)
 #endif
 _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t __n)
 {
 #if __has_builtin(__builtin___memchr_chk) && USE_NATIVE_CHK
-	return __builtin___memchr_chk(__d, __c, __n, __bos(__d, 0));
+	return __builtin___memchr_chk(__d, __c, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -119,13 +119,13 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 #endif
 }
 
-__access(read_only, 1, 2)
+__fh_access(read_only, 1, 2)
 _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 {
 #if __has_builtin(__builtin___strchr_chk) && USE_NATIVE_CHK
-	return __builtin___strchr_chk(__s, __c, __bos(__s, 0));
+	return __builtin___strchr_chk(__s, __c, __fh_bos(__s, 0));
 #else
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	char* __r = __builtin_strchr(__s, __c);
 	if (__r - __s > __b)
@@ -134,13 +134,13 @@ _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 #endif
 }
 
-__access(read_only, 1, 2)
+__fh_access(read_only, 1, 2)
 _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
 {
 #if __has_builtin(__builtin___strrchr_chk) && USE_NATIVE_CHK
-	return __builtin___strrchr_chk(__s, __c, __bos(__s, 0));
+	return __builtin___strrchr_chk(__s, __c, __fh_bos(__s, 0));
 #else
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	char* __r = __builtin_strrchr(__s, __c);
 	if (__r - __s > __b)
@@ -153,22 +153,22 @@ _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
  || defined(_BSD_SOURCE)
 #undef stpcpy
-__access(write_only, 1)
-__access(read_only, 2)
+__fh_access(write_only, 1)
+__fh_access(read_only, 2)
 #if __has_builtin(__builtin_stpcpy)
 __diagnose_as_builtin(__builtin_stpcpy, 1, 2)
 #endif
 _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
 #if __has_builtin(__builtin___stpcpy_chk) && USE_NATIVE_CHK
-	return __builtin___stpcpy_chk(__d, __s, __bos(__d, 0));
+	return __builtin___stpcpy_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __n = strlen(__s) + 1;
 
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_stpcpy(__d, __s);
@@ -176,8 +176,8 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 }
 
 #undef stpncpy
-__access(write_only, 1)
-__access(read_only, 2, 3)
+__fh_access(write_only, 1)
+__fh_access(read_only, 2, 3)
 #if __has_builtin(__builtin_stpncpy)
 __diagnose_as_builtin(__builtin_stpncpy, 1, 2, 3)
 #endif
@@ -185,12 +185,12 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
 #if __has_builtin(__builtin___stpncpy_chk) && USE_NATIVE_CHK
-	return __builtin___stpncpy_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b && strlen(__s) + 1 > __b)
 		__builtin_trap();
 	return __orig_stpncpy(__d, __s, __n);
@@ -198,17 +198,17 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 }
 #endif
 
-__access (read_write, 1)
-__access (read_only, 2)
+__fh_access (read_write, 1)
+__fh_access (read_only, 2)
 #if __has_builtin(__builtin_strcat)
 __diagnose_as_builtin(__builtin_strcat, 1, 2)
 #endif
 _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 {
 #if __has_builtin(__builtin___strcat_chk) && USE_NATIVE_CHK
-	return __builtin___strcat_chk(__d, __s, __bos(__d, 0));
+	return __builtin___strcat_chk(__d, __s, __fh_bos(__d, 0));
 #else
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (strlen(__s) + strlen(__d) + 1 > __b)
 		__builtin_trap();
@@ -216,46 +216,46 @@ _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 #endif
 }
 
-__access (write_only, 1)
-__access (read_only, 2)
+__fh_access (write_only, 1)
+__fh_access (read_only, 2)
 #if __has_builtin(__builtin_strcpy)
 __diagnose_as_builtin(__builtin_strcpy, 1, 2)
 #endif
 _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
 #if __has_builtin(__builtin___strcpy_chk) && USE_NATIVE_CHK
-	return __builtin___strcpy_chk(__d, __s, __bos(__d, 0));
+	return __builtin___strcpy_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __n = strlen(__s) + 1;
 
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strcpy(__d, __s);
 #endif
 }
 
-__access (read_only, 1)
+__fh_access (read_only, 1)
 #if __has_builtin(__builtin_strlen)
 __diagnose_as_builtin(__builtin_strlen, 1)
 #endif
 _FORTIFY_FN(strlen) size_t strlen(const char * _FORTIFY_POS0 __s)
 {
 #if __has_builtin(__builtin___strlen_chk) && USE_NATIVE_CHK
-	return __builtin___strlen_chk(__s, __bos(__s, 0));
+	return __builtin___strlen_chk(__s, __fh_bos(__s, 0));
 #else
 	__fh_size_t ret = __orig_strlen(__s);
-	if (ret > __bos(__s, 0) - 1)
+	if (ret > __fh_bos(__s, 0) - 1)
 		__builtin_trap();
 	return ret;
 #endif
 }
 
-__access (read_write, 1)
-__access (read_only, 2, 3)
+__fh_access (read_write, 1)
+__fh_access (read_only, 2, 3)
 #if __has_builtin(__builtin_strncat)
 __diagnose_as_builtin(__builtin_strncat, 1, 2, 3)
 #endif
@@ -263,9 +263,9 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
 #if __has_builtin(__builtin___strncat_chk) && USE_NATIVE_CHK
-	return __builtin___strncat_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___strncat_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b) {
 		__fh_size_t __sl = strnlen(__s, __n);
@@ -277,8 +277,8 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 #endif
 }
 
-__access (write_only, 1)
-__access (read_only, 2, 3)
+__fh_access (write_only, 1)
+__fh_access (read_only, 2, 3)
 #if __has_builtin(__builtin_strncpy)
 __diagnose_as_builtin(__builtin_strncpy, 1, 2, 3)
 #endif
@@ -286,12 +286,12 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
                                    const char *__s, size_t __n)
 {
 #if __has_builtin(__builtin___strncpy_chk) && USE_NATIVE_CHK
-	return __builtin___strncpy_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___strncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strncpy(__d, __s, __n);
@@ -300,8 +300,8 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 
 #ifdef _GNU_SOURCE
 #undef mempcpy
-__access(write_only, 1)
-__access(read_only, 2, 3)
+__fh_access(write_only, 1)
+__fh_access(read_only, 2, 3)
 #if __has_builtin(__builtin_mempcpy)
 __diagnose_as_builtin(__builtin_mempcpy, 1, 2, 3)
 #endif
@@ -309,10 +309,10 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
 #if __has_builtin(__builtin___mempcpy_chk) && USE_NATIVE_CHK
-	return __builtin___mempcpy_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___mempcpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __bd = __bos(__d, 0);
-	__fh_size_t __bs = __bos(__s, 0);
+	__fh_size_t __bd = __fh_bos(__d, 0);
+	__fh_size_t __bs = __fh_bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -324,8 +324,8 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef strlcat
 #undef strlcpy
-__access (read_write, 1)
-__access (read_only, 2, 3)
+__fh_access (read_write, 1)
+__fh_access (read_only, 2, 3)
 #if __has_builtin(__builtin_strlcat)
 __diagnose_as_builtin(__builtin_strlcat, 1, 2, 3)
 #endif
@@ -333,9 +333,9 @@ _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
 #if __has_builtin(__builtin___strlcat_chk) && USE_NATIVE_CHK
-	return __builtin___strlcat_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___strlcat_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -343,8 +343,8 @@ _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
 #endif
 }
 
-__access (write_only, 1)
-__access (read_only, 2, 3)
+__fh_access (write_only, 1)
+__fh_access (read_only, 2, 3)
 #if __has_builtin(__builtin_strlcpy)
 __diagnose_as_builtin(__builtin_strlcpy, 1, 2, 3)
 #endif
@@ -352,9 +352,9 @@ _FORTIFY_FN(strlcpy) size_t strlcpy(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
 #if __has_builtin(__builtin___strlcpy_chk) && USE_NATIVE_CHK
-	return __builtin___strlcpy_chk(__d, __s, __n, __bos(__d, 0));
+	return __builtin___strlcpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
