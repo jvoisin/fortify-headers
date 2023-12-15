@@ -47,7 +47,7 @@ __diagnose_as_builtin(__builtin_fgetws, 1, 2, 3)
 _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t * _FORTIFY_POS0 __s,
                                     int __n, FILE *__f)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if ((__fh_size_t)__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -64,7 +64,7 @@ _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t * _FORTIFY_POS0 __d,
                                           const char **__s, size_t __n,
                                           size_t __wn, mbstate_t *__st)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	__fh_size_t __r;
 
 	if (__wn > __n / sizeof(wchar_t)) {
@@ -88,7 +88,7 @@ _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t * _FORTIFY_POS0 __d,
                                         const char **__s, size_t __wn,
                                         mbstate_t *__st)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	__fh_size_t __r;
 
 	__b /= sizeof(wchar_t);
@@ -106,14 +106,14 @@ __diagnose_as_builtin(__builtin_wcrtomb, 1, 2, 3)
 _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 {
 	// In glibc, MB_LEN_MAX is typically 16 (6 in glibc versions earlier than 2.2)
-	if (__s && 16 > __bos(__s, 2)) {
+	if (__s && 16 > __fh_bos(__s, 2)) {
 		char __buf[16];
 		__fh_size_t __r;
 
 		__r = __orig_wcrtomb(__buf, __w, __st);
 		if (__r == (__fh_size_t)-1)
 			return __r;
-		if (__r > __bos(__s, 0))
+		if (__r > __fh_bos(__s, 0))
 			__builtin_trap();
 		__builtin_memcpy(__s, __buf, __r);
 		return __r;
@@ -128,7 +128,7 @@ __diagnose_as_builtin(__builtin_wcscat, 1, 2)
 _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t * _FORTIFY_POS0 __d,
                                     const wchar_t *__s)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (wcslen(__s) + wcslen(__d) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -141,7 +141,7 @@ __diagnose_as_builtin(__builtin_wcscpy, 1, 2)
 _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
                                     const wchar_t *__s)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (wcslen(__s) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -154,7 +154,7 @@ __diagnose_as_builtin(__builtin_wcsncat, 1, 2, 3)
 _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	__fh_size_t __sl, __dl;
 
 	if (__n > __b / sizeof(wchar_t)) {
@@ -174,7 +174,7 @@ __diagnose_as_builtin(__builtin_wcsncpy, 1, 2, 3)
 _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -191,7 +191,7 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
                                           const wchar_t **__s, size_t __wn,
                                           size_t __n, mbstate_t *__st)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	__fh_size_t __r;
 
 	if (__wn > __n / sizeof(wchar_t)) {
@@ -215,7 +215,7 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
                                         const wchar_t **__s, size_t __n,
                                         mbstate_t *__st)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 	__fh_size_t __r;
 
 	__r = __orig_wcsrtombs(__d, __s, __n > __b ? __b : __n, __st);
@@ -230,7 +230,7 @@ __diagnose_as_builtin(__builtin_wmemcpy, 1, 2, 3)
 _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -243,7 +243,7 @@ __diagnose_as_builtin(__builtin_wmemmove, 1, 2, 3)
 _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
                                         const wchar_t *__s, size_t __n)
 {
-	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -256,7 +256,7 @@ __diagnose_as_builtin(__builtin_wmemset, 1, 2, 3)
 _FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t * _FORTIFY_POS0 __s,
                                       wchar_t __c, size_t __n)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();

@@ -37,7 +37,7 @@ __diagnose_as_builtin(__builtin_mbstowcs, 1, 2, 3)
 _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
                                       const char *__s, size_t __wn)
 {
-	__fh_size_t __b = __bos(__ws, 0);
+	__fh_size_t __b = __fh_bos(__ws, 0);
 
 	if (__ws && __wn > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -45,14 +45,14 @@ _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
 }
 
 #undef wcstombs
-__access(write_only, 1, 3)
+__fh_access(write_only, 1, 3)
 #if __has_builtin(__builtin_wcstombs)
 __diagnose_as_builtin(__builtin_wcstombs, 1, 2, 3)
 #endif
 _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
                                       const wchar_t *__ws, size_t __n)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__s && __n > __b)
 		__builtin_trap();
@@ -68,7 +68,7 @@ __diagnose_as_builtin(__builtin_wctomb, 1, 2)
 #endif
 _FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__s && 16 > __b && MB_CUR_MAX > __b)
 		__builtin_trap();
@@ -81,11 +81,11 @@ _FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 #if __has_builtin(__builtin_qsort)
 __diagnose_as_builtin(__builtin_qsort, 1, 2, 3, 4)
 #endif
-__access(read_write, 1)
+__fh_access(read_write, 1)
 _FORTIFY_FN(qsort) void qsort(void * _FORTIFY_POS0 base, size_t nmemb, size_t size,
 	int (*compar)(const void *, const void *))
 {
-	__fh_size_t __b = __bos(base, 0);
+	__fh_size_t __b = __fh_bos(base, 0);
 
 	if (__bmo(nmemb, size))
 		__builtin_trap();
@@ -101,8 +101,8 @@ _FORTIFY_FN(qsort) void qsort(void * _FORTIFY_POS0 base, size_t nmemb, size_t si
 #undef realloc
 #undef calloc
 
-__malloc(malloc (free, 1))
-__alloc_size(1)
+__fh_malloc(malloc (free, 1))
+__fh_alloc_size(1)
 __warn_unused_result
 #if __has_builtin(__builtin_malloc)
 __diagnose_as_builtin(__builtin_malloc, 1)
@@ -112,7 +112,7 @@ _FORTIFY_FN(malloc) void *malloc(size_t __s)
 	return __orig_malloc(__s);
 }
 
-__alloc_size(2)
+__fh_alloc_size(2)
 __warn_unused_result
 #if __has_builtin(__builtin_realloc)
 __diagnose_as_builtin(__builtin_realloc, 1, 2)
@@ -122,7 +122,7 @@ _FORTIFY_FN(realloc) void *realloc(void *__p, size_t __s)
 	return __orig_realloc(__p, __s);
 }
 
-__alloc_size(1, 2)
+__fh_alloc_size(1, 2)
 __warn_unused_result
 #if __has_builtin(__builtin_calloc)
 __diagnose_as_builtin(__builtin_calloc, 1, 2)
@@ -134,7 +134,7 @@ _FORTIFY_FN(calloc) void *calloc(size_t __n, size_t __s)
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 #undef reallocarray
-__alloc_size (2, 3)
+__fh_alloc_size (2, 3)
 __warn_unused_result
 #if __has_builtin(__builtin_reallocarray)
 __diagnose_as_builtin(__builtin_reallocarray, 1, 2, 3)
@@ -154,7 +154,7 @@ __diagnose_as_builtin(__builtin_realpath, 1, 2)
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
 	// PATH_MAX is defined as 4096
-	if (__r && 4096 > __bos(__r, 2)) {
+	if (__r && 4096 > __fh_bos(__r, 2)) {
 		char __buf[4096], *__ret;
 		__fh_size_t __l;
 
@@ -162,7 +162,7 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 		if (!__ret)
 			return NULL;
 		__l = __builtin_strlen(__ret) + 1;
-		if (__l > __bos(__r, 0))
+		if (__l > __fh_bos(__r, 0))
 			__builtin_trap();
 		__builtin_memcpy(__r, __ret, __l);
 		return __r;

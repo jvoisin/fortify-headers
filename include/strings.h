@@ -31,8 +31,8 @@ extern "C" {
  || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE+0 < 700)
 #undef bcopy
 #undef bzero
-__access(write_only, 2, 3)
-__access(read_only, 1, 3)
+__fh_access(write_only, 2, 3)
+__fh_access(read_only, 1, 3)
 #if __has_builtin(__builtin_bcopy) && !defined(__clang__)
 // parameter 1 of function '__orig_bcopy' has type 'const void *', but parameter 1 of function '__builtin_bcopy' has type 'void *'
 __diagnose_as_builtin(__builtin_bcopy, 1, 2, 3)
@@ -40,21 +40,21 @@ __diagnose_as_builtin(__builtin_bcopy, 1, 2, 3)
 _FORTIFY_FN(bcopy) void bcopy(const void * _FORTIFY_POS0 __s,
                               void * _FORTIFY_POS0 __d, size_t __n)
 {
-	__fh_size_t __bd = __bos(__d, 0);
-	__fh_size_t __bs = __bos(__s, 0);
+	__fh_size_t __bd = __fh_bos(__d, 0);
+	__fh_size_t __bs = __fh_bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
 	return __orig_bcopy(__s, __d, __n);
 }
 
-__access(write_only, 1, 2)
+__fh_access(write_only, 1, 2)
 #if __has_builtin(__builtin_bzero)
 __diagnose_as_builtin(__builtin_bzero, 1, 2)
 #endif
 _FORTIFY_FN(bzero) void bzero(void * _FORTIFY_POS0 __s, size_t __n)
 {
-	__fh_size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __fh_bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();
