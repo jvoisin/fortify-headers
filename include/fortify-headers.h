@@ -27,8 +27,13 @@
 #endif
 
 /* we can't use extern inline with overloads without making them external */
+#ifdef __cplusplus
+#define _FORTIFY_INLINE __inline__ \
+        __attribute__((__always_inline__,__artificial__,__overloadable__))
+#else
 #define _FORTIFY_INLINE static __inline__ \
 	__attribute__((__always_inline__,__artificial__,__overloadable__))
+#endif
 
 #else /* !__clang__ */
 
