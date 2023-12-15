@@ -59,6 +59,24 @@ _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
 	return __orig_wcstombs(__s, __ws, __n);
 }
 
+#if 0
+/* https://github.com/jvoisin/fortify-headers/issues/24 */
+#ifdef MB_CUR_MAX
+#undef wctomb
+#if __has_builtin(__builtin_wctomb)
+__diagnose_as_builtin(__builtin_wctomb, 1, 2)
+#endif
+_FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
+{
+	__fh_size_t __b = __bos(__s, 0);
+
+	if (__s && 16 > __b && MB_CUR_MAX > __b)
+		__builtin_trap();
+	return __orig_wctomb(__s, __w);
+}
+#endif // MB_CUR_MAX
+#endif
+
 #undef qsort
 #if __has_builtin(__builtin_qsort)
 __diagnose_as_builtin(__builtin_qsort, 1, 2, 3, 4)
