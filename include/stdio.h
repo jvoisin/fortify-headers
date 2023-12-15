@@ -29,15 +29,20 @@ __extension__
 extern "C" {
 #endif
 
-#undef fdopen
 #undef fgets
-#undef fmemopen
 #undef fopen
 #undef fread
 #undef fwrite
-#undef popen
 #undef vsnprintf
 #undef vsprintf
+
+#if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
+ || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
+ || defined(_BSD_SOURCE)
+
+#undef fdopen
+#undef fmemopen
+#undef popen
 
 __access(read_only, 2)
 #if __has_builtin(__builtin_fdopen)
@@ -47,6 +52,28 @@ _FORTIFY_FN(fdopen) FILE *fdopen(int __f, const char* _FORTIFY_POS0 __m)
 {
 	return __orig_fdopen(__f, __m);
 }
+
+__malloc(malloc (fclose, 1))
+#if __has_builtin(__builtin_fmemopen)
+__diagnose_as_builtin(__builtin_fmemopen, 1, 2, 3)
+#endif
+_FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const char* _FORTIFY_POS0 __m)
+{
+	return __orig_fmemopen(__b, __s, __m);
+}
+
+__access(read_only, 1)
+__access(read_only, 2)
+__malloc(malloc (pclose, 1))
+#if __has_builtin(__builtin_popen)
+__diagnose_as_builtin(__builtin_popen, 1, 2)
+#endif
+_FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTIFY_POS0 __t)
+{
+	return __orig_popen(__c, __t);
+}
+
+#endif /* _POSIX_SOURCE || _POSIX_C_SOURCE || _XOPEN_SOURCE || _GNU_SOURCE || _BSD_SOURCE */
 
 __access(write_only, 1, 2)
 #if __has_builtin(__builtin_fgets)
@@ -59,15 +86,6 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 	if ((__fh_size_t)__n > __b)
 		__builtin_trap();
 	return __orig_fgets(__s, __n, __f);
-}
-
-__malloc(malloc (fclose, 1))
-#if __has_builtin(__builtin_fmemopen)
-__diagnose_as_builtin(__builtin_fmemopen, 1, 2, 3)
-#endif
-_FORTIFY_FN(fmemopen) FILE *fmemopen(void* _FORTIFY_POS0 __b, size_t __s, const char* _FORTIFY_POS0 __m)
-{
-	return __orig_fmemopen(__b, __s, __m);
 }
 
 __access(read_only, 1)
@@ -111,17 +129,6 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 	if (__n * __m > __b)
 		__builtin_trap();
 	return __orig_fwrite(__d, __n, __m, __f);
-}
-
-__access(read_only, 1)
-__access(read_only, 2)
-__malloc(malloc (pclose, 1))
-#if __has_builtin(__builtin_popen)
-__diagnose_as_builtin(__builtin_popen, 1, 2)
-#endif
-_FORTIFY_FN(popen) FILE *popen(const char* _FORTIFY_POS0 __c, const char* _FORTIFY_POS0 __t)
-{
-	return __orig_popen(__c, __t);
 }
 
 #ifndef __clang__  /* FIXME */
