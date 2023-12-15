@@ -36,7 +36,7 @@ __diagnose_as_builtin(__builtin_poll, 1, 2, 3)
 #endif
 _FORTIFY_FN(poll) int poll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n, int __s)
 {
-	size_t __b = __bos(__f, 0);
+	__fh_size_t __b = __bos(__f, 0);
 
 	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();
@@ -51,7 +51,7 @@ __diagnose_as_builtin(__builtin_ppoll, 1, 2, 3, 4)
 _FORTIFY_FN(ppoll) int ppoll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n,
                              const struct timespec *__s, const sigset_t *__m)
 {
-	size_t __b = __bos(__f, 0);
+	__fh_size_t __b = __bos(__f, 0);
 
 	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();

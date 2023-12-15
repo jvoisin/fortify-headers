@@ -123,13 +123,17 @@
 
 #endif /* __has_attribute */
 
+// Since we're not allow to include anything.
+// https://awesomekling.github.io/How-SerenityOS-declares-ssize_t/
+#define __fh_size_t __typeof__(sizeof(char))
+
 //TODO(jvoisin) Add a check for overflows
 /* check if pointers are overlapping but not if dst == src,
  * since gcc seems to like to generate code that relies on dst == src */
 #define __fh_overlap(a, b, l) \
 	( \
-		((a) < (b) && (b) < (a) + (size_t)(l)) \
-	     || ((b) < (a) && (a) < (b) + (size_t)(l)) \
+		((a) < (b) && (b) < (a) + (__fh_size_t)(l)) \
+	     || ((b) < (a) && (a) < (b) + (__fh_size_t)(l)) \
         )
 
 /*

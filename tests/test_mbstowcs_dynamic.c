@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include <wchar.h>
+#include <stdlib.h>
 
 int main(int argc, char** argv) {
   const char* mbstr = "z\u00df\u6c34\U0001f34c"; // or u8"zß水🍌"
