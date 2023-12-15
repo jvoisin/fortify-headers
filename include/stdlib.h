@@ -171,11 +171,11 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 }
 #endif
 
+#endif // clang
+
 #ifdef __cplusplus
 }
 #endif
-
-#endif // clang
 
 #endif // _FORTIFY_SOURCE
 
