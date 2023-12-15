@@ -119,6 +119,7 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 #endif
 }
 
+#if 0
 __fh_access(read_only, 1, 2)
 _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 {
@@ -148,6 +149,7 @@ _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
 	return __r;
 #endif
 }
+#endif
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
  || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
