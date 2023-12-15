@@ -23,6 +23,7 @@ __extension__
 #include_next <sys/select.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "../fortify-headers.h"
 
 #ifdef __cplusplus
 extern "C" {
