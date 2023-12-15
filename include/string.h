@@ -51,8 +51,8 @@ __error_if((__bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the siz
 #if __has_builtin(__builtin___memcpy_chk) && USE_NATIVE_CHK
 	return __builtin___memcpy_chk(__od, __os, __n, __bos(__od, 0));
 #else
-	size_t __bd = __bos(__od, 0);
-	size_t __bs = __bos(__os, 0);
+	__fh_size_t __bd = __bos(__od, 0);
+	__fh_size_t __bs = __bos(__os, 0);
 	char *__d = (char *)__od;
 	const char *__s = (const char *)__os;
 
@@ -75,8 +75,8 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___memmove_chk) && USE_NATIVE_CHK
 	return __builtin___memmove_chk(__d, __s, __n, __bos(__d, 0));
 #else
-	size_t __bd = __bos(__d, 0);
-	size_t __bs = __bos(__s, 0);
+	__fh_size_t __bd = __bos(__d, 0);
+	__fh_size_t __bs = __bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -94,7 +94,7 @@ __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert 
 #if __has_builtin(__builtin___memset_chk) && USE_NATIVE_CHK
 	return __builtin___memset_chk(__d, __c, __n, __bos(__d, 0));
 #else
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -111,7 +111,7 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 #if __has_builtin(__builtin___memchr_chk) && USE_NATIVE_CHK
 	return __builtin___memchr_chk(__d, __c, __n, __bos(__d, 0));
 #else
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -125,7 +125,7 @@ _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 #if __has_builtin(__builtin___strchr_chk) && USE_NATIVE_CHK
 	return __builtin___strchr_chk(__s, __c, __bos(__s, 0));
 #else
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	char* __r = __builtin_strchr(__s, __c);
 	if (__r - __s > __b)
@@ -140,7 +140,7 @@ _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
 #if __has_builtin(__builtin___strrchr_chk) && USE_NATIVE_CHK
 	return __builtin___strrchr_chk(__s, __c, __bos(__s, 0));
 #else
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	char* __r = __builtin_strrchr(__s, __c);
 	if (__r - __s > __b)
@@ -163,12 +163,12 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 #if __has_builtin(__builtin___stpcpy_chk) && USE_NATIVE_CHK
 	return __builtin___stpcpy_chk(__d, __s, __bos(__d, 0));
 #else
-	size_t __n = strlen(__s) + 1;
+	__fh_size_t __n = strlen(__s) + 1;
 
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_stpcpy(__d, __s);
@@ -190,7 +190,7 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 	if (__n > __b && strlen(__s) + 1 > __b)
 		__builtin_trap();
 	return __orig_stpncpy(__d, __s, __n);
@@ -208,7 +208,7 @@ _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 #if __has_builtin(__builtin___strcat_chk) && USE_NATIVE_CHK
 	return __builtin___strcat_chk(__d, __s, __bos(__d, 0));
 #else
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (strlen(__s) + strlen(__d) + 1 > __b)
 		__builtin_trap();
@@ -226,12 +226,12 @@ _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 #if __has_builtin(__builtin___strcpy_chk) && USE_NATIVE_CHK
 	return __builtin___strcpy_chk(__d, __s, __bos(__d, 0));
 #else
-	size_t __n = strlen(__s) + 1;
+	__fh_size_t __n = strlen(__s) + 1;
 
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strcpy(__d, __s);
@@ -247,7 +247,7 @@ _FORTIFY_FN(strlen) size_t strlen(const char * _FORTIFY_POS0 __s)
 #if __has_builtin(__builtin___strlen_chk) && USE_NATIVE_CHK
 	return __builtin___strlen_chk(__s, __bos(__s, 0));
 #else
-	size_t ret = __orig_strlen(__s);
+	__fh_size_t ret = __orig_strlen(__s);
 	if (ret > __bos(__s, 0) - 1)
 		__builtin_trap();
 	return ret;
@@ -265,11 +265,11 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___strncat_chk) && USE_NATIVE_CHK
 	return __builtin___strncat_chk(__d, __s, __n, __bos(__d, 0));
 #else
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b) {
-		size_t __sl = strnlen(__s, __n);
-		size_t __dl = strlen(__d);
+		__fh_size_t __sl = strnlen(__s, __n);
+		__fh_size_t __dl = strlen(__d);
 		if (__sl + __dl + 1 > __b)
 			__builtin_trap();
 	}
@@ -291,7 +291,7 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
 
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strncpy(__d, __s, __n);
@@ -311,8 +311,8 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___mempcpy_chk) && USE_NATIVE_CHK
 	return __builtin___mempcpy_chk(__d, __s, __n, __bos(__d, 0));
 #else
-	size_t __bd = __bos(__d, 0);
-	size_t __bs = __bos(__s, 0);
+	__fh_size_t __bd = __bos(__d, 0);
+	__fh_size_t __bs = __bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -335,7 +335,7 @@ _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___strlcat_chk) && USE_NATIVE_CHK
 	return __builtin___strlcat_chk(__d, __s, __n, __bos(__d, 0));
 #else
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();
@@ -354,7 +354,7 @@ _FORTIFY_FN(strlcpy) size_t strlcpy(char * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___strlcpy_chk) && USE_NATIVE_CHK
 	return __builtin___strlcpy_chk(__d, __s, __n, __bos(__d, 0));
 #else
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b)
 		__builtin_trap();

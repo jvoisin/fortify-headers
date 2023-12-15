@@ -24,18 +24,40 @@ __extension__
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
 
-#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
-#if !defined(__cplusplus) && !defined(__clang__)
-__extension__
-#endif
-#include_next <limits.h>
-#endif
-
 #include "fortify-headers.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#undef mbstowcs
+#if __has_builtin(__builtin_mbstowcs)
+__diagnose_as_builtin(__builtin_mbstowcs, 1, 2, 3)
+#endif
+_FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
+                                      const char *__s, size_t __wn)
+{
+	__fh_size_t __b = __bos(__ws, 0);
+
+	if (__ws && __wn > __b / sizeof(wchar_t))
+		__builtin_trap();
+	return __orig_mbstowcs(__ws, __s, __wn);
+}
+
+#undef wcstombs
+__access(write_only, 1, 3)
+#if __has_builtin(__builtin_wcstombs)
+__diagnose_as_builtin(__builtin_wcstombs, 1, 2, 3)
+#endif
+_FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
+                                      const wchar_t *__ws, size_t __n)
+{
+	__fh_size_t __b = __bos(__s, 0);
+
+	if (__s && __n > __b)
+		__builtin_trap();
+	return __orig_wcstombs(__s, __ws, __n);
+}
 
 #undef qsort
 #if __has_builtin(__builtin_qsort)
@@ -45,7 +67,7 @@ __access(read_write, 1)
 _FORTIFY_FN(qsort) void qsort(void * _FORTIFY_POS0 base, size_t nmemb, size_t size,
 	int (*compar)(const void *, const void *))
 {
-	size_t __b = __bos(base, 0);
+	__fh_size_t __b = __bos(base, 0);
 
 	if (__bmo(nmemb, size))
 		__builtin_trap();
@@ -113,12 +135,10 @@ __diagnose_as_builtin(__builtin_realpath, 1, 2)
 #endif
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
-#ifndef PATH_MAX
-#error PATH_MAX unset. A fortified realpath will not work.
-#else
-	if (__r && PATH_MAX > __bos(__r, 2)) {
-		char __buf[PATH_MAX], *__ret;
-		size_t __l;
+	// PATH_MAX is defined as 4096
+	if (__r && 4096 > __bos(__r, 2)) {
+		char __buf[4096], *__ret;
+		__fh_size_t __l;
 
 		__ret = __orig_realpath(__p, __buf);
 		if (!__ret)
@@ -130,7 +150,6 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 		return __r;
 	}
 	return __orig_realpath(__p, __r);
-#endif
 }
 #endif
 

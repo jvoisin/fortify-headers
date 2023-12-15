@@ -40,8 +40,8 @@ __diagnose_as_builtin(__builtin_bcopy, 1, 2, 3)
 _FORTIFY_FN(bcopy) void bcopy(const void * _FORTIFY_POS0 __s,
                               void * _FORTIFY_POS0 __d, size_t __n)
 {
-	size_t __bd = __bos(__d, 0);
-	size_t __bs = __bos(__s, 0);
+	__fh_size_t __bd = __bos(__d, 0);
+	__fh_size_t __bs = __bos(__s, 0);
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -54,7 +54,7 @@ __diagnose_as_builtin(__builtin_bzero, 1, 2)
 #endif
 _FORTIFY_FN(bzero) void bzero(void * _FORTIFY_POS0 __s, size_t __n)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	if (__n > __b)
 		__builtin_trap();

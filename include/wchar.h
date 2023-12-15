@@ -20,18 +20,6 @@
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
-#include_next <limits.h>
-#if !defined(__cplusplus) && !defined(__clang__)
-__extension__
-#endif
-#include_next <stdlib.h>
-#if !defined(__cplusplus) && !defined(__clang__)
-__extension__
-#endif
-#include_next <string.h>
-#if !defined(__cplusplus) && !defined(__clang__)
-__extension__
-#endif
 #include_next <wchar.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
@@ -43,15 +31,12 @@ extern "C" {
 
 #undef fgetws
 #undef mbsrtowcs
-#undef mbstowcs
 #undef wcrtomb
 #undef wcscat
 #undef wcscpy
 #undef wcsncat
 #undef wcsncpy
 #undef wcsrtombs
-#undef wcstombs
-#undef wctomb
 #undef wmemcpy
 #undef wmemmove
 #undef wmemset
@@ -62,9 +47,9 @@ __diagnose_as_builtin(__builtin_fgetws, 1, 2, 3)
 _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t * _FORTIFY_POS0 __s,
                                     int __n, FILE *__f)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
-	if ((size_t)__n > __b / sizeof(wchar_t))
+	if ((__fh_size_t)__n > __b / sizeof(wchar_t))
 		__builtin_trap();
 	return __orig_fgetws(__s, __n, __f);
 }
@@ -79,17 +64,17 @@ _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t * _FORTIFY_POS0 __d,
                                           const char **__s, size_t __n,
                                           size_t __wn, mbstate_t *__st)
 {
-	size_t __b = __bos(__d, 0);
-	size_t __r;
+	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __r;
 
 	if (__wn > __n / sizeof(wchar_t)) {
 		__b /= sizeof(wchar_t);
 		__r = __orig_mbsnrtowcs(__d, __s, __n, __wn > __b ? __b : __wn, __st);
-		if (__b < __wn && __d && *__s && __r != (size_t)-1)
+		if (__b < __wn && __d && *__s && __r != (__fh_size_t)-1)
 			__builtin_trap();
 	} else {
 		__r = __orig_mbsnrtowcs(__d, __s, __n > __b ? __b : __n, __wn, __st);
-		if (__b < __n && __d && *__s && __r != (size_t)-1)
+		if (__b < __n && __d && *__s && __r != (__fh_size_t)-1)
 			__builtin_trap();
 	}
 	return __r;
@@ -103,27 +88,14 @@ _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t * _FORTIFY_POS0 __d,
                                         const char **__s, size_t __wn,
                                         mbstate_t *__st)
 {
-	size_t __b = __bos(__d, 0);
-	size_t __r;
+	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __r;
 
 	__b /= sizeof(wchar_t);
 	__r = __orig_mbsrtowcs(__d, __s, __wn > __b ? __b : __wn, __st);
-	if (__b < __wn && __d && *__s && __r != (size_t)-1)
+	if (__b < __wn && __d && *__s && __r != (__fh_size_t)-1)
 		__builtin_trap();
 	return __r;
-}
-
-#if __has_builtin(__builtin_mbstowcs)
-__diagnose_as_builtin(__builtin_mbstowcs, 1, 2, 3)
-#endif
-_FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
-                                      const char *__s, size_t __wn)
-{
-	size_t __b = __bos(__ws, 0);
-
-	if (__ws && __wn > __b / sizeof(wchar_t))
-		__builtin_trap();
-	return __orig_mbstowcs(__ws, __s, __wn);
 }
 
 /* FIXME clang */
@@ -133,12 +105,13 @@ __diagnose_as_builtin(__builtin_wcrtomb, 1, 2, 3)
 #endif
 _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 {
-	if (__s && MB_LEN_MAX > __bos(__s, 2)) {
-		char __buf[MB_LEN_MAX];
-		size_t __r;
+	// In glibc, MB_LEN_MAX is typically 16 (6 in glibc versions earlier than 2.2)
+	if (__s && 16 > __bos(__s, 2)) {
+		char __buf[16];
+		__fh_size_t __r;
 
 		__r = __orig_wcrtomb(__buf, __w, __st);
-		if (__r == (size_t)-1)
+		if (__r == (__fh_size_t)-1)
 			return __r;
 		if (__r > __bos(__s, 0))
 			__builtin_trap();
@@ -155,7 +128,7 @@ __diagnose_as_builtin(__builtin_wcscat, 1, 2)
 _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t * _FORTIFY_POS0 __d,
                                     const wchar_t *__s)
 {
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (wcslen(__s) + wcslen(__d) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -168,7 +141,7 @@ __diagnose_as_builtin(__builtin_wcscpy, 1, 2)
 _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
                                     const wchar_t *__s)
 {
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (wcslen(__s) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -181,8 +154,8 @@ __diagnose_as_builtin(__builtin_wcsncat, 1, 2, 3)
 _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
-	size_t __b = __bos(__d, 0);
-	size_t __sl, __dl;
+	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __sl, __dl;
 
 	if (__n > __b / sizeof(wchar_t)) {
 		__sl = wcslen(__s);
@@ -201,7 +174,7 @@ __diagnose_as_builtin(__builtin_wcsncpy, 1, 2, 3)
 _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -218,17 +191,17 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
                                           const wchar_t **__s, size_t __wn,
                                           size_t __n, mbstate_t *__st)
 {
-	size_t __b = __bos(__d, 0);
-	size_t __r;
+	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __r;
 
 	if (__wn > __n / sizeof(wchar_t)) {
 		__b /= sizeof(wchar_t);
 		__r = __orig_wcsnrtombs(__d, __s, __wn > __b ? __b : __wn, __n, __st);
-		if (__b < __wn && __d && *__s && __r != (size_t)-1)
+		if (__b < __wn && __d && *__s && __r != (__fh_size_t)-1)
 			__builtin_trap();
 	} else {
 		__r = __orig_wcsnrtombs(__d, __s, __wn, __n > __b ? __b : __n, __st);
-		if (__b < __n && __d && *__s && __r != (size_t)-1)
+		if (__b < __n && __d && *__s && __r != (__fh_size_t)-1)
 			__builtin_trap();
 	}
 	return __r;
@@ -242,40 +215,29 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
                                         const wchar_t **__s, size_t __n,
                                         mbstate_t *__st)
 {
-	size_t __b = __bos(__d, 0);
-	size_t __r;
+	__fh_size_t __b = __bos(__d, 0);
+	__fh_size_t __r;
 
 	__r = __orig_wcsrtombs(__d, __s, __n > __b ? __b : __n, __st);
-	if (__b < __n && __d && *__s && __r != (size_t)-1)
+	if (__b < __n && __d && *__s && __r != (__fh_size_t)-1)
 		__builtin_trap();
 	return __r;
 }
 
-__access(write_only, 1, 3)
-#if __has_builtin(__builtin_wcstombs)
-__diagnose_as_builtin(__builtin_wcstombs, 1, 2, 3)
-#endif
-_FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
-                                      const wchar_t *__ws, size_t __n)
-{
-	size_t __b = __bos(__s, 0);
-
-	if (__s && __n > __b)
-		__builtin_trap();
-	return __orig_wcstombs(__s, __ws, __n);
-}
-
+#ifdef MB_CUR_MAX
+#undef wctomb
 #if __has_builtin(__builtin_wctomb)
 __diagnose_as_builtin(__builtin_wctomb, 1, 2)
 #endif
 _FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
-	if (__s && MB_LEN_MAX > __b && MB_CUR_MAX > __b)
+	if (__s && 16 > __b && MB_CUR_MAX > __b)
 		__builtin_trap();
 	return __orig_wctomb(__s, __w);
 }
+#endif // MB_CUR_MAX
 
 #if __has_builtin(__builtin_wmemcpy)
 __diagnose_as_builtin(__builtin_wmemcpy, 1, 2, 3)
@@ -283,7 +245,7 @@ __diagnose_as_builtin(__builtin_wmemcpy, 1, 2, 3)
 _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
                                       const wchar_t *__s, size_t __n)
 {
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -296,7 +258,7 @@ __diagnose_as_builtin(__builtin_wmemmove, 1, 2, 3)
 _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
                                         const wchar_t *__s, size_t __n)
 {
-	size_t __b = __bos(__d, 0);
+	__fh_size_t __b = __bos(__d, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
@@ -309,7 +271,7 @@ __diagnose_as_builtin(__builtin_wmemset, 1, 2, 3)
 _FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t * _FORTIFY_POS0 __s,
                                       wchar_t __c, size_t __n)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();

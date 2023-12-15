@@ -33,7 +33,7 @@ extern "C" {
 
 _STI void __fortify_FD_CLR(int __f, fd_set * _FORTIFY_POS0 __s)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	if (__f < 0 || __f >= FD_SETSIZE || __b < sizeof(fd_set))
 		__builtin_trap();
@@ -42,7 +42,7 @@ _STI void __fortify_FD_CLR(int __f, fd_set * _FORTIFY_POS0 __s)
 
 _STI void __fortify_FD_SET(int __f, fd_set * _FORTIFY_POS0 __s)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	if (__f < 0 || __f >= FD_SETSIZE || __b < sizeof(fd_set))
 		__builtin_trap();
@@ -51,7 +51,7 @@ _STI void __fortify_FD_SET(int __f, fd_set * _FORTIFY_POS0 __s)
 
 _STI int __fortify_FD_ISSET(int __f, fd_set * _FORTIFY_POS0 __s)
 {
-	size_t __b = __bos(__s, 0);
+	__fh_size_t __b = __bos(__s, 0);
 
 	if (__f < 0 || __f >= FD_SETSIZE || __b < sizeof(fd_set))
 		__builtin_trap();
