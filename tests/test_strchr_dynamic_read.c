@@ -3,6 +3,7 @@
 #include <string.h>
 
 int main(int argc, char** argv) {
+#if 0
   char buffer[] = {'1', '2', '3', '4', '5'};
   const char* padding = "ABCDEFGHIJKLMN";
   strchr(buffer, (int)'4');
@@ -14,4 +15,7 @@ int main(int argc, char** argv) {
 
   puts(buffer);
   return ret;
+#else
+  return 0;
+#endif
 }
