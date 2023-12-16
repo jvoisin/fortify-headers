@@ -47,6 +47,7 @@ set_fortify_handler (void)
   sigemptyset (&sa.sa_mask);
 
   sigaction (SIGILL, &sa, NULL);
+  sigaction (SIGTRAP, &sa, NULL);
 }
 
 #define FAIL() \
