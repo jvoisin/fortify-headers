@@ -41,7 +41,7 @@ extern "C" {
 
 __fh_access(write_only, 1, 3)
 __fh_access(read_only, 2, 3)
-#if __has_builtin(__builtin_mempcpy)
+#if __has_builtin(__builtin_memcpy)
 __diagnose_as_builtin(__builtin_memcpy, 1, 2, 3)
 #endif
 _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
