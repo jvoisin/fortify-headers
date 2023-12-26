@@ -4,6 +4,10 @@
 
 int main(int argc, char** argv) {
   char buffer[8] = {0};
+
+  strncat(buffer, "1", 50);
+  puts(buffer);
+
   strncat(buffer, "1234567", 5);
   puts(buffer);
 

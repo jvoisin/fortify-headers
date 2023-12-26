@@ -189,11 +189,12 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___stpncpy_chk) && USE_NATIVE_CHK
 	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	if (__fh_overlap(__d, __s, __n))
+	__fh_size_t __len_s = strlen(__s) + 1;
+	if (__fh_overlap(__d, __s, (__len_s < __n)? __len_s: __n))
 		__builtin_trap();
 
 	__fh_size_t __b = __fh_bos(__d, 0);
-	if (__n > __b && strlen(__s) + 1 > __b)
+	if (__n > __b && __len_s > __b)
 		__builtin_trap();
 	return __orig_stpncpy(__d, __s, __n);
 #endif
@@ -290,7 +291,8 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___strncpy_chk) && USE_NATIVE_CHK
 	return __builtin___strncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	if (__fh_overlap(__d, __s, __n))
+	__fh_size_t __len_s = strlen(__s) + 1;
+	if (__fh_overlap(__d, __s, (__len_s < __n)? __len_s: __n))
 		__builtin_trap();
 
 	__fh_size_t __b = __fh_bos(__d, 0);
