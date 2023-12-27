@@ -135,10 +135,10 @@
 //TODO(jvoisin) Add a check for overflows
 /* check if pointers are overlapping but not if dst == src,
  * since gcc seems to like to generate code that relies on dst == src */
-#define __fh_overlap(a, b, l) \
+#define __fh_overlap(a, len_a, b, len_b) \
 	( \
-		((a) < (b) && (b) < (a) + (__fh_size_t)(l)) \
-	     || ((b) < (a) && (a) < (b) + (__fh_size_t)(l)) \
+		((a) < (b) && (b) < (a) + (__fh_size_t)(len_a)) \
+	     || ((b) < (a) && (a) < (b) + (__fh_size_t)(len_b)) \
         )
 
 /*

@@ -56,7 +56,7 @@ __error_if((__fh_bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the 
 	char *__d = (char *)__od;
 	const char *__s = (const char *)__os;
 
-	if __fh_overlap(__d, __s, __n)
+	if __fh_overlap(__d, __bd, __s, __n)
 		__builtin_trap();
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
@@ -166,11 +166,11 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 	return __builtin___stpcpy_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __n = strlen(__s) + 1;
+	__fh_size_t __b = __fh_bos(__d, 0);
 
-	if (__fh_overlap(__d, __s, __n))
+	if (__fh_overlap(__d, __b, __s, __n))
 		__builtin_trap();
 
-	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_stpcpy(__d, __s);
@@ -236,11 +236,11 @@ _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 	return __builtin___strcpy_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __n = strlen(__s) + 1;
+	__fh_size_t __b = __fh_bos(__d, 0);
 
-	if (__fh_overlap(__d, __s, __n))
+	if (__fh_overlap(__d, __b, __s, __n))
 		__builtin_trap();
 
-	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
 	return __orig_strcpy(__d, __s);
