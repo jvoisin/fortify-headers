@@ -189,8 +189,15 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___stpncpy_chk) && USE_NATIVE_CHK
 	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
+#if 0
+	// They check overlap across the whole range of the given length, but
+	// the given length is not what will actually be copied, rather it's
+	// the maximum length (if src is shorter, only length of src will be
+	// copied). This triggers false positives and traps where it shouldn't
+	// (e.g. in ICU tests).
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
+#endif
 
 	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b && strlen(__s) + 1 > __b)
@@ -290,8 +297,15 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___strncpy_chk) && USE_NATIVE_CHK
 	return __builtin___strncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
+#if 0
+	// They check overlap across the whole range of the given length, but
+	// the given length is not what will actually be copied, rather it's
+	// the maximum length (if src is shorter, only length of src will be
+	// copied). This triggers false positives and traps where it shouldn't
+	// (e.g. in ICU tests).
 	if (__fh_overlap(__d, __s, __n))
 		__builtin_trap();
+#endif
 
 	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
