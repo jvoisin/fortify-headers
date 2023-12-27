@@ -3,8 +3,9 @@
 #include <string.h>
 
 int main(int argc, char** argv) {
-  char buffer[8] = {0};
-  stpncpy(buffer, "1234567", 5);
+  char buffer[] = {'A', 'B', 'C', 'D', 'E', 'F', '\0'};
+
+  stpncpy(buffer, "1234567", 3);
   puts(buffer);
 
   CHK_FAIL_START
