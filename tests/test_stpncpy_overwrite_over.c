@@ -3,8 +3,10 @@
 #include <string.h>
 
 int main(int argc, char** argv) {
-#if 0
   char buffer[9] = {'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', '\0'};
+  puts(buffer);
+
+  stpncpy(buffer, buffer+5, 2);
   puts(buffer);
 
   CHK_FAIL_START
@@ -12,6 +14,5 @@ int main(int argc, char** argv) {
   CHK_FAIL_END
 
   puts(buffer);
-#endif
   return ret;
 }
