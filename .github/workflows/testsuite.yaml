@@ -37,7 +37,9 @@ jobs:
       - name: Build without native chk, and run the testsuite
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
-        run: make -C tests clean gcc run
+        run: |
+          make -C tests clean gcc run > ./results.txt
+          grep -zvq 'FAIL' ./results.txt
 
   clang:
     runs-on: ubuntu-latest
@@ -70,4 +72,6 @@ jobs:
       - name: Building and running without native chk
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
-        run: make -C tests clean clang run
+        run: |
+          make -C tests clean clang run > ./results.txt
+          grep -zvq 'FAIL' ./results.txt
