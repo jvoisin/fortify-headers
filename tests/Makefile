@@ -48,10 +48,15 @@ RUNTIME_TARGETS= \
 	test_mbstowcs_static         \
 	test_memchr_dynamic_read     \
 	test_memchr_static_read      \
+	test_memchr_null             \
 	test_memcpy_dynamic_read     \
 	test_memcpy_dynamic_write    \
 	test_memcpy_overwrite_over   \
 	test_memcpy_static_read      \
+	test_memcpy_null_src         \
+	test_memcpy_null_dst         \
+	test_memmove_null_src        \
+	test_memmove_null_dst        \
 	test_memmove_dynamic_read    \
 	test_memmove_dynamic_write   \
 	test_memmove_static_read     \
@@ -62,6 +67,7 @@ RUNTIME_TARGETS= \
 	test_mempcpy_static_write    \
 	test_memset_dynamic_write    \
 	test_memset_static_write     \
+	test_memset_null             \
 	test_poll_dynamic            \
 	test_poll_static             \
 	test_ppoll_dynamic           \
