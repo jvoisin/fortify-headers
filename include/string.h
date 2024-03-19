@@ -123,10 +123,12 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 	if (!__d)
 		__builtin_trap();
 
+#if __STDC_VERSION__ < 201112L
 	__fh_size_t __b = __fh_bos(__d, 0);
-
 	if (__n > __b)
 		__builtin_trap();
+#endif
+
 	return __builtin_memchr(__d, __c, __n);
 #endif
 }
