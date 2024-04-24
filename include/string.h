@@ -51,8 +51,10 @@ __error_if((__fh_bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the 
 #if __has_builtin(__builtin___memcpy_chk) && USE_NATIVE_CHK
 	return __builtin___memcpy_chk(__od, __os, __n, __fh_bos(__od, 0));
 #else
+#if defined PEDANTIC_CHECKS
 	if (!__od || !__os)
       		__builtin_trap();
+#endif
 
 	__fh_size_t __bd = __fh_bos(__od, 0);
 	__fh_size_t __bs = __fh_bos(__os, 0);
@@ -78,8 +80,10 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___memmove_chk) && USE_NATIVE_CHK
 	return __builtin___memmove_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
+#if defined PEDANTIC_CHECKS
 	if (!__d || !__s)
 		__builtin_trap();
+#endif
 
 	__fh_size_t __bd = __fh_bos(__d, 0);
 	__fh_size_t __bs = __fh_bos(__s, 0);
@@ -100,8 +104,10 @@ __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert 
 #if __has_builtin(__builtin___memset_chk) && USE_NATIVE_CHK
 	return __builtin___memset_chk(__d, __c, __n, __fh_bos(__d, 0));
 #else
+#if defined PEDANTIC_CHECKS
 	if (!__d)
 		__builtin_trap();
+#endif
 
 	__fh_size_t __b = __fh_bos(__d, 0);
 
@@ -120,13 +126,14 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 #if __has_builtin(__builtin___memchr_chk) && USE_NATIVE_CHK
 	return __builtin___memchr_chk(__d, __c, __n, __fh_bos(__d, 0));
 #else
+#if defined PEDANTIC_CHECKS
 	if (!__d)
 		__builtin_trap();
-
 #if __STDC_VERSION__ < 201112L
 	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
+#endif
 #endif
 
 	return __builtin_memchr(__d, __c, __n);

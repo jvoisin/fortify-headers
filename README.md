@@ -28,8 +28,10 @@ on Clang. It was initially intended to be used on
   [significant coverage](https://jvoisin.github.io/fortify-headers/)
 - Defining `USE_NATIVE_CHK` will make use of compiler-provided builtin `_chk`
   functions, which might be a bit better in term of diagnostics,
-  but won't necesarily provide the same amount of security checks.
-
+  but won't necessarily provide the same amount of security checks.
+- Defining `PEDANTIC_CHECKS` will enable pedantic checks, that while technically
+  correct, might break some programs relying on widely accepted
+  undefined-behaviours.
 
 # Sample usage
 
