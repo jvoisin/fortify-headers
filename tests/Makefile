@@ -43,6 +43,7 @@ RUNTIME_TARGETS= \
 	test_getlogin_r_dynamic      \
 	test_getlogin_r_static       \
 	test_issue57                 \
+	test_issue57_strcpy          \
 	test_mbsrtowcs_dynamic       \
 	test_mbsrtowcs_static        \
 	test_mbstowcs_dynamic        \
