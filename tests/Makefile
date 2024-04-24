@@ -42,6 +42,7 @@ RUNTIME_TARGETS= \
 	test_gethostname_static      \
 	test_getlogin_r_dynamic      \
 	test_getlogin_r_static       \
+	test_issue57                 \
 	test_mbsrtowcs_dynamic       \
 	test_mbsrtowcs_static        \
 	test_mbstowcs_dynamic        \
