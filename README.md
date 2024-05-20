@@ -59,6 +59,7 @@ At this point, the program will safely crash.
 
 - `FD_CLR`
 - `FD_SET`
+- `asprintf`
 - `bcopy`
 - `bzero`
 - `calloc`
@@ -121,6 +122,7 @@ At this point, the program will safely crash.
 - `umask` 
 - `vfprintf` 
 - `vprintf` 
+- `vasprintf`
 - `vsnprintf`
 - `vsprintf`
 - `wcrtomb`
