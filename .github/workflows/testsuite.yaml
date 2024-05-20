@@ -29,6 +29,9 @@ jobs:
         run: tar xzf ./x86_64-linux-musl-native.tgz
       - name: Setting up gcc version
         run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt update
+          sudo apt install -y --no-install-recommends gcc-${{ matrix.version }} g++-${{ matrix.version }}
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
       - name: Build with native chk
