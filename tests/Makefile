@@ -1,4 +1,4 @@
-CFLAGS+=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -DPEDANTIC_CHECKS
+CFLAGS+=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -DPEDANTIC_CHECKS -Wno-format
 
 COMPTIME_TARGETS= \
 	test_memcpy_overwrite_under  \
@@ -12,6 +12,7 @@ RUNTIME_TARGETS= \
 	test_FD_SET_negative         \
 	test_FD_ISSET_SETSIZE        \
 	test_FD_ISSET_negative       \
+	test_asprintf                \
 	test_bcopy_dynamic_read      \
 	test_bcopy_dynamic_write     \
 	test_bcopy_static_read       \
@@ -126,11 +127,12 @@ RUNTIME_TARGETS= \
 	test_ttyname_r_dynamic       \
 	test_ttyname_r_static        \
 	test_umask                   \
+	test_vasprintf               \
+	test_vfprintf                \
+	test_vprintf                 \
 	test_vsnprintf_dynamic       \
 	test_vsnprintf_static        \
 	test_vsprintf                \
-	test_vfprintf                \
-	test_vprintf                 \
 	test_wcscat_static_write     \
 	test_wcscpy_static_write     \
 	test_wcsncat_static_write    \
