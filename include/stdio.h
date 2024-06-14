@@ -226,7 +226,7 @@ _FORTIFY_FN(vprintf) int vprintf(const char *__f, __builtin_va_list __v)
 #if __has_builtin(__builtin_vasprintf)
 __diagnose_as_builtin(__builtin_vasprintf, 1, 2, 3)
 #endif
-_FORTIFY_FN(vasprintf) int vasprintf(char **restrict strp, const char *restrict fmt, __builtin_va_list ap)
+_FORTIFY_FN(vasprintf) int vasprintf(char **strp, const char *fmt, __builtin_va_list ap)
 {
 #if __has_builtin(__builtin___vasprintf_chk) && USE_NATIVE_CHK
 	return __builtin___vasprintf_chk(_FORTIFY_SOURCE, strp, fmt, ap);
@@ -340,7 +340,7 @@ __fh_format(printf, 2, 0)
 #if __has_builtin(__builtin_asprintf)
 __diagnose_as_builtin(__builtin_asprintf, 2, 3)
 #endif
-_FORTIFY_FN(asprintf) int asprintf(char **restrict strp, const char *restrict fmt, ...)
+_FORTIFY_FN(asprintf) int asprintf(char **strp, const char *fmt, ...)
 {
 #if __has_builtin(__builtin___asprintf_chk) && USE_NATIVE_CHK
 	return __builtin___asprintf_chk(_FORTIFY_SOURCE, strp, fmt, __builtin_va_arg_pack());
