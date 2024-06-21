@@ -156,7 +156,9 @@ clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
 clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
 clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
 clang: CFLAGS+=-nostdinc
-clang: comptime $(RUNTIME_TARGETS)
+clang: CXX=clang++
+clang: CXXFLAGS=$(CFLAGS)
+clang: comptime $(RUNTIME_TARGETS) cpp
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
 coverage: CC=../x86_64-linux-musl-native/bin/gcc
@@ -173,6 +175,10 @@ all: gcc
 $(RUNTIME_TARGETS): %: %.c
 	$(CC) $(CFLAGS) -o $@ $<
 
+cpp: test_compile.cc
+	$(CXX) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
+	timeout 1s ./test_compile_cc 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
+
 run: $(RUNTIME_TARGETS)
 	$(foreach EXE, $(RUNTIME_TARGETS), \
 		timeout 1s ./$(EXE) 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
@@ -187,5 +193,6 @@ clean:
 	$(foreach EXE, $(RUNTIME_TARGETS) $(COMPTIME_TARGETS), \
 		rm -f ./$(EXE) \
 	)
+	rm -f ./test_compile_cc
 	rm -rf ./*.gcno ./*.gcda ./*.gcov ./coverage.info ./coverage
 
