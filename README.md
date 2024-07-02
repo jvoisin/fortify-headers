@@ -1,8 +1,8 @@
 # What is it?
 
 This is a [standalone implementation](https://git.2f30.org/fortify-headers/) of
-[fortify source]( http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html ).
-It provides compile time buffer checks.
+[fortify source]( http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html )
+level 3, providing compile time security checks.
 It is libc-agnostic and simply overlays the system headers by using the
 [`#include_next`](https://gcc.gnu.org/onlinedocs/cpp/Wrapper-Headers.html)
 extension found in GCC, and
@@ -11,17 +11,15 @@ on Clang. It was initially intended to be used on
 [musl](http://www.musl-libc.org/) based
 [Linux distributions](https://git.alpinelinux.org/aports/commit/?id=067a4f28825478911bb62be3b8da758d9722753e).
 
-
 # Features
 
 - It is portable, works on *BSD, Linux, Solaris and possibly others.
-- It will only trap non-conformant programs.  This means that fortify
+- It will only trap non-conformant programs. This means that fortify
   level 2 is treated in the same way as level 1.
 - Avoids making function calls when undefined behaviour has already been
-  invoked.  This is handled by using `__builtin_trap()`.
-- Support for out-of-bounds read interfaces, such as send(), write(),
-  fwrite() etc.
-- No ABI is enforced.  All of the fortify check functions are inlined
+  invoked. This is handled by using `__builtin_trap()`.
+- Support for out-of-bounds read interfaces, such as send(), write(), fwrite() etc.
+- No ABI is enforced. All of the fortify check functions are inlined
   into the resulting binary.
 - It has a [comprehensive suite of tests](https://github.com/jvoisin/fortify-headers/tree/master/tests),
   running both on Clang and on GCC for every commit, with
@@ -48,11 +46,11 @@ main(void)
 	return 0;
 }
 EOF
-cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=1 -O1 fgets.c
+cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=3 -O1 fgets.c
 ./a.out
 ```
 
-At this point, the program will safely crash.
+At this point, the program will safely and loudly crash.
 
 
 # Supported interfaces
