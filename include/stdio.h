@@ -268,7 +268,7 @@ _FORTIFY_FN(vasprintf) int vasprintf(char **strp, const char *fmt, __builtin_va_
 #undef printf
 #undef fprintf
 
-__fh_access(read_write, 1, 2)
+__fh_access(write_only, 1, 2)
 __fh_access(read_only, 3)
 __fh_format(printf, 3, 4)
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
@@ -286,7 +286,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 }
 
 __fh_format(printf, 2, 3)
-__fh_access(read_write, 1)
+__fh_access(write_only, 1)
 __fh_access(read_only, 2)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
