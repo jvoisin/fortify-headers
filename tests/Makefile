@@ -1,4 +1,4 @@
-CFLAGS+=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -DPEDANTIC_CHECKS -Wno-format -Werror=pointer-arith
+CFLAGS+=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -DFORTIFY_PEDANTIC_CHECKS -Wno-format -Werror=pointer-arith
 
 COMPTIME_TARGETS= \
 	test_memcpy_overwrite_under  \
