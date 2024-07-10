@@ -198,7 +198,7 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 
 #undef stpncpy
 __fh_access(write_only, 1)
-__fh_access(read_only, 2, 3)
+__fh_access(read_only, 2)
 #if __has_builtin(__builtin_stpncpy)
 __diagnose_as_builtin(__builtin_stpncpy, 1, 2, 3)
 #endif
@@ -304,7 +304,7 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 }
 
 __fh_access (write_only, 1)
-__fh_access (read_only, 2, 3)
+__fh_access (read_only, 2)
 #if __has_builtin(__builtin_strncpy)
 __diagnose_as_builtin(__builtin_strncpy, 1, 2, 3)
 #endif
