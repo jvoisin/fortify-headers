@@ -143,7 +143,7 @@ _FORTIFY_FN(tmpfile) FILE *tmpfile(void)
 }
 #endif
 
-__fh_access(read_write, 1, 2)
+__fh_access(write_only, 1, 2)
 __fh_access(read_only, 3)
 __fh_format(printf, 3, 0)
 #if __has_builtin(__builtin_vsnprintf)
@@ -164,7 +164,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 }
 
 __fh_format(printf, 2, 0)
-__fh_access(read_write, 1)
+__fh_access(write_only, 1)
 __fh_access(read_only, 2)
 #if __has_builtin(__builtin_vsprintf)
 __diagnose_as_builtin(__builtin_vsprintf, 1, 2, 3)
