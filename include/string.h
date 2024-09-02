@@ -208,7 +208,9 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___stpncpy_chk) && FORTIFY_USE_NATIVE_CHK
 	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t max_len_s = strnlen(__s, __n);
+	__fh_size_t max_len_s = strlen(__s);
+	if (max_len_s > __n)
+		max_len_s = __n;
 	if (__fh_overlap(__d, max_len_s, __s, max_len_s))
 		__builtin_trap();
 
