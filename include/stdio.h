@@ -286,7 +286,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 }
 
 __fh_format(printf, 2, 3)
-__fh_access(write_only, 1)
+//__fh_access(write_only, 1)
 __fh_access(read_only, 2)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
@@ -296,13 +296,13 @@ _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 	__fh_size_t __b = __fh_bos(__s, 0);
 	int __r;
 
-	if (__b != (__fh_size_t)-1) {
-		__r = __orig_snprintf(__s, __b, __f, __builtin_va_arg_pack());
-		if (__r != -1 && (__fh_size_t)__r >= __b)
-			__builtin_trap();
-	} else {
-		__r = __orig_sprintf(__s, __f, __builtin_va_arg_pack());
+	if (__b == (__fh_size_t)-1) {
+		return __orig_sprintf(__s, __f, __builtin_va_arg_pack());
 	}
+
+	__r = __orig_snprintf(__s, __b, __f, __builtin_va_arg_pack());
+	if (__r != -1 && (__fh_size_t)__r >= __b)
+		__builtin_trap();
 	return __r;
 #endif
 }

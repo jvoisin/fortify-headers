@@ -96,6 +96,8 @@ RUNTIME_TARGETS= \
 	test_send_static             \
 	test_sendto_dynamic          \
 	test_sendto_static           \
+	test_sprintf                 \
+	test_sprintf_62              \
 	test_stpcpy_dynamic_write    \
 	test_stpcpy_overwrite_over   \
 	test_stpcpy_overwrite_under  \
