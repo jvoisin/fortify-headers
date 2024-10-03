@@ -2,8 +2,10 @@ VERSION = 2.1
 PREFIX = /usr/local
 
 install:
-	mkdir -p $(DESTDIR)$(PREFIX)/include/fortify
-	cp -R include/* $(DESTDIR)$(PREFIX)/include/fortify
+	install -D -t $(DESTDIR)$(PREFIX)/include/fortify \
+		include/*.h
+	install -D -t $(DESTDIR)$(PREFIX)/include/fortify/sys \
+		include/sys/*.h
 
 uninstall:
 	rm -rf $(DESTDIR)$(PREFIX)/include/fortify
