@@ -159,10 +159,6 @@ gcc: CC=gcc
 gcc: $(RUNTIME_TARGETS)
 
 clang: CC=clang
-clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
-clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
-clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
-clang: CFLAGS+=-nostdinc
 clang: CXX=clang++
 clang: CXXFLAGS+=-I/usr/include/x86_64-linux-musl
 clang: CXXFLAGS+=-I../x86_64-linux-musl-native/include/
@@ -185,10 +181,10 @@ $(TARGET_DIR):
 	mkdir -p $@
 
 $(RUNTIME_TARGETS): $(TARGET_DIR)/%: %.c | $(TARGET_DIR)
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(SYS_INCLUDES) -o $@ $<
 
 cpp: test_compile.cc
-	$(CXX) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
+	$(CXX) $(CXXFLAGS) $(SYS_INCLUDES) test_compile.cc -o ./test_compile_cc
 	timeout 1s ./test_compile_cc 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 
 run: $(RUNTIME_TARGETS)
@@ -198,7 +194,7 @@ run: $(RUNTIME_TARGETS)
 
 comptime: | $(TARGET_DIR) # only works on clang, as gcc doesn't have the diagnose_if attribute
 	$(foreach EXE, $(COMPTIME_TARGETS), \
-		($(CC) $(CFLAGS) -o ./$(EXE) ./$(EXE).c 1>/dev/null 2>/dev/null && echo "$(EXE) FAIL" || echo "$(EXE) OK") || true ;\
+		($(CC) $(CFLAGS) $(SYS_INCLUDES) -o ./$(EXE) ./$(EXE).c 1>/dev/null 2>/dev/null && echo "$(EXE) FAIL" || echo "$(EXE) OK") || true ;\
 	)
 
 clean:

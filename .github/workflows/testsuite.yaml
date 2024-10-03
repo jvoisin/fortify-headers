@@ -46,6 +46,8 @@ jobs:
 
   clang:
     runs-on: ubuntu-latest
+    env:
+      SYS_INCLUDES: -I/usr/include/x86_64-linux-musl -I../x86_64-linux-musl-native/include/ -Ix86_64-linux-musl-native/include/ -nostdinc
     strategy:
       matrix:
         version: [13, 14, 15]
@@ -71,12 +73,12 @@ jobs:
           sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
       - name: Build with native chk
         if: ${{ matrix.use_native_chk == true }}
-        run: make CFLAGS=-DFORTIFY_USE_NATIVE_CHK -C tests clang
+        run: make CFLAGS=-DFORTIFY_USE_NATIVE_CHK SYS_INCLUDES="$SYS_INCLUDES" -C tests clang
       - name: Building and running without native chk
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
         run: |
-          make -C tests clean clang run > ./results.txt
+          make SYS_INCLUDES="$SYS_INCLUDES" -C tests clean clang run > ./results.txt
           grep -zvq 'FAIL' ./results.txt
 
   c_versions:
