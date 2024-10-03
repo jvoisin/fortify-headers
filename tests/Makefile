@@ -150,7 +150,7 @@ RUNTIME_TARGETS= \
 
 .SILENT:
 
-gcc: CC=../x86_64-linux-musl-native/bin/gcc
+gcc: CC=gcc
 gcc: $(RUNTIME_TARGETS)
 
 clang: CC=clang

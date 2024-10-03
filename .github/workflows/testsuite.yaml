@@ -36,12 +36,12 @@ jobs:
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
       - name: Build with native chk
         if: ${{ matrix.use_native_chk == true }}
-        run: make CFLAGS=-DFORTIFY_USE_NATIVE_CHK -C tests gcc
+        run: make CFLAGS=-DFORTIFY_USE_NATIVE_CHK -C tests gcc CC=../x86_64-linux-musl-native/bin/gcc
       - name: Build without native chk, and run the testsuite
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
         run: |
-          make -C tests clean gcc run > ./results.txt
+          make -C tests clean gcc run CC=../x86_64-linux-musl-native/bin/gcc > ./results.txt
           grep -zvq 'FAIL' ./results.txt
 
   clang:
