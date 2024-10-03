@@ -1,5 +1,9 @@
-FORTIFY_CFLAGS= -D_FORTIFY_SOURCE=3
-CFLAGS+=-I../include/ $(FORTIFY_CFLAGS) -static -O2 -DFORTIFY_PEDANTIC_CHECKS -Wno-format -Werror=pointer-arith
+-include config.mk
+
+FORTIFY_LEVEL=3
+FORTIFY_CFLAGS= -D_FORTIFY_SOURCE=$(FORTIFY_LEVEL)
+SYS_INCLUDES= -nostdinc -I/usr/include
+CFLAGS+=-I../include/ $(FORTIFY_CFLAGS) -static -O2 -DFORTIFY_PEDANTIC_CHECKS -Wno-format -Werror=pointer-arith -nostdinc
 
 COMPTIME_BINS= \
 	test_memcpy_overwrite_under  \
@@ -149,33 +153,23 @@ RUNTIME_BINS= \
 	test_write_dynamic           \
 	test_write_static            \
 
-TARGET_DIR=out
+TARGET_DIR=out.$(notdir $(CC))
 RUNTIME_TARGETS = $(addprefix $(TARGET_DIR)/,$(RUNTIME_BINS))
 COMPTIME_TARGETS = $(addprefix $(TARGET_DIR)/,$(COMPTIME_BINS))
 
 .SILENT:
 
-gcc: CC=gcc
-gcc: $(RUNTIME_TARGETS)
-
-clang: CC=clang
-clang: CXX=clang++
-clang: CXXFLAGS+=-I/usr/include/x86_64-linux-musl
-clang: CXXFLAGS+=-I../x86_64-linux-musl-native/include/
-clang: CXXFLAGS+=-Ix86_64-linux-musl-native/include/
-clang: CXXFLAGS+=-nostdinc
-clang: comptime $(RUNTIME_TARGETS) cpp
+check: run comptime cpp
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
-coverage: CC=../x86_64-linux-musl-native/bin/gcc
-coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
+coverage: CC=gcc
+coverage: GCOV=gcov
 coverage: $(RUNTIME_TARGETS) run
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
 	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info
 	genhtml cleaned-coverage.info --output-directory coverage
 
-all: gcc
 
 $(TARGET_DIR):
 	mkdir -p $@
