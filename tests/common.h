@@ -15,6 +15,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
+#define _POSIX_C_SOURCE 1
+#define _XOPEN_SOURCE 700
+
 #include <setjmp.h>
 #include <unistd.h>
 #include <signal.h>

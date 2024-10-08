@@ -12,7 +12,7 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 
-// Check that all headers are compiling.
+/* Check that all headers are compiling.*/
 int main(int argc, char** argv) {
   return 0;
 }

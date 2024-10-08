@@ -159,7 +159,10 @@ clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
 clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
 clang: CFLAGS+=-nostdinc
 clang: CXX=clang++
-clang: CXXFLAGS=$(CFLAGS)
+clang: CXXFLAGS+=-I/usr/include/x86_64-linux-musl
+clang: CXXFLAGS+=-I../x86_64-linux-musl-native/include/
+clang: CXXFLAGS+=-Ix86_64-linux-musl-native/include/
+clang: CXXFLAGS+=-nostdinc
 clang: comptime $(RUNTIME_TARGETS) cpp
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
