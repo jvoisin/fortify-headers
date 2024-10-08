@@ -1,6 +1,7 @@
-#include "common.h"
-
 #define _GNU_SOURCE
+#define _DEFAULT_SOURCE
+
+#include "common.h"
 
 #include <unistd.h>
 

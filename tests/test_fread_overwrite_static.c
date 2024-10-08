@@ -1,7 +1,6 @@
-#include <assert.h>
-
 #include "common.h"
 
+#include <assert.h>
 #include <stdio.h>
 
 int main(int argc, char** argv) {

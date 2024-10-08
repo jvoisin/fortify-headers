@@ -78,3 +78,30 @@ jobs:
         run: |
           make -C tests clean clang run > ./results.txt
           grep -zvq 'FAIL' ./results.txt
+
+  c_versions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["c89", "c99", "c11", "c17"]
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v3
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://musl.cc/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+      - name: Building with clang
+        shell: bash
+        run: make CFLAGS=-std=${{ matrix.version }} -C tests clean clang
+      - name: Building with gcc
+        shell: bash
+        run: make CFLAGS=-std=${{ matrix.version }} -C tests clean gcc

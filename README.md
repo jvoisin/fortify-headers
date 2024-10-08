@@ -21,8 +21,9 @@ on Clang. It was initially intended to be used on
 - Support for out-of-bounds read interfaces, such as send(), write(), fwrite() etc.
 - No ABI is enforced. All of the fortify check functions are inlined
   into the resulting binary.
-- It has a [comprehensive suite of tests](https://github.com/jvoisin/fortify-headers/tree/master/tests),
-  running both on Clang and on GCC for every commit, with
+- It has a [comprehensive suite of
+  tests](https://github.com/jvoisin/fortify-headers/tree/master/tests), running
+  both on Clang and on GCC for every commit, on C89, C99, C11 and C17, with
   [significant coverage](https://jvoisin.github.io/fortify-headers/)
 - Defining `FORTIFY_USE_NATIVE_CHK` will make use of compiler-provided builtin `_chk`
   functions, which might be a bit better in term of diagnostics,
