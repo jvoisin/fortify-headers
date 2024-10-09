@@ -243,6 +243,7 @@ _FORTIFY_FN(vasprintf) int vasprintf(char **strp, const char *fmt, __builtin_va_
 #endif  // __clang__
 
 
+#if 0
 #if __has_builtin(__builtin_va_arg_pack)
 
 /* clang is missing __builtin_va_arg_pack, so we cannot use these impls
@@ -356,6 +357,7 @@ _FORTIFY_FN(asprintf) int asprintf(char **strp, const char *fmt, ...)
 
 #pragma GCC diagnostic pop
 #endif /* __has_builtin(__builtin_va_arg_pack) */
+#endif
 
 #ifdef __cplusplus
 }

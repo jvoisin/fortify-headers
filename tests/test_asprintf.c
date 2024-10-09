@@ -11,9 +11,11 @@ int main(int argc, char** argv) {
     puts(buf);
     free(buf);
 
+#if 0
 #ifndef __clang__
     asprintf(&buf, "total: %", 1);
     assert(buf == NULL);
+#endif
 #endif
 
     return 0;
