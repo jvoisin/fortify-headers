@@ -4,7 +4,9 @@
 
 int main(int argc, char** argv) {
   char buffer[8] = {0};
-  strncpy(buffer, "1234567", 5);
+  char src[] = {'A', 'B', 'C', 'D', 'E', 'F'};
+
+  strncpy(buffer, src, 5);
   puts(buffer);
 
   CHK_FAIL_START

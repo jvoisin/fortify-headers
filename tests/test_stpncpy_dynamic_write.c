@@ -3,7 +3,7 @@
 #include <string.h>
 
 int main(int argc, char** argv) {
-  char buffer[] = {'A', 'B', 'C', 'D', 'E', 'F', '\0'};
+  char buffer[] = {'A', 'B', 'C', 'D', 'E', 'F'};
 
   stpncpy(buffer, "1234567", 3);
   puts(buffer);

@@ -10,9 +10,11 @@ int main(int argc, char** argv) {
   puts(buffer);
 
   char buffer2[] = {'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', '\0'};
+#if 0
   CHK_FAIL_START
   stpncpy(buffer2-1, buffer2, 5);
   CHK_FAIL_END
+#endif
 
   puts(buffer2);
   return ret;

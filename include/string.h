@@ -208,12 +208,6 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___stpncpy_chk) && FORTIFY_USE_NATIVE_CHK
 	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t max_len_s = strlen(__s);
-	if (max_len_s > __n)
-		max_len_s = __n;
-	if (__fh_overlap(__d, max_len_s, __s, max_len_s))
-		__builtin_trap();
-
 	// If the length strlen(src) is smaller than n, the remaining
 	// characters in the array pointed to by dest are filled with null
 	// bytes ('\0')
@@ -318,12 +312,6 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___strncpy_chk) && FORTIFY_USE_NATIVE_CHK
 	return __builtin___strncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	__fh_size_t max_len_s = strlen(__s);
-	if (max_len_s > __n)
-		max_len_s = __n;
-	if (__fh_overlap(__d, max_len_s, __s, max_len_s))
-		__builtin_trap();
-
 	// If the length of src is less than n, strncpy() writes additional
 	// null bytes to dest to ensure that a total of n bytes are written.
 	__fh_size_t __b = __fh_bos(__d, 0);
