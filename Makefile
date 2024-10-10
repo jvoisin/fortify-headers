@@ -17,6 +17,8 @@ dist: clean
 	gzip fortify-headers-$(VERSION).tar
 	rm -rf fortify-headers-$(VERSION)
 
+check:
+	$(MAKE) -C tests check
 clean:
 	rm -f fortify-headers-$(VERSION).tar.gz
 
