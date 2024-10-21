@@ -287,6 +287,7 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___strncat_chk) && FORTIFY_USE_NATIVE_CHK
 	return __builtin___strncat_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
+#if 0 // strlen(__s) isn't guaranteed to be valid.
 	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b) {
@@ -297,6 +298,7 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 		if (__sl + __dl + 1 > __b)
 			__builtin_trap();
 	}
+#endif
 	return __orig_strncat(__d, __s, __n);
 #endif
 }

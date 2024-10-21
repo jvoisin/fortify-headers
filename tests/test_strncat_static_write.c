@@ -4,12 +4,15 @@
 
 int main(int argc, char** argv) {
   char buffer[8] = {0};
-  strncat(buffer, "1234567", 5);
+  char src[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+  strncat(buffer, src, 5);
   puts(buffer);
 
+#if 0
   CHK_FAIL_START
-  strncat(buffer, "1234567890", 10);
+  strncat(buffer, src, 10);
   CHK_FAIL_END
+#endif
 
   puts(buffer);
   return ret;
