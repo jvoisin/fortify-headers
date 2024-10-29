@@ -12,6 +12,9 @@ jobs:
       matrix:
         version: [9, 10, 11, 12, 13]
         use_native_chk: [true, false]
+    env:
+      CC: ../x86_64-linux-musl-native/bin/gcc
+      SYS_INCLUDES: -I/usr/include/x86_64-linux-musl -I../x86_64-linux-musl-native/include/ -Ix86_64-linux-musl-native/include/
     steps:
       - name: Checking out the code
         uses: actions/checkout@v3
@@ -36,16 +39,19 @@ jobs:
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
       - name: Build with native chk
         if: ${{ matrix.use_native_chk == true }}
-        run: make CFLAGS=-DUSE_NATIVE_CHK -C tests gcc
+        run: make TARGET_DIR=out.gcc.native_chk CFLAGS=-DFORTIFY_USE_NATIVE_CHK -C tests
       - name: Build without native chk, and run the testsuite
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
         run: |
-          make -C tests clean gcc run > ./results.txt
+          make -C tests check > ./results.txt
           grep -zvq 'FAIL' ./results.txt
 
   clang:
     runs-on: ubuntu-latest
+    env:
+      SYS_INCLUDES: -I/usr/include/x86_64-linux-musl -I../x86_64-linux-musl-native/include/ -Ix86_64-linux-musl-native/include/
+      CC: clang
     strategy:
       matrix:
         version: [13, 14, 15]
@@ -71,12 +77,12 @@ jobs:
           sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
       - name: Build with native chk
         if: ${{ matrix.use_native_chk == true }}
-        run: make CFLAGS=-DUSE_NATIVE_CHK -C tests clang
+        run: make CFLAGS=-DFORTIFY_USE_NATIVE_CHK SYS_INCLUDES="$SYS_INCLUDES" CC=clang -C tests clang
       - name: Building and running without native chk
         if: ${{ matrix.use_native_chk == false }}
         shell: bash
         run: |
-          make -C tests clean clang run > ./results.txt
+          make SYS_INCLUDES="$SYS_INCLUDES" CC=clang TARGET_DIR=out.clang -C tests check > ./results.txt
           grep -zvq 'FAIL' ./results.txt
 
   c_versions:

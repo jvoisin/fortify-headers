@@ -1,11 +1,16 @@
-CFLAGS+=-I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -DFORTIFY_PEDANTIC_CHECKS -Wno-format -Werror=pointer-arith
+-include config.mk
 
-COMPTIME_TARGETS= \
+FORTIFY_LEVEL=3
+FORTIFY_CFLAGS= -D_FORTIFY_SOURCE=$(FORTIFY_LEVEL)
+SYS_INCLUDES= -nostdinc -I/usr/include
+CFLAGS+=-I../include/ $(FORTIFY_CFLAGS) -static -O2 -DFORTIFY_PEDANTIC_CHECKS -Wno-format -Werror=pointer-arith -nostdinc
+
+COMPTIME_BINS= \
 	test_memcpy_overwrite_under  \
 	test_memcpy_static_write     \
 
 
-RUNTIME_TARGETS= \
+RUNTIME_BINS= \
 	test_FD_CLR_SETSIZE          \
 	test_FD_CLR_negative         \
 	test_FD_SET_SETSIZE          \
@@ -148,40 +153,32 @@ RUNTIME_TARGETS= \
 	test_write_dynamic           \
 	test_write_static            \
 
+TARGET_DIR=out.$(notdir $(CC))
+RUNTIME_TARGETS = $(addprefix $(TARGET_DIR)/,$(RUNTIME_BINS))
+COMPTIME_TARGETS = $(addprefix $(TARGET_DIR)/,$(COMPTIME_BINS))
+
 .SILENT:
 
-gcc: CC=../x86_64-linux-musl-native/bin/gcc
-gcc: $(RUNTIME_TARGETS)
-
-clang: CC=clang
-clang: CFLAGS+=-I/usr/include/x86_64-linux-musl
-clang: CFLAGS+=-I../x86_64-linux-musl-native/include/
-clang: CFLAGS+=-Ix86_64-linux-musl-native/include/
-clang: CFLAGS+=-nostdinc
-clang: CXX=clang++
-clang: CXXFLAGS+=-I/usr/include/x86_64-linux-musl
-clang: CXXFLAGS+=-I../x86_64-linux-musl-native/include/
-clang: CXXFLAGS+=-Ix86_64-linux-musl-native/include/
-clang: CXXFLAGS+=-nostdinc
-clang: comptime $(RUNTIME_TARGETS) cpp
+check: run comptime cpp
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
-coverage: CC=../x86_64-linux-musl-native/bin/gcc
-coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
+coverage: CC=gcc
+coverage: GCOV=gcov
 coverage: $(RUNTIME_TARGETS) run
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
 	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info
 	genhtml cleaned-coverage.info --output-directory coverage
 
-all: gcc
 
+$(TARGET_DIR):
+	mkdir -p $@
 
-$(RUNTIME_TARGETS): %: %.c
-	$(CC) $(CFLAGS) -o $@ $<
+$(RUNTIME_TARGETS): $(TARGET_DIR)/%: %.c | $(TARGET_DIR)
+	$(CC) $(CFLAGS) $(SYS_INCLUDES) -o $@ $<
 
 cpp: test_compile.cc
-	$(CXX) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
+	$(CXX) $(CXXFLAGS) $(SYS_INCLUDES) test_compile.cc -o ./test_compile_cc
 	timeout 1s ./test_compile_cc 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 
 run: $(RUNTIME_TARGETS)
@@ -189,9 +186,9 @@ run: $(RUNTIME_TARGETS)
 		timeout 1s ./$(EXE) 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 	)
 
-comptime:  # only works on clang, as gcc doesn't have the diagnose_if attribute
+comptime: | $(TARGET_DIR) # only works on clang, as gcc doesn't have the diagnose_if attribute
 	$(foreach EXE, $(COMPTIME_TARGETS), \
-		($(CC) $(CFLAGS) -o ./$(EXE) ./$(EXE).c 1>/dev/null 2>/dev/null && echo "$(EXE) FAIL" || echo "$(EXE) OK") || true ;\
+		($(CC) $(CFLAGS) $(SYS_INCLUDES) -o ./$(EXE) ./$(EXE).c 1>/dev/null 2>/dev/null && echo "$(EXE) FAIL" || echo "$(EXE) OK") || true ;\
 	)
 
 clean:
