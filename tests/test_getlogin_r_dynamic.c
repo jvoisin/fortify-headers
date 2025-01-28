@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 int main(int argc, char** argv) {
+#if  _REENTRANT || _POSIX_C_SOURCE >= 199506L
   char buffer[8] = {0};
 
   getlogin_r(buffer, 6);
@@ -13,4 +14,6 @@ int main(int argc, char** argv) {
 
   puts(buffer);
   return ret;
+#endif
+  return 0;
 }

@@ -33,7 +33,6 @@ extern "C" {
 #undef getcwd
 #undef getgroups
 #undef gethostname
-#undef getlogin_r
 #undef pread
 #undef read
 #undef readlink
@@ -109,6 +108,8 @@ _FORTIFY_FN(gethostname) int gethostname(char * _FORTIFY_POS0 __s, size_t __l)
 	return __orig_gethostname(__s, __l);
 }
 
+#if  _REENTRANT || _POSIX_C_SOURCE >= 199506L
+#undef getlogin_r
 __fh_access(write_only, 1, 2)
 #if __has_builtin(__builtin_getlogin_r)
 __diagnose_as_builtin(__builtin_getlogin_r, 1, 2)
@@ -121,6 +122,7 @@ _FORTIFY_FN(getlogin_r) int getlogin_r(char * _FORTIFY_POS0 __s, size_t __l)
 		__builtin_trap();
 	return __orig_getlogin_r(__s, __l);
 }
+#endif
 
 #if __has_builtin(__builtin_pread)
 __diagnose_as_builtin(__builtin_pread, 1, 2, 3, 4)
