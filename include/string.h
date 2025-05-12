@@ -44,8 +44,13 @@ __fh_access(read_only, 2, 3)
 #if __has_builtin(__builtin_memcpy)
 __diagnose_as_builtin(__builtin_memcpy, 1, 2, 3)
 #endif
+#if __STDC_VERSION__>=199901L
 _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
                                  const void * _FORTIFY_POS0 __os, size_t __n)
+#else
+_FORTIFY_FN(memcpy) void *memcpy(void *restrict  _FORTIFY_POS0 __od,
+                                 const void *restrict _FORTIFY_POS0 __os, size_t __n)
+#endif
 __error_if((__fh_bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the size of `d`.")
 {
 #if __has_builtin(__builtin___memcpy_chk) && FORTIFY_USE_NATIVE_CHK
