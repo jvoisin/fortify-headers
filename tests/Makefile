@@ -172,7 +172,7 @@ coverage: $(RUNTIME_TARGETS) run
 	$(GCOV) *.c
 	lcov --capture --directory . --output-file coverage.info
 	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info
-	genhtml cleaned-coverage.info --output-directory coverage
+	genhtml --output-directory coverage --ignore-errors version cleaned-coverage.info
 
 all: gcc
 
