@@ -170,8 +170,8 @@ coverage: CC=../x86_64-linux-musl-native/bin/gcc
 coverage: GCOV=../x86_64-linux-musl-native/bin/gcov
 coverage: $(RUNTIME_TARGETS) run
 	$(GCOV) *.c
-	lcov --capture --directory . --output-file coverage.info
-	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info
+	lcov --capture --directory . --output-file coverage.info --ignore-errors version --ignore-errors empty
+	lcov --remove ./coverage.info "*/tests/*" --output-file cleaned-coverage.info --ignore-errors version --ignore-errors empty
 	genhtml --output-directory coverage --ignore-errors version cleaned-coverage.info
 
 all: gcc
