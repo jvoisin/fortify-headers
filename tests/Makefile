@@ -126,6 +126,10 @@ RUNTIME_TARGETS= \
 	test_strncpy_static_write    \
 	test_strrchr_dynamic_read    \
 	test_strrchr_static_read     \
+	test_swab_dynamic_read       \
+	test_swab_dynamic_write      \
+	test_swab_overwrite_over     \
+	test_swab_static_read        \
 	test_ttyname_r_dynamic       \
 	test_ttyname_r_static        \
 	test_umask                   \

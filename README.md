@@ -116,6 +116,7 @@ At this point, the program will safely and loudly crash.
 - `strncat`
 - `strncpy`
 - `strrchr`
+- `swab`
 - `tmpfile` 
 - `ttyname_r`
 - `umask` 
