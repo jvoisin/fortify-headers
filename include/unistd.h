@@ -178,6 +178,32 @@ _FORTIFY_FN(readlinkat) ssize_t readlinkat(int __f, const char *__p,
 	return __orig_readlinkat(__f, __p, __s, __n);
 }
 
+#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#undef swab
+
+__fh_access(read_only, 1, 3)
+__fh_access(write_only, 2, 3)
+#if __has_builtin(__builtin_swab)
+__diagnose_as_builtin(__builtin_swab, 1, 2, 3)
+#endif
+_FORTIFY_FN(swab) void swab(const void *restrict  _FORTIFY_POS0 __os,
+                                 void *restrict _FORTIFY_POS0 __od, ssize_t __n)
+__error_if((__fh_bos(__od, 0) < __n), "'swab' called with `n` bigger than the size of `d`.")
+{
+	__fh_size_t __bs = __fh_bos(__os, 0);
+	__fh_size_t __bd = __fh_bos(__od, 0);
+
+#if defined FORTIFY_PEDANTIC_CHECKS
+	if (__n > 0 && __fh_overlap(__os, __n, __od, __n))
+		__builtin_trap();
+#endif
+	if (__n > __bs || __n > __bd)
+		__builtin_trap();
+	return __orig_swab(__os, __od, __n);
+}
+
+#endif
+
 __fh_access(write_only, 2, 3)
 #if __has_builtin(__builtin_ttyname_r)
 __diagnose_as_builtin(__builtin_ttyname_r, 1, 2, 3)
