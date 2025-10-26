@@ -21,21 +21,21 @@
 #error a compiler with __has_builtin support is required
 #endif
 
-// https://clang.llvm.org/docs/LanguageExtensions.html#has-builtin
-// > __has_builtin should not be used to detect support for a builtin macro; use #ifdef instead.
-#define __fh_has_builtin(x) (__has_builtin(x) || defined(x))
-
-#if ! __fh_has_builtin(__builtin_trap)
-#define __builtin_trap abort
-#endif
-
 #if _FORTIFY_SOURCE > 3
 #warning _FORTIFY_SOURCE > 3 is treated as 3
 #endif
 
 #ifdef __clang__
 
-#if _FORTIFY_SOURCE  > 2 && __fh_has_builtin (__builtin_dynamic_object_size) && __has_attribute(pass_dynamic_object_size)
+// https://clang.llvm.org/docs/LanguageExtensions.html#has-builtin
+// > __has_builtin should not be used to detect support for a builtin macro; use #ifdef instead.
+#define __has_builtin(x) (__has_builtin(x) || defined(x))
+
+#if ! __has_builtin(__builtin_trap)
+#define __builtin_trap abort
+#endif
+
+#if _FORTIFY_SOURCE  > 2 && __has_builtin (__builtin_dynamic_object_size) && __has_attribute(pass_dynamic_object_size)
 #define _FORTIFY_POSN(n) const __attribute__((pass_dynamic_object_size(n)))
 #else
 #define _FORTIFY_POSN(n) const __attribute__((pass_object_size(n)))
@@ -70,7 +70,7 @@
 #define _FORTIFY_FN(fn) _FORTIFY_FNB(fn); _FORTIFY_INLINE
 
 /* Use __builtin_dynamic_object_size with _FORTIFY_SOURCE>2, if available.  */
-#if _FORTIFY_SOURCE  > 2 && __fh_has_builtin (__builtin_dynamic_object_size)
+#if _FORTIFY_SOURCE  > 2 && __has_builtin (__builtin_dynamic_object_size)
 /* 
  * See:
  * - https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html
@@ -155,7 +155,7 @@
  * - https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
  * - https://clang.llvm.org/docs/LanguageExtensions.html#checked-arithmetic-builtins
  */
-#if __fh_has_builtin (__builtin_mul_overflow_p)
+#if __has_builtin (__builtin_mul_overflow_p)
 #define __bmo(x, y) (x != 0 && __builtin_mul_overflow_p(x, y, (__typeof__ ((x) + (y))) 0))
 #else /* !__builtin_mul_overflow_p */
 #define __bmo(x, y) (x != 0 && (x * y) / x != y)
