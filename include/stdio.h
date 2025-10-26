@@ -152,7 +152,7 @@ __diagnose_as_builtin(__builtin_vsnprintf, 1, 2, 3, 4)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
                                      const char *__f, __builtin_va_list __v)
 {
-#if __has_builtin(__builtin___vsnprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___vsnprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___vsnprintf_chk(__s, __n, _FORTIFY_SOURCE, __fh_bos(__s, 0), __f, __v);
 #else
 	__fh_size_t __b = __fh_bos(__s, 0);
@@ -172,7 +172,7 @@ __diagnose_as_builtin(__builtin_vsprintf, 1, 2, 3)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
 {
-#if __has_builtin(__builtin___vsprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___vsprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___vsprintf_chk(__s, _FORTIFY_SOURCE, __fh_bos(__s, 0), __f, __v);
 #else
 	__fh_size_t __b = __fh_bos(__s, 0);
@@ -200,7 +200,7 @@ __diagnose_as_builtin(__builtin_vfprintf, 2, 3)
 #endif
 _FORTIFY_FN(vfprintf) int vfprintf(FILE * __s, const char *__f, __builtin_va_list __v)
 {
-#if __has_builtin(__builtin___vfprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___vfprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___vfprintf_chk(__s, _FORTIFY_SOURCE, __f, __v);
 #else
 	return __orig_vfprintf(__s, __f, __v);
@@ -214,7 +214,7 @@ __diagnose_as_builtin(__builtin_vprintf, 1, 2)
 #endif
 _FORTIFY_FN(vprintf) int vprintf(const char *__f, __builtin_va_list __v)
 {
-#if __has_builtin(__builtin___vprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___vprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___vprintf_chk(_FORTIFY_SOURCE, __f, __v);
 #else
 	return __orig_vprintf(__f, __v);
@@ -228,7 +228,7 @@ __diagnose_as_builtin(__builtin_vasprintf, 1, 2, 3)
 #endif
 _FORTIFY_FN(vasprintf) int vasprintf(char **strp, const char *fmt, __builtin_va_list ap)
 {
-#if __has_builtin(__builtin___vasprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___vasprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___vasprintf_chk(_FORTIFY_SOURCE, strp, fmt, ap);
 #else
 	int ret = __orig_vasprintf(strp, fmt, ap);
@@ -275,7 +275,7 @@ __fh_format(printf, 3, 4)
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
                                     const char *__f, ...)
 {
-#if __has_builtin(__builtin___snprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___snprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___snprintf_chk(__s, __n, _FORTIFY_SOURCE, __fh_bos(__s, 0), __f, __builtin_va_arg_pack());
 #else
 	__fh_size_t __b = __fh_bos(__s, 0);
@@ -291,7 +291,7 @@ __fh_format(printf, 2, 3)
 __fh_access(read_only, 2)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
-#if __has_builtin(__builtin___sprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___sprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___sprintf_chk(__s, _FORTIFY_SOURCE, __fh_bos(__s, 0), __f, __builtin_va_arg_pack());
 #else
 	__fh_size_t __b = __fh_bos(__s, 0);
@@ -312,7 +312,7 @@ __fh_format(printf, 1, 2)
 __fh_access(read_only, 1)
 _FORTIFY_FN(printf) int printf(const char *__f, ...)
 {
-#if __has_builtin(__builtin___printf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___printf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___printf_chk(_FORTIFY_SOURCE, __f, __builtin_va_arg_pack());
 #else
 	return __orig_printf(__f, __builtin_va_arg_pack());
@@ -326,7 +326,7 @@ __diagnose_as_builtin(__builtin_fprintf, 2, 3)
 #endif
 _FORTIFY_FN(fprintf) int fprintf(FILE *__s, const char *__f, ...)
 {
-#if __has_builtin(__builtin___fprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___fprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___fprintf_chk(_FORTIFY_SOURCE, __s, __f, __builtin_va_arg_pack());
 #else
 	return __orig_fprintf(__s, __f, __builtin_va_arg_pack());
@@ -343,7 +343,7 @@ __diagnose_as_builtin(__builtin_asprintf, 2, 3)
 #endif
 _FORTIFY_FN(asprintf) int asprintf(char **strp, const char *fmt, ...)
 {
-#if __has_builtin(__builtin___asprintf_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___asprintf_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___asprintf_chk(_FORTIFY_SOURCE, strp, fmt, __builtin_va_arg_pack());
 #else
 	int ret = __orig_asprintf(strp, fmt, __builtin_va_arg_pack());

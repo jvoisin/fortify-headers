@@ -48,7 +48,7 @@ _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
                                  const void * _FORTIFY_POS0 __os, size_t __n)
 __error_if((__fh_bos(__od, 0) < __n), "'memcpy' called with `n` bigger than the size of `d`.")
 {
-#if __has_builtin(__builtin___memcpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___memcpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___memcpy_chk(__od, __os, __n, __fh_bos(__od, 0));
 #else
 #if defined FORTIFY_PEDANTIC_CHECKS
@@ -75,7 +75,7 @@ __diagnose_as_builtin(__builtin_memmove, 1, 2, 3)
 _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
-#if __has_builtin(__builtin___memmove_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___memmove_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___memmove_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 #if defined FORTIFY_PEDANTIC_CHECKS
@@ -99,7 +99,7 @@ __diagnose_as_builtin(__builtin_memset, 1, 2, 3)
 _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 __warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert the arguments?")
 {
-#if __has_builtin(__builtin___memset_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___memset_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___memset_chk(__d, __c, __n, __fh_bos(__d, 0));
 #else
 #if defined FORTIFY_PEDANTIC_CHECKS
@@ -121,7 +121,7 @@ __diagnose_as_builtin(__builtin_memchr, 1, 2, 3)
 #endif
 _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t __n)
 {
-#if __has_builtin(__builtin___memchr_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___memchr_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___memchr_chk(__d, __c, __n, __fh_bos(__d, 0));
 #else
 #if defined FORTIFY_PEDANTIC_CHECKS
@@ -142,7 +142,7 @@ _FORTIFY_FN(memchr) void *memchr(const void * _FORTIFY_POS0 __d, int __c, size_t
 __fh_access(read_only, 1, 2)
 _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 {
-#if __has_builtin(__builtin___strchr_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strchr_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strchr_chk(__s, __c, __fh_bos(__s, 0));
 #else
 	__fh_size_t __b = __fh_bos(__s, 0);
@@ -157,7 +157,7 @@ _FORTIFY_FN(strchr) char *strchr(const char * _FORTIFY_POS0 __s, int __c)
 __fh_access(read_only, 1, 2)
 _FORTIFY_FN(strrchr) char *strrchr(const char * _FORTIFY_POS0 __s, int __c)
 {
-#if __has_builtin(__builtin___strrchr_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strrchr_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strrchr_chk(__s, __c, __fh_bos(__s, 0));
 #else
 	__fh_size_t __b = __fh_bos(__s, 0);
@@ -181,7 +181,7 @@ __diagnose_as_builtin(__builtin_stpcpy, 1, 2)
 #endif
 _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
-#if __has_builtin(__builtin___stpcpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___stpcpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___stpcpy_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __n = strlen(__s) + 1;
@@ -205,7 +205,7 @@ __diagnose_as_builtin(__builtin_stpncpy, 1, 2, 3)
 _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
-#if __has_builtin(__builtin___stpncpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___stpncpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	// If the length strlen(src) is smaller than n, the remaining
@@ -227,7 +227,7 @@ __diagnose_as_builtin(__builtin_strcat, 1, 2)
 #endif
 _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 {
-#if __has_builtin(__builtin___strcat_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strcat_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strcat_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __b = __fh_bos(__d, 0);
@@ -245,7 +245,7 @@ __diagnose_as_builtin(__builtin_strcpy, 1, 2)
 #endif
 _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 {
-#if __has_builtin(__builtin___strcpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strcpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strcpy_chk(__d, __s, __fh_bos(__d, 0));
 #else
 	__fh_size_t __n = strlen(__s) + 1;
@@ -266,7 +266,7 @@ __diagnose_as_builtin(__builtin_strlen, 1)
 #endif
 _FORTIFY_FN(strlen) size_t strlen(const char * _FORTIFY_POS0 __s)
 {
-#if __has_builtin(__builtin___strlen_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strlen_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strlen_chk(__s, __fh_bos(__s, 0));
 #else
 	__fh_size_t ret = __orig_strlen(__s);
@@ -284,7 +284,7 @@ __diagnose_as_builtin(__builtin_strncat, 1, 2, 3)
 _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
                                    size_t __n)
 {
-#if __has_builtin(__builtin___strncat_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strncat_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strncat_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 #if 0 // strlen(__s) isn't guaranteed to be valid.
@@ -311,7 +311,7 @@ __diagnose_as_builtin(__builtin_strncpy, 1, 2, 3)
 _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
                                    const char *__s, size_t __n)
 {
-#if __has_builtin(__builtin___strncpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strncpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	// If the length of src is less than n, strncpy() writes additional
@@ -334,7 +334,7 @@ __diagnose_as_builtin(__builtin_mempcpy, 1, 2, 3)
 _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
                                    const void * _FORTIFY_POS0 __s, size_t __n)
 {
-#if __has_builtin(__builtin___mempcpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___mempcpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___mempcpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	if (!__d || !__s)
@@ -361,7 +361,7 @@ __diagnose_as_builtin(__builtin_strlcat, 1, 2, 3)
 _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
-#if __has_builtin(__builtin___strlcat_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strlcat_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strlcat_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	__fh_size_t __b = __fh_bos(__d, 0);
@@ -380,7 +380,7 @@ __diagnose_as_builtin(__builtin_strlcpy, 1, 2, 3)
 _FORTIFY_FN(strlcpy) size_t strlcpy(char * _FORTIFY_POS0 __d,
                                     const char *__s, size_t __n)
 {
-#if __has_builtin(__builtin___strlcpy_chk) && FORTIFY_USE_NATIVE_CHK
+#if __has_builtin(__builtin___strlcpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strlcpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
 	__fh_size_t __b = __fh_bos(__d, 0);
