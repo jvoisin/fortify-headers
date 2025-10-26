@@ -43,7 +43,7 @@ _FORTIFY_FN(poll) int poll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n, int __
 	return __orig_poll(__f, __n, __s);
 }
 
-#if defined(_GNU_SOURCE) && !_REDIR_TIME64
+#if defined(_GNU_SOURCE) && (!defined(_REDIR_TIME64) || !_REDIR_TIME64)
 #undef ppoll
 #if __has_builtin(__builtin_ppoll)
 __diagnose_as_builtin(__builtin_ppoll, 1, 2, 3, 4)
