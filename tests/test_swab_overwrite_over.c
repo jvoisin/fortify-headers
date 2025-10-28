@@ -1,5 +1,3 @@
-#define _XOPEN_SOURCE
-
 #include "common.h"
 
 #include <unistd.h>
