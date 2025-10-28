@@ -134,8 +134,8 @@
  * since gcc seems to like to generate code that relies on dst == src */
 #define __fh_overlap(a, len_a, b, len_b) \
 	( \
-		((char*)(a) < (char*)(b) && (char*)(b) < ((char*)(a) + (__fh_size_t)(len_a))) \
-	     || ((char*)(b) < (char*)(a) && (char*)(a) < ((char*)(b) + (__fh_size_t)(len_b))) \
+		((const char*)(a) < (const char*)(b) && (const char*)(b) < ((const char*)(a) + (__fh_size_t)(len_a))) \
+	     || ((const char*)(b) < (const char*)(a) && (const char*)(a) < ((const char*)(b) + (__fh_size_t)(len_b))) \
         )
 
 /*
