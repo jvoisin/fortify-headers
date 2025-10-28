@@ -154,7 +154,7 @@ RUNTIME_TARGETS= \
 
 .SILENT:
 
-gcc: CC=../aarch64-linux-musl-native/bin/gcc
+gcc: CC=../x86_64-linux-musl-native/bin/gcc
 gcc: $(RUNTIME_TARGETS)
 
 clang: CC=clang
