@@ -10,6 +10,6 @@ int main(int argc, char** argv) {
   fgetws(buffer, 14, NULL);
   CHK_FAIL_END
 
-  putwchar(buffer[0]);
+  printf("%ls\n", buffer);
   return ret;
 }

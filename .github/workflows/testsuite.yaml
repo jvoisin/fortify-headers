@@ -74,7 +74,6 @@ jobs:
         run: make CFLAGS=-DUSE_NATIVE_CHK -C tests clang
       - name: Building and running without native chk
         if: ${{ matrix.use_native_chk == false }}
-        continue-on-error: true
         shell: bash
         run: |
           make -C tests clean clang run > ./results.txt

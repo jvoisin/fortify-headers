@@ -5,12 +5,12 @@
 int main(int argc, char** argv) {
   wchar_t buffer[2] = {0};
   wmemmove(buffer, L"αβγδεζηθικλμνξοπρστυφχψω", 2);
-  fputws(buffer, stdout);
+  printf("%ls\n", buffer);
 
   CHK_FAIL_START
   wmemmove(buffer, L"αβγδεζηθικλμνξοπρστυφχψω", 1337);
   CHK_FAIL_END
 
-  fputws(buffer, stdout);
+  printf("%ls\n", buffer);
   return ret;
 }
