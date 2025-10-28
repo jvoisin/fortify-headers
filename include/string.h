@@ -344,8 +344,10 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___mempcpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___mempcpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
+#if defined FORTIFY_PEDANTIC_CHECKS
 	if (!__d || !__s)
 		__builtin_trap();
+#endif
 
 	__fh_size_t __bd = __fh_bos(__d, 0);
 	__fh_size_t __bs = __fh_bos(__s, 0);
