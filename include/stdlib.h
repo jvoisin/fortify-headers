@@ -74,7 +74,7 @@ _FORTIFY_FN(wctomb) int wctomb(char * _FORTIFY_POS0 __s, wchar_t __w)
 		__builtin_trap();
 	return __orig_wctomb(__s, __w);
 }
-#endif // MB_CUR_MAX
+#endif /* MB_CUR_MAX */
 #endif
 
 #undef qsort
@@ -153,7 +153,7 @@ __diagnose_as_builtin(__builtin_realpath, 1, 2)
 #endif
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
-	// PATH_MAX is defined as 4096
+	/* PATH_MAX is defined as 4096 */
 	if (__r && 4096 > __fh_bos(__r, 2)) {
 		char __buf[4096], *__ret;
 		__fh_size_t __l;
@@ -171,12 +171,12 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 }
 #endif
 
-#endif // clang
+#endif /* clang */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // _FORTIFY_SOURCE
+#endif /* _FORTIFY_SOURCE */
 
 #endif

@@ -213,9 +213,10 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___stpncpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___stpncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	// If the length strlen(src) is smaller than n, the remaining
-	// characters in the array pointed to by dest are filled with null
-	// bytes ('\0')
+	/* If the length strlen(src) is smaller than n, the remaining
+	 * characters in the array pointed to by dest are filled with null
+	 * bytes ('\0')
+	 */
 	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();
@@ -292,7 +293,7 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 #if __has_builtin(__builtin___strncat_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strncat_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-#if 0 // strlen(__s) isn't guaranteed to be valid.
+#if 0 /* strlen(__s) isn't guaranteed to be valid. */
 	__fh_size_t __b = __fh_bos(__d, 0);
 
 	if (__n > __b) {
@@ -319,8 +320,9 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 #if __has_builtin(__builtin___strncpy_chk) && defined(FORTIFY_USE_NATIVE_CHK)
 	return __builtin___strncpy_chk(__d, __s, __n, __fh_bos(__d, 0));
 #else
-	// If the length of src is less than n, strncpy() writes additional
-	// null bytes to dest to ensure that a total of n bytes are written.
+	/* If the length of src is less than n, strncpy() writes additional
+	 * null bytes to dest to ensure that a total of n bytes are written.
+	 */
 	__fh_size_t __b = __fh_bos(__d, 0);
 	if (__n > __b)
 		__builtin_trap();

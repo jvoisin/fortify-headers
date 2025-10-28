@@ -34,7 +34,8 @@ extern "C" {
 __fh_access(write_only, 2, 3)
 __fh_access(read_only, 1, 3)
 #if __has_builtin(__builtin_bcopy) && !defined(__clang__)
-// parameter 1 of function '__orig_bcopy' has type 'const void *', but parameter 1 of function '__builtin_bcopy' has type 'void *'
+/* parameter 1 of function '__orig_bcopy' has type 'const void, but
+ * parameter 1 of function '__builtin_bcopy' has type 'void *' */
 __diagnose_as_builtin(__builtin_bcopy, 1, 2, 3)
 #endif
 _FORTIFY_FN(bcopy) void bcopy(const void * _FORTIFY_POS0 __s,

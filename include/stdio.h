@@ -239,8 +239,8 @@ _FORTIFY_FN(vasprintf) int vasprintf(char **strp, const char *fmt, __builtin_va_
 }
 
 
-#endif // defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
-#endif  // __clang__
+#endif /* defined(_GNU_SOURCE) || defined(_BSD_SOURCE) */
+#endif  /* __clang__ */
 
 
 #if 0
@@ -260,7 +260,7 @@ _FORTIFY_FN(vasprintf) int vasprintf(char **strp, const char *fmt, __builtin_va_
  * TODO: add __diagnose_as_builtin
  */
 
-// See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110834
+/* See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110834 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
 
@@ -287,7 +287,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 }
 
 __fh_format(printf, 2, 3)
-//__fh_access(write_only, 1)
+/* __fh_access(write_only, 1) */
 __fh_access(read_only, 2)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
@@ -352,7 +352,7 @@ _FORTIFY_FN(asprintf) int asprintf(char **strp, const char *fmt, ...)
 	return ret;
 #endif
 }
-#endif // __clang__
+#endif /* __clang__ */
 #endif
 
 #pragma GCC diagnostic pop

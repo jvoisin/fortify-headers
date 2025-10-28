@@ -105,7 +105,7 @@ __diagnose_as_builtin(__builtin_wcrtomb, 1, 2, 3)
 #endif
 _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 {
-	// In glibc, MB_LEN_MAX is typically 16 (6 in glibc versions earlier than 2.2)
+	/* In glibc, MB_LEN_MAX is typically 16 (6 in glibc versions earlier than 2.2) */
 	if (__s && 16 > __fh_bos(__s, 2)) {
 		char __buf[16];
 		__fh_size_t __r;
