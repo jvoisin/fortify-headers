@@ -32,7 +32,7 @@ jobs:
           key: musl
       - name: Downloading musl-based toolchain
         if: steps.cache-musl.outputs.cache-hit != 'true'
-        run: wget --quiet https://musl.cc/x86_64-linux-musl-native.tgz
+        run: wget --quiet https://dustri.org/x86_64-linux-musl-native.tgz
       - name: Extracting musl-based toolchain
         if: steps.cache-musl.outputs.cache-hit != 'true'
         run: tar xzf ./x86_64-linux-musl-native.tgz
