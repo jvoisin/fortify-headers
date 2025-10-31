@@ -1,0 +1,104 @@
+name: Test suite
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '0 16 * * 5'
+
+jobs:
+  gcc:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [9, 10, 11, 12, 13, 14]
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v3
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://dustri.org/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+      - name: Setting up gcc version
+        run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt update
+          sudo apt install -y --no-install-recommends gcc-${{ matrix.version }} g++-${{ matrix.version }}
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
+      - name: Build and run the testsuite
+        run : make --silent -C tests clean gcc run | tee ./results.txt
+      - name: Check the testsuite's output
+        shell: bash
+        run: grep -zvq 'FAIL' ./results.txt
+      - name: Show logs in case of failure
+        if: ${{ failure() }}
+        run: cat ./results.txt
+
+
+  clang:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [16, 17, 18]
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v3
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://dustri.org/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+      - name: Setting up clang version
+        run: |
+          sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100
+          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
+      - name: Build and run the testsuite
+        run : make --silent -C tests clean clang run | tee ./results.txt
+      - name: Check the testsuite's output
+        shell: bash
+        run: grep -zvq 'FAIL' ./results.txt
+      - name: Show logs in case of failure
+        if: ${{ failure() }}
+        run: cat ./results.txt
+
+  c_versions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["c89", "c99", "c11", "c17"]
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v3
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://dustri.org/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+      - name: Building with clang
+        shell: bash
+        run: CFLAGS=-std=${{ matrix.version }} make -C tests clean clang run
+      - name: Building with gcc
+        shell: bash
+        run: CFLAGS=-std=${{ matrix.version }} make -C tests clean gcc run
