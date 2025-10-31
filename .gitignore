@@ -1,0 +1,6 @@
+x86_64-linux-musl-native        
+x86_64-linux-musl-native.tgz
+tests/*
+!tests/*.c
+!tests/Makefile
+~
