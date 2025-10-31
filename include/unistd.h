@@ -158,6 +158,22 @@ _FORTIFY_FN(write) ssize_t write(int __f, const void * _FORTIFY_POS0 __s,
 	return __orig_write(__f, __s, __n);
 }
 
+#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#undef swab
+
+_FORTIFY_FN(swab) void swab(const void * _FORTIFY_POS0 __os,
+                                 void * _FORTIFY_POS0 __od, ssize_t __n)
+{
+	size_t __bs = __bos(__os, 0);
+	size_t __bd = __bos(__od, 0);
+
+	if ((size_t)__n > __bs || (size_t)__n > __bd)
+		__builtin_trap();
+	return __orig_swab(__os, __od, __n);
+}
+
+#endif
+
 #ifdef __cplusplus
 }
 #endif
