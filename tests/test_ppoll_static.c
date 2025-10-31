@@ -1,0 +1,17 @@
+#include "common.h"
+
+#define _GNU_SOURCE
+#include <poll.h>
+
+int main(int argc, char** argv) {
+#if !defined(__clang__)
+  struct pollfd buffer[12] = {0};
+
+  CHK_FAIL_START
+  ppoll(buffer, 14, NULL, NULL);
+  CHK_FAIL_END
+
+  puts((const char*)buffer);
+#endif
+  return ret;
+}
