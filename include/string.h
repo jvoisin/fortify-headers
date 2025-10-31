@@ -45,6 +45,9 @@ _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
 	char *__d = (char *)__od;
 	const char *__s = (const char *)__os;
 
+	if (!__od || !__os)
+		__builtin_trap();
+
 	/* trap if pointers are overlapping but not if dst == src.
 	 * gcc seems to like to generate code that relies on dst == src */
 	if ((__d < __s && __d + __n > __s) ||
@@ -61,6 +64,9 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 	size_t __bd = __bos(__d, 0);
 	size_t __bs = __bos(__s, 0);
 
+	if (!__d || !__s)
+		__builtin_trap();
+
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
 	return __orig_memmove(__d, __s, __n);
@@ -69,6 +75,9 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
+
+	if (!__d)
+		__builtin_trap();
 
 	if (__n > __b)
 		__builtin_trap();
@@ -152,6 +161,9 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 {
 	size_t __bd = __bos(__d, 0);
 	size_t __bs = __bos(__s, 0);
+
+	if (!__d || !__s)
+		__builtin_trap();
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
