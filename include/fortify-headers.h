@@ -59,4 +59,15 @@
 #define __bos(ptr, type) __builtin_object_size (ptr, type)
 #endif
 
+/* This needs to be two different conditions: https://gcc.gnu.org/onlinedocs/cpp/_005f_005fhas_005fattribute.html */
+#if defined __has_attribute
+#if __has_attribute (access)
+#define __access(...) __attribute__ ((access (__VA_ARGS__)))
+#else
+#define __access(...)
+#endif
+#else
+#define __access(...)
+#endif
+
 #endif
