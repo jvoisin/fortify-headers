@@ -70,4 +70,15 @@
 #define __access(...)
 #endif
 
+/* This needs to be two different conditions: https://gcc.gnu.org/onlinedocs/cpp/_005f_005fhas_005fattribute.html */
+#if defined __has_attribute
+#if __has_attribute (format)
+#define __format(...) __attribute__ ((format (__VA_ARGS__)))
+#else
+#define __format(...)
+#endif
+#else
+#define __format(...)
+#endif
+
 #endif
