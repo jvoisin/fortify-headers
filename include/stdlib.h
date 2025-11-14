@@ -39,6 +39,7 @@ extern "C" {
 /* FIXME clang */
 #if (defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)) && !defined(__clang__)
 #undef realpath
+__warning_if(__p == NULL, "'realpath' called with path set to `NULL`; did you invert the arguments?")
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
 #ifndef PATH_MAX

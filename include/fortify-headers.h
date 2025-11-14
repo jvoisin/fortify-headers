@@ -73,6 +73,12 @@
 #define __format(...)
 #endif
 
+#if __has_attribute (__diagnose_if)
+#define __warning_if(cond, msg) __attribute__ ((__diagnose_if (cond, msg, "warning")))
+#else
+#define __warning_if(cond, msg)
+#endif
+
 #endif
 
 #endif

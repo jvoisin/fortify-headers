@@ -71,6 +71,7 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 }
 
 __access(write_only, 1, 3)
+__warning_if(__c != 0 && __n == 0, "'memset' will set `0` bytes; did you invert the arguments?")
 _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 {
 	size_t __b = __bos(__d, 0);
