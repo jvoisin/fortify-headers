@@ -76,7 +76,7 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 	return __orig_fwrite(__d, __n, __m, __f);
 }
 
-__format(printf, 3, 0)
+__fortify__format(printf, 3, 0)
 __access(write_only, 1, 2)
 __access(read_only, 3)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
@@ -89,7 +89,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 	return __orig_vsnprintf(__s, __n, __f, __v);
 }
 
-__format(printf, 2, 0)
+__fortify__format(printf, 2, 0)
 __access(write_only, 1)
 __access(read_only, 2)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
@@ -123,7 +123,7 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
  * 3) not implementing these under clang, which is what we do for now
  */
 
-__format(printf, 3, 4)
+__fortify__format(printf, 3, 4)
 _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
                                     const char *__f, ...)
 {
@@ -134,7 +134,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 	return __orig_snprintf(__s, __n, __f, __builtin_va_arg_pack());
 }
 
-__format(printf, 2, 3)
+__fortify__format(printf, 2, 3)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
 	size_t __b = __bos(__s, 0);
