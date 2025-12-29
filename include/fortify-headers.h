@@ -68,9 +68,9 @@
 #endif
 
 #if __has_attribute (format)
-#define __format(...) __attribute__ ((format (__VA_ARGS__)))
+#define __fortify__format(...) __attribute__ ((format (__VA_ARGS__)))
 #else
-#define __format(...)
+#define __fortify__format(...)
 #endif
 
 #if __has_attribute (__diagnose_if)
