@@ -37,8 +37,8 @@ extern "C" {
 #undef snprintf
 #undef sprintf
 
-__access(read_write, 1, 2)
-__access(read_only, 3)
+__fortify_access(read_write, 1, 2)
+__fortify_access(read_only, 3)
 _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 {
 	size_t __b = __bos(__s, 0);
@@ -48,8 +48,8 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 	return __orig_fgets(__s, __n, __f);
 }
 
-__access(write_only, 1)
-__access(read_only, 4)
+__fortify_access(write_only, 1)
+__fortify_access(read_only, 4)
 _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
                                 size_t __m, FILE *__f)
 {
@@ -62,8 +62,8 @@ _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
 	return __orig_fread(__d, __n, __m, __f);
 }
 
-__access(read_only, 1)
-__access(write_only, 4)
+__fortify_access(read_only, 1)
+__fortify_access(write_only, 4)
 _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
                                   size_t __m, FILE *__f)
 {
@@ -77,8 +77,8 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 }
 
 __fortify__format(printf, 3, 0)
-__access(write_only, 1, 2)
-__access(read_only, 3)
+__fortify_access(write_only, 1, 2)
+__fortify_access(read_only, 3)
 _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
                                      const char *__f, __builtin_va_list __v)
 {
@@ -90,8 +90,8 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 }
 
 __fortify__format(printf, 2, 0)
-__access(write_only, 1)
-__access(read_only, 2)
+__fortify_access(write_only, 1)
+__fortify_access(read_only, 2)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
 {

@@ -62,9 +62,9 @@
 #if defined __has_attribute
 
 #if __has_attribute (access)
-#define __access(...) __attribute__ ((access (__VA_ARGS__)))
+#define __fortify_access(...) __attribute__ ((access (__VA_ARGS__)))
 #else
-#define __access(...)
+#define __fortify_access(...)
 #endif
 
 #if __has_attribute (format)
