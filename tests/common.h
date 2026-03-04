@@ -23,6 +23,10 @@
 #include <signal.h>
 #include <stdio.h>
 
+#ifndef _FORTIFY_HEADERS_H
+#error Never included fortify-headers.h
+#endif
+
 volatile int chk_fail_ok;
 volatile int ret;
 jmp_buf chk_fail_buf;
