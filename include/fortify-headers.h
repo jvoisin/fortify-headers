@@ -59,26 +59,22 @@
 #define __bos(ptr, type) __builtin_object_size (ptr, type)
 #endif
 
-#if defined __has_attribute
-
-#if __has_attribute (access)
+#if defined __has_attribute && __has_attribute (access)
 #define __fortify_access(...) __attribute__ ((access (__VA_ARGS__)))
 #else
 #define __fortify_access(...)
 #endif
 
-#if __has_attribute (format)
+#if defined __has_attribute && __has_attribute (format)
 #define __fortify__format(...) __attribute__ ((format (__VA_ARGS__)))
 #else
 #define __fortify__format(...)
 #endif
 
-#if __has_attribute (__diagnose_if)
+#if defined __has_attribute && __has_attribute (__diagnose_if)
 #define __fortify_warning_if(cond, msg) __attribute__ ((__diagnose_if (cond, msg, "warning")))
 #else
 #define __fortify_warning_if(cond, msg)
-#endif
-
 #endif
 
 #endif
