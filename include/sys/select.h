@@ -29,14 +29,8 @@ __extension__
 extern "C" {
 #endif
 
-#ifdef __clang__
-#define _FORTIFY_FD_POS0 const __attribute__((__pass_object_size__(0)))
-#else
-#define _FORTIFY_FD_POS0
-#endif
-
-static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void __fortify_FD_CLR(int __f, fd_set * _FORTIFY_FD_POS0 __s)
+_FORTIFY_INLINE
+void __fortify_FD_CLR(int __f, fd_set * _FORTIFY_POS0 __s)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -45,8 +39,8 @@ void __fortify_FD_CLR(int __f, fd_set * _FORTIFY_FD_POS0 __s)
 	FD_CLR(__f, __s);
 }
 
-static __inline__ __attribute__((__always_inline__,__gnu_inline__,__artificial__))
-void __fortify_FD_SET(int __f, fd_set * _FORTIFY_FD_POS0 __s)
+_FORTIFY_INLINE
+void __fortify_FD_SET(int __f, fd_set * _FORTIFY_POS0 __s)
 {
 	size_t __b = __bos(__s, 0);
 
@@ -54,8 +48,6 @@ void __fortify_FD_SET(int __f, fd_set * _FORTIFY_FD_POS0 __s)
 		__builtin_trap();
 	FD_SET(__f, __s);
 }
-
-#undef _FORTIFY_FD_POS0
 
 #undef FD_CLR
 #define FD_CLR(fd, set) __fortify_FD_CLR(fd, set)
