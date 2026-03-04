@@ -1,7 +1,7 @@
 MACHINE := $(shell uname -m)
 CFLAGS ?= -std=gnu99
-CFLAGS += -I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
-CFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
+CPPFLAGS += -I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
+CPPFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
 
 RUNTIME_TARGETS= \
 	test_FD_CLR_SETSIZE           \
@@ -123,10 +123,10 @@ all: gcc
 
 
 $(RUNTIME_TARGETS): %: %.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $<
 
 cpp: test_compile.cc
-	$(CXX) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
 	timeout 1s ./test_compile_cc 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 
 run: $(RUNTIME_TARGETS)
