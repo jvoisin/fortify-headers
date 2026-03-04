@@ -23,7 +23,7 @@
 #define _FORTIFY_POSN(n) const __attribute__((pass_dynamic_object_size(n)))
 #else
 /* clang uses overloads; see https://github.com/llvm/llvm-project/issues/53516 */
-#define _FORTIFY_POSN(n) const __attribute__((pass_object_size__(n)))
+#define _FORTIFY_POSN(n) const __attribute__((pass_object_size(n)))
 #endif
 
 /* we can't use extern inline with overloads without making them external */
