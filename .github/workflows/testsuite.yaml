@@ -34,6 +34,7 @@ jobs:
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
       - name: Build and run the testsuite
+        shell: bash
         run : make --silent -C tests clean gcc run | tee ./results.txt
       - name: Check the testsuite's output
         shell: bash
@@ -68,6 +69,7 @@ jobs:
           sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.version }} 100
           sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.version }} 100
       - name: Build and run the testsuite
+        shell: bash
         run : make --silent -C tests clean clang run | tee ./results.txt
       - name: Check the testsuite's output
         shell: bash
