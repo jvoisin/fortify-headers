@@ -1,6 +1,7 @@
 MACHINE := $(shell uname -m)
 CFLAGS ?= -std=gnu99
-CPPFLAGS += -I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
+_FORTIFY_SOURCE ?= 3
+CPPFLAGS += -I../include/ -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
 CPPFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
 
 RUNTIME_TARGETS= \
