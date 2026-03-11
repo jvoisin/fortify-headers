@@ -3,7 +3,9 @@ _FORTIFY_SOURCE ?= 3
 CFLAGS ?= -std=gnu99
 CFLAGS += -I../include/ -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
 CFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
-CXXFLAGS += -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE)
+CXXFLAGS += -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -O2
+CXXFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
+
 
 RUNTIME_TARGETS= \
 	test_FD_CLR_SETSIZE           \
@@ -118,7 +120,7 @@ clang: CXX=clang++
 clang: CXXFLAGS+=-I/usr/include/$(MACHINE)-linux-musl
 clang: CXXFLAGS+=-I../$(MACHINE)-linux-musl-native/include/
 clang: CXXFLAGS+=-I$(MACHINE)-linux-musl-native/include/
-clang: CXXFLAGS+=-nostdinc
+clang: CXXFLAGS+=-nostdinc -Wno-fortify-source
 clang: $(RUNTIME_TARGETS) cpp
 
 all: gcc
