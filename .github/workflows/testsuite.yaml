@@ -102,3 +102,30 @@ jobs:
       - name: Building with gcc
         shell: bash
         run: CFLAGS=-std=${{ matrix.version }} make -C tests clean gcc run
+
+  fortify_level:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        level: [2, 3]
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v3
+      - name: Cache musl toolchain
+        uses: actions/cache@v3
+        id: cache-musl
+        with:
+          path: x86_64-linux-musl-native
+          key: musl
+      - name: Downloading musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: wget --quiet https://dustri.org/x86_64-linux-musl-native.tgz
+      - name: Extracting musl-based toolchain
+        if: steps.cache-musl.outputs.cache-hit != 'true'
+        run: tar xzf ./x86_64-linux-musl-native.tgz
+      - name: Building with clang
+        shell: bash
+        run: _FORTIFY_SOURCE=${{ matrix.level }} make -C tests clean clang 
+      - name: Building with gcc
+        shell: bash
+        run: _FORTIFY_SOURCE=${{ matrix.level }} make -C tests clean gcc 
