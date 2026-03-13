@@ -79,6 +79,12 @@
 #define __fortify_warning_if(cond, msg)
 #endif
 
+#else /* ! __has_attribute */
+
+#define __fortify_access(...)
+#define __fortify__format(...)
+#define __fortify_warning_if(cond, msg)
+
 #endif
 
 #endif
