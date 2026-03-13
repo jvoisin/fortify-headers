@@ -1,7 +1,9 @@
 MACHINE := $(shell uname -m)
+_FORTIFY_SOURCE ?= 3
 CFLAGS ?= -std=gnu99
-CFLAGS += -I../include/ -D_FORTIFY_SOURCE=3 -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
+CFLAGS += -I../include/ -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
 CFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
+CXXFLAGS += -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE)
 
 RUNTIME_TARGETS= \
 	test_FD_CLR_SETSIZE           \
