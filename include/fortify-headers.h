@@ -19,12 +19,17 @@
 
 #ifdef __clang__
 
-#if _FORTIFY_SOURCE > 2 && defined __has_attribute && __has_attribute(pass_dynamic_object_size)
+/* split the if statements for older versions of gcc */
+#if _FORTIFY_SOURCE > 2 && defined __has_attribute
+#if __has_attribute(pass_dynamic_object_size)
 #define _FORTIFY_POSN(n) const __attribute__((pass_dynamic_object_size(n)))
+#else
+#define _FORTIFY_POSN(n) const __attribute__((pass_object_size(n)))
+#endif /* __has_attribute(pass_dynamic_object_size) */
 #else
 /* clang uses overloads; see https://github.com/llvm/llvm-project/issues/53516 */
 #define _FORTIFY_POSN(n) const __attribute__((pass_object_size(n)))
-#endif
+#endif /* _FORTIFY_SOURCE > 2 && defined __has_attribute */
 
 /* we can't use extern inline with overloads without making them external */
 #ifdef __cplusplus
@@ -52,12 +57,16 @@
 #define _FORTIFY_FNB(fn) _FORTIFY_ORIG(__USER_LABEL_PREFIX__,fn)
 #define _FORTIFY_FN(fn) _FORTIFY_FNB(fn); _FORTIFY_INLINE
 
-
-#if _FORTIFY_SOURCE > 2 && defined __has_builtin && __has_builtin (__builtin_dynamic_object_size)
+/* split the if statements for older versions of gcc */
+#if _FORTIFY_SOURCE > 2 && defined __has_builtin
+#if __has_builtin (__builtin_dynamic_object_size)
 #define __bos(ptr, type) __builtin_dynamic_object_size (ptr, type)
 #else
 #define __bos(ptr, type) __builtin_object_size (ptr, type)
-#endif
+#endif /* __has_builtin (__builtin_dynamic_object_size) */
+#else
+#define __bos(ptr, type) __builtin_object_size (ptr, type)
+#endif /* _FORTIFY_SOURCE > 2 && defined __has_builtin */
 
 #if defined __has_attribute
 
