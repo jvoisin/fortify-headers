@@ -8,9 +8,6 @@ on:
 jobs:
   gcc:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: [9, 10, 11, 12, 13, 14]
     steps:
       - name: Checking out the code
         uses: actions/checkout@v3
@@ -26,13 +23,6 @@ jobs:
       - name: Extracting musl-based toolchain
         if: steps.cache-musl.outputs.cache-hit != 'true'
         run: tar xzf ./x86_64-linux-musl-native.tgz
-      - name: Setting up gcc version
-        run: |
-          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-          sudo apt update
-          sudo apt install -y --no-install-recommends gcc-${{ matrix.version }} g++-${{ matrix.version }}
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.version }} 100
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.version }} 100
       - name: Build and run the testsuite
         shell: bash
         run : make --silent -C tests clean gcc run | tee ./results.txt
@@ -42,7 +32,6 @@ jobs:
       - name: Show logs in case of failure
         if: ${{ failure() }}
         run: cat ./results.txt
-
 
   clang:
     runs-on: ubuntu-latest
