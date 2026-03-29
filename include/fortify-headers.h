@@ -52,11 +52,24 @@
 #define _FORTIFY_FNB(fn) _FORTIFY_ORIG(__USER_LABEL_PREFIX__,fn)
 #define _FORTIFY_FN(fn) _FORTIFY_FNB(fn); _FORTIFY_INLINE
 
+#ifndef __has_builtin
+#error "fortify-headers needs a compiler with `__has_builtin` support"
+#endif 
 
-#if _FORTIFY_SOURCE > 2 && defined __has_builtin && __has_builtin (__builtin_dynamic_object_size)
+#if _FORTIFY_SOURCE == 2 
+#if __has_builtin (__builtin_object_size)
+#define __bos(ptr, type) __builtin_object_size (ptr, type)
+#else 
+#error "fortify-headers needs a compiler with `__builtin_object_size` for `_FORTIFY_SOURCE=2` support."
+#endif /* __builtin_object_size */
+#endif
+
+#if _FORTIFY_SOURCE == 3
+#if __has_builtin (__builtin_dynamic_object_size)
 #define __bos(ptr, type) __builtin_dynamic_object_size (ptr, type)
 #else
-#define __bos(ptr, type) __builtin_object_size (ptr, type)
+#error "fortify-headers needs a compiler with `__builtin_dynamic_object_size` for `_FORTIFY_SOURCE=3`"
+#endif /* __builtin_dynamic_object_size */
 #endif
 
 #if defined __has_attribute
