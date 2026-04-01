@@ -43,8 +43,9 @@ __fortify_warning_if(__p == NULL, "'realpath' called with path set to `NULL`; di
 _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 {
 #ifndef PATH_MAX
-#error PATH_MAX unset. A fortified realpath will not work.
-#else
+/* see man realpath(3) */
+#define PATH_MAX 4096
+#endif
 	if (__r && PATH_MAX > __bos(__r, 2)) {
 		char __buf[PATH_MAX], *__ret;
 		size_t __l;
@@ -59,7 +60,6 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 		return __r;
 	}
 	return __orig_realpath(__p, __r);
-#endif
 }
 #endif
 

@@ -61,6 +61,8 @@ RUNTIME_TARGETS= \
 	test_read_static              \
 	test_readlink_dynamic         \
 	test_readlink_static          \
+	test_realpath_null            \
+	test_realpath                 \
 	test_recv_dynamic             \
 	test_recv_static              \
 	test_recvfrom_dynamic         \
