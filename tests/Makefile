@@ -1,11 +1,8 @@
 MACHINE := $(shell uname -m)
 _FORTIFY_SOURCE ?= 3
 CFLAGS ?= -std=gnu99
-CFLAGS += -I../include/ -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
-CFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
-CXXFLAGS += -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -O2
-CXXFLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
-
+COMMON_FLAGS += -I../include/ -D_FORTIFY_SOURCE=$(_FORTIFY_SOURCE) -static -O2 -Wall -Wextra -Werror -Werror=pointer-arith
+COMMON_FLAGS += -Wno-format -Wno-array-bounds -Wno-shift-count-negative -Wno-unused-variable -Wno-unused-parameter
 
 RUNTIME_TARGETS= \
 	test_FD_CLR_SETSIZE           \
@@ -129,10 +126,10 @@ all: gcc
 
 
 $(RUNTIME_TARGETS): %: %.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(COMMON_FLAGS) $(CFLAGS) -o $@ $<
 
 cpp: test_compile.cc
-	$(CXX) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
+	$(CXX) $(COMMON_FLAGS) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
 	timeout 1s ./test_compile_cc 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 
 run: $(RUNTIME_TARGETS)
