@@ -95,10 +95,10 @@ __fortify_access(read_only, 2)
 _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
                                    __builtin_va_list __v)
 {
-	size_t __b = __bos(__s, 0);
+	size_t __b = __bos(__s, 2);
 	int __r;
 
-	if (__b != (size_t)-1) {
+	if (__b) {
 		__r = __orig_vsnprintf(__s, __b, __f, __v);
 		if (__r != -1 && (size_t)__r >= __b)
 			__builtin_trap();
@@ -136,10 +136,10 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 __fortify__format(printf, 2, 3)
 _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 {
-	size_t __b = __bos(__s, 0);
+	size_t __b = __bos(__s, 2);
 	int __r;
 
-	if (__b != (size_t)-1) {
+	if (__b) {
 		__r = __orig_snprintf(__s, __b, __f, __builtin_va_arg_pack());
 		if (__r != -1 && (size_t)__r >= __b)
 			__builtin_trap();
