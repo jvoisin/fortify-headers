@@ -107,7 +107,7 @@ RUNTIME_TARGETS= \
 	test_write_static             \
 
 gcc: CC=../$(MACHINE)-linux-musl-native/bin/gcc
-gcc: CFLAGS += -Wno-stringop-overread -Wno-stringop-overflow -ffreestanding
+gcc: CFLAGS += -Wno-stringop-overread -ffreestanding
 gcc: $(RUNTIME_TARGETS)
 
 clang: CC=clang
