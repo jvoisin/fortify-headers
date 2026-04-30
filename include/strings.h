@@ -17,6 +17,9 @@
 #ifndef _FORTIFY_STRINGS_H
 #define _FORTIFY_STRINGS_H
 
+#if !defined(__cplusplus) && !defined(__clang__)
+__extension__
+#endif
 #include_next <strings.h>
 
 #if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
