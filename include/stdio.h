@@ -37,7 +37,7 @@ extern "C" {
 #undef snprintf
 #undef sprintf
 
-__fortify_access(read_write, 1, 2)
+__fortify_access(write_only, 1, 2)
 __fortify_access(read_only, 3)
 _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 {
