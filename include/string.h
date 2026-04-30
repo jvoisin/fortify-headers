@@ -104,7 +104,7 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 {
 	size_t __b = __bos(__d, 0);
 
-	if (__n > __b && strlen(__s) + 1 > __b)
+	if (__n > __b)
 		__builtin_trap();
 	return __orig_stpncpy(__d, __s, __n);
 }

@@ -4,7 +4,8 @@
 
 int main(int argc, char** argv) {
   char buffer[8] = {0};
-  stpncpy(buffer, "1234567", 5);
+  stpncpy(buffer, "1234567890", 5);
+  stpncpy(buffer, "1234567890", 8);
   puts(buffer);
 
   CHK_FAIL_START
