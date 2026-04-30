@@ -87,6 +87,7 @@ RUNTIME_TARGETS= \
 	test_strncpy_static_write     \
 	test_swab_dynamic_read        \
 	test_swab_dynamic_write       \
+	test_swab_negative            \
 	test_swab_static_read         \
 	test_ttyname_r_dynamic        \
 	test_ttyname_r_static         \

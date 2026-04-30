@@ -177,7 +177,7 @@ _FORTIFY_FN(swab) void swab(const void * _FORTIFY_POS0 __os,
 	size_t __bs = __bos(__os, 0);
 	size_t __bd = __bos(__od, 0);
 
-	if ((size_t)__n > __bs || (size_t)__n > __bd)
+	if (__n > 0 && ((size_t)__n > __bs || (size_t)__n > __bd))
 		__builtin_trap();
 	return __orig_swab(__os, __od, __n);
 }
