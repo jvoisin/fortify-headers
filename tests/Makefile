@@ -100,9 +100,13 @@ RUNTIME_TARGETS= \
 	test_wcscpy_static_write      \
 	test_wcsncat_static_write     \
 	test_wcsncpy_static_write     \
+	test_wmemcpy_dynamic_read     \
 	test_wmemcpy_dynamic_write    \
+	test_wmemcpy_static_read      \
 	test_wmemcpy_static_write     \
+	test_wmemmove_dynamic_read    \
 	test_wmemmove_dynamic_write   \
+	test_wmemmove_static_read     \
 	test_wmemmove_static_write    \
 	test_wmemset_dynamic          \
 	test_wmemset_static           \

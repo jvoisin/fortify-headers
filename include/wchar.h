@@ -221,21 +221,25 @@ _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
 }
 
 _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
-                                      const wchar_t *__s, size_t __n)
+                                      const wchar_t * _FORTIFY_POS0 __s,
+                                      size_t __n)
 {
-	size_t __b = __bos(__d, 0);
+	size_t __bd = __bos(__d, 0);
+	size_t __bs = __bos(__s, 0);
 
-	if (__n > __b / sizeof(wchar_t))
+	if (__n > __bd / sizeof(wchar_t) || __n > __bs / sizeof(wchar_t))
 		__builtin_trap();
 	return __orig_wmemcpy(__d, __s, __n);
 }
 
 _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
-                                        const wchar_t *__s, size_t __n)
+                                        const wchar_t * _FORTIFY_POS0 __s,
+                                        size_t __n)
 {
-	size_t __b = __bos(__d, 0);
+	size_t __bd = __bos(__d, 0);
+	size_t __bs = __bos(__s, 0);
 
-	if (__n > __b / sizeof(wchar_t))
+	if (__n > __bd / sizeof(wchar_t) || __n > __bs / sizeof(wchar_t))
 		__builtin_trap();
 	return __orig_wmemmove(__d, __s, __n);
 }
