@@ -94,6 +94,8 @@ RUNTIME_TARGETS= \
 	test_vsnprintf_static         \
 	test_vsprintf                 \
 	test_wcrtomb                  \
+	test_wcsnrtombs_dynamic       \
+	test_wcsnrtombs_static        \
 	test_wcscat_static_write      \
 	test_wcscpy_static_write      \
 	test_wcsncat_static_write     \

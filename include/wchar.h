@@ -190,16 +190,9 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
 	size_t __b = __bos(__d, 0);
 	size_t __r;
 
-	if (__wn > __n / sizeof(wchar_t)) {
-		__b /= sizeof(wchar_t);
-		__r = __orig_wcsnrtombs(__d, __s, __wn > __b ? __b : __wn, __n, __st);
-		if (__b < __wn && __d && *__s && __r != (size_t)-1)
-			__builtin_trap();
-	} else {
-		__r = __orig_wcsnrtombs(__d, __s, __wn, __n > __b ? __b : __n, __st);
-		if (__b < __n && __d && *__s && __r != (size_t)-1)
-			__builtin_trap();
-	}
+	__r = __orig_wcsnrtombs(__d, __s, __wn, __n > __b ? __b : __n, __st);
+	if (__b < __n && __d && *__s && __r != (size_t)-1)
+		__builtin_trap();
 	return __r;
 }
 #endif
