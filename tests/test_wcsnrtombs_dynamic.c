@@ -14,9 +14,7 @@ int main(int argc, char** argv) {
   srcp = src;
   wcsnrtombs(buffer, &srcp, 4, 4, &st);
 
-  /* Unsafe: ask to write argc (10) bytes into 8-byte buffer.
-   * Before the fix, the first branch incorrectly divided the byte-sized
-   * buffer capacity by sizeof(wchar_t), making the check too permissive. */
+  /* Unsafe: ask to write argc (10) bytes into 8-byte buffer. */
   CHK_FAIL_START
   srcp = src;
   memset(&st, 0, sizeof(st));

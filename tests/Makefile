@@ -84,6 +84,11 @@ RUNTIME_TARGETS= \
 	test_strlcpy_dynamic_write    \
 	test_strlcpy_static_write     \
 	test_strncat_dynamic_write    \
+	test_strncat_n_eq_buf          \
+	test_strncat_n_gt_buf          \
+	test_strncat_n_lt_buf          \
+	test_strncat_n_one             \
+	test_strncat_safe              \
 	test_strncat_static_write     \
 	test_strncpy_dynamic_write    \
 	test_strncpy_static_write     \
@@ -101,6 +106,11 @@ RUNTIME_TARGETS= \
 	test_wcsnrtombs_static        \
 	test_wcscat_static_write      \
 	test_wcscpy_static_write      \
+	test_wcsncat_n_eq_buf          \
+	test_wcsncat_n_gt_buf          \
+	test_wcsncat_n_lt_buf          \
+	test_wcsncat_n_one             \
+	test_wcsncat_safe              \
 	test_wcsncat_static_write     \
 	test_wcsncpy_static_write     \
 	test_wmemcpy_dynamic_read     \

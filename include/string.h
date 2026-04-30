@@ -140,14 +140,12 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 	size_t __b = __bos(__d, 0);
 	size_t __sl, __dl;
 
-	if (__n > __b) {
-		__sl = strlen(__s);
-		__dl = strlen(__d);
-		if (__sl > __n)
-			__sl = __n;
-		if (__sl + __dl + 1 > __b)
-			__builtin_trap();
-	}
+	__sl = strlen(__s);
+	__dl = strlen(__d);
+	if (__sl > __n)
+		__sl = __n;
+	if (__sl + __dl + 1 > __b)
+		__builtin_trap();
 	return __orig_strncat(__d, __s, __n);
 }
 

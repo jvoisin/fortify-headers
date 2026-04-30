@@ -14,9 +14,7 @@ int main(int argc, char** argv) {
   srcp = src;
   mbsnrtowcs(buffer, &srcp, 2, 2, &st);
 
-  /* Unsafe: ask to write argc (10) wide chars into 4-element buffer.
-   * Before the fix, the else branch clamped source bytes instead of
-   * the output wide-char count, allowing destination overflow. */
+  /* Unsafe: ask to write argc (10) wide chars into 4-element buffer. */
   CHK_FAIL_START
   srcp = src;
   memset(&st, 0, sizeof(st));

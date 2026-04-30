@@ -153,14 +153,12 @@ _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
 	size_t __b = __bos(__d, 0);
 	size_t __sl, __dl;
 
-	if (__n > __b / sizeof(wchar_t)) {
-		__sl = wcslen(__s);
-		__dl = wcslen(__d);
-		if (__sl > __n)
-			__sl = __n;
-		if (__sl + __dl + 1 > __b / sizeof(wchar_t))
-			__builtin_trap();
-	}
+	__sl = wcslen(__s);
+	__dl = wcslen(__d);
+	if (__sl > __n)
+		__sl = __n;
+	if (__sl + __dl + 1 > __b / sizeof(wchar_t))
+		__builtin_trap();
 	return __orig_wcsncat(__d, __s, __n);
 }
 

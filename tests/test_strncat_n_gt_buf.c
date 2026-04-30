@@ -7,11 +7,9 @@ int main(int argc, char** argv) {
   strncat(buffer, "12345", 5);
   puts(buffer);
 
-  /* n=4 is less than buffer size (8), but buffer already has 5 chars,
-   * so appending 4 more + NUL = 10 bytes total, overflowing the buffer.
-   */
+  /* n > buffer size and overflow: n=10, buffer has 5 chars. */
   CHK_FAIL_START
-  strncat(buffer, "ABCD", 4);
+  strncat(buffer, "1234567890", 10);
   CHK_FAIL_END
 
   puts(buffer);
