@@ -45,6 +45,7 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 #ifndef PATH_MAX
 /* see man realpath(3) */
 #define PATH_MAX 4096
+#define _FORTIFY_UNDEF_PATH_MAX
 #endif
 	if (__r && PATH_MAX > __bos(__r, 2)) {
 		char __buf[PATH_MAX], *__ret;
@@ -61,6 +62,10 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 	}
 	return __orig_realpath(__p, __r);
 }
+#ifdef _FORTIFY_UNDEF_PATH_MAX
+#undef PATH_MAX
+#undef _FORTIFY_UNDEF_PATH_MAX
+#endif
 #endif
 
 #ifdef __cplusplus
