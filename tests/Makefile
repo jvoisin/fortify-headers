@@ -50,6 +50,8 @@ RUNTIME_TARGETS= \
 	test_mempcpy_static_write     \
 	test_memset_dynamic_write     \
 	test_memset_static_write      \
+	test_mbsnrtowcs_dynamic       \
+	test_mbsnrtowcs_static        \
 	test_poll_dynamic             \
 	test_poll_static              \
 	test_ppoll_dynamic            \
