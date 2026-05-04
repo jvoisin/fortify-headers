@@ -15,9 +15,9 @@ int main(int argc, char** argv) {
   mbsnrtowcs(buffer, &srcp, 2, 2, &st);
 
   /* Unsafe: ask to write argc (10) wide chars into 4-element buffer. */
-  CHK_FAIL_START
   srcp = src;
   memset(&st, 0, sizeof(st));
+  CHK_FAIL_START
   mbsnrtowcs(buffer, &srcp, 10, argc, &st);
   CHK_FAIL_END
 

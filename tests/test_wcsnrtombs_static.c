@@ -15,9 +15,9 @@ int main(int argc, char** argv) {
   wcsnrtombs(buffer, &srcp, 2, 2, &st);
 
   /* Unsafe: ask to write 16 bytes into 4-byte buffer */
-  CHK_FAIL_START
   srcp = src;
   memset(&st, 0, sizeof(st));
+  CHK_FAIL_START
   wcsnrtombs(buffer, &srcp, 10, 16, &st);
   CHK_FAIL_END
 
