@@ -1,14 +1,14 @@
 #include "common.h"
 
-#include <unistd.h>
+#include <wchar.h>
 
 int main(int argc, char** argv) {
   char buffer[4] = {0};
 
-  confstr(_CS_PATH, buffer, 4);
+  wcstombs(buffer, L"AB", 2);
 
   CHK_FAIL_START
-  confstr(_CS_PATH, buffer, 8);
+  wcstombs(buffer, L"ABCDEFGHIJ", argc + 15);
   CHK_FAIL_END
 
   puts(buffer);

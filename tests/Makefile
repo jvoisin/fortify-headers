@@ -40,7 +40,9 @@ RUNTIME_TARGETS= \
 	test_getlogin_r_static        \
 	test_memcpy_dynamic_read      \
 	test_memcpy_dynamic_write     \
+	test_memcpy_overlap           \
 	test_memcpy_static_read       \
+	test_memcpy_static_write      \
 	test_memmove_dynamic_read     \
 	test_memmove_dynamic_write    \
 	test_memmove_static_read      \
@@ -53,7 +55,9 @@ RUNTIME_TARGETS= \
 	test_memset_static_write      \
 	test_mbsnrtowcs_dynamic       \
 	test_mbsnrtowcs_static        \
+	test_mbsrtowcs_dynamic        \
 	test_mbsrtowcs_static         \
+	test_mbstowcs_dynamic         \
 	test_mbstowcs_static          \
 	test_poll_dynamic             \
 	test_poll_static              \
@@ -77,6 +81,7 @@ RUNTIME_TARGETS= \
 	test_send_static              \
 	test_sendto_dynamic           \
 	test_sendto_static            \
+	test_snprintf_dynamic         \
 	test_snprintf_static          \
 	test_sprintf                  \
 	test_sprintf_62               \
@@ -105,6 +110,7 @@ RUNTIME_TARGETS= \
 	test_swab_dynamic_write       \
 	test_swab_negative            \
 	test_swab_static_read         \
+	test_swab_static_write        \
 	test_ttyname_r_dynamic        \
 	test_ttyname_r_static         \
 	test_vsnprintf_dynamic        \
@@ -113,16 +119,22 @@ RUNTIME_TARGETS= \
 	test_wcrtomb                  \
 	test_wcsnrtombs_dynamic       \
 	test_wcsnrtombs_static        \
+	test_wcscat_dynamic_write     \
 	test_wcscat_static_write      \
+	test_wcscpy_dynamic_write     \
 	test_wcscpy_static_write      \
+	test_wcsncat_dynamic_write    \
 	test_wcsncat_n_eq_buf          \
 	test_wcsncat_n_gt_buf          \
 	test_wcsncat_n_lt_buf          \
 	test_wcsncat_n_one             \
 	test_wcsncat_safe              \
 	test_wcsncat_static_write     \
+	test_wcsncpy_dynamic_write    \
 	test_wcsncpy_static_write     \
+	test_wcsrtombs_dynamic        \
 	test_wcsrtombs_static         \
+	test_wcstombs_dynamic         \
 	test_wcstombs_static          \
 	test_wmemcpy_dynamic_read     \
 	test_wmemcpy_dynamic_write    \
