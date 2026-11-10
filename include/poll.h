@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_POLL_H
 #define _FORTIFY_POLL_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -37,7 +41,7 @@ _FORTIFY_FN(poll) int poll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n, int __
 
 	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();
-	return __orig_poll(__f, __n, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(poll)(__f, __n, __s);
 }
 
 #if defined(_GNU_SOURCE) && (!defined(_REDIR_TIME64) || !_REDIR_TIME64)
@@ -49,7 +53,7 @@ _FORTIFY_FN(ppoll) int ppoll(struct pollfd * _FORTIFY_POS0 __f, nfds_t __n,
 
 	if (__n > __b / sizeof(struct pollfd))
 		__builtin_trap();
-	return __orig_ppoll(__f, __n, __s, __m);
+	return FORTIFY_HEADERS_INTERNAL_CALL(ppoll)(__f, __n, __s, __m);
 }
 #endif
 

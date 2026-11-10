@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_STRINGS_H
 #define _FORTIFY_STRINGS_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -44,7 +48,7 @@ _FORTIFY_FN(bcopy) void bcopy(const void * _FORTIFY_POS0 __s,
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_bcopy(__s, __d, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(bcopy)(__s, __d, __n);
 }
 
 __fortify_access(write_only, 1, 2)
@@ -54,7 +58,7 @@ _FORTIFY_FN(bzero) void bzero(void * _FORTIFY_POS0 __s, size_t __n)
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_bzero(__s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(bzero)(__s, __n);
 }
 #endif
 

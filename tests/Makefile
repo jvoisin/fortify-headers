@@ -175,6 +175,34 @@ cpp: test_compile.cc
 	$(CXX) $(COMMON_FLAGS) $(CXXFLAGS) test_compile.cc -o ./test_compile_cc
 	timeout 1s ./test_compile_cc 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
 
+gcc: lto
+gcc clang: headers
+
+# Check that every wrapper can be the first header included.
+.PHONY: headers
+headers:
+	@set -e; \
+	for header in poll.h stdio.h stdlib.h string.h strings.h sys/select.h sys/socket.h unistd.h wchar.h; do \
+		printf '#include <%s>\n' "$$header" | \
+			$(CC) $(COMMON_FLAGS) $(CFLAGS) -fsyntax-only -x c -; \
+	done
+
+# -fhosted overrides the inherited -ffreestanding so the default case
+# exercises enabled builtins.
+# -UNDEBUG keeps the assertions and the function calls inside them active.
+# -Wl,-u,__wrap_memmove retains the counting hook, which older GCC LTO
+# can otherwise discard.
+.PHONY: lto
+lto: test_lto.c test_lto_helpers.c
+	@set -e; \
+	for flag in "" -fno-builtin -fno-builtin-memmove -fno-builtin-vsnprintf; do \
+		expected=0; \
+		case "$$flag" in -fno-builtin|-fno-builtin-memmove) expected=1 ;; esac; \
+		$(CC) $(COMMON_FLAGS) $(CFLAGS) -fhosted -UNDEBUG -flto $$flag \
+			-DEXPECT_MEMMOVE_CALLS=$$expected -Wl,--wrap=memmove,-u,__wrap_memmove -o test_lto $^; \
+		./test_lto; \
+	done
+
 run: $(RUNTIME_TARGETS)
 	$(foreach EXE, $(RUNTIME_TARGETS), \
 		timeout 1s ./$(EXE) 1234567890 2 3 4 5 6 7 8 9 0 >/dev/null && echo "$(EXE) OK" || echo "$(EXE) FAIL"; \
@@ -185,4 +213,4 @@ clean:
 		rm -f ./$(EXE) \
 	)
 	rm -f ./test_compile_cc
-
+	rm -f ./test_lto

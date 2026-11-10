@@ -50,6 +50,14 @@ cc -I<path-to-fortify-include-dir> -D_FORTIFY_SOURCE=3 -O1 fgets.c
 At this point, the program will safely crash.
 
 
+# Building with GCC
+
+If your C code declares libc functions before including their standard
+headers, include `<fortify-builtins.h>` before those declarations. This
+preserves builtin optimizations and avoids link failures with link-time
+optimization (LTO).
+
+
 Supported interfaces
 ====================
 

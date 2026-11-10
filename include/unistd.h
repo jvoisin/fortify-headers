@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_UNISTD_H
 #define _FORTIFY_UNISTD_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -45,7 +49,7 @@ __fortify_access(write_only, 2, 3)
 _FORTIFY_FN(confstr) size_t confstr(int __n, char * _FORTIFY_POS0 __s, size_t __l)
 {
 	size_t __b = __bos(__s, 0);
-	size_t __r = __orig_confstr(__n, __s, __b > __l ? __l : __b);
+	size_t __r = FORTIFY_HEADERS_INTERNAL_CALL(confstr)(__n, __s, __b > __l ? __l : __b);
 
 	if (__l > __b && __r > __b)
 		__builtin_trap();
@@ -59,7 +63,7 @@ _FORTIFY_FN(getcwd) char *getcwd(char * _FORTIFY_POS0 __s, size_t __l)
 
 	if (__l > __b)
 		__builtin_trap();
-	return __orig_getcwd(__s, __l);
+	return FORTIFY_HEADERS_INTERNAL_CALL(getcwd)(__s, __l);
 }
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
@@ -71,7 +75,7 @@ _FORTIFY_FN(getdomainname) int getdomainname(char * _FORTIFY_POS0 __s, size_t __
 
 	if (__l > __b)
 		__builtin_trap();
-	return __orig_getdomainname(__s, __l);
+	return FORTIFY_HEADERS_INTERNAL_CALL(getdomainname)(__s, __l);
 }
 #endif
 
@@ -81,7 +85,7 @@ _FORTIFY_FN(getgroups) int getgroups(int __l, gid_t * _FORTIFY_POS0 __s)
 
 	if (__l > 0 && (unsigned)__l > __b / sizeof(gid_t))
 		__builtin_trap();
-	return __orig_getgroups(__l, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(getgroups)(__l, __s);
 }
 
 __fortify_access(write_only, 1, 2)
@@ -91,7 +95,7 @@ _FORTIFY_FN(gethostname) int gethostname(char * _FORTIFY_POS0 __s, size_t __l)
 
 	if (__l > __b)
 		__builtin_trap();
-	return __orig_gethostname(__s, __l);
+	return FORTIFY_HEADERS_INTERNAL_CALL(gethostname)(__s, __l);
 }
 
 __fortify_access(write_only, 1, 2)
@@ -101,7 +105,7 @@ _FORTIFY_FN(getlogin_r) int getlogin_r(char * _FORTIFY_POS0 __s, size_t __l)
 
 	if (__l > __b)
 		__builtin_trap();
-	return __orig_getlogin_r(__s, __l);
+	return FORTIFY_HEADERS_INTERNAL_CALL(getlogin_r)(__s, __l);
 }
 
 _FORTIFY_FN(pread) ssize_t pread(int __f, void * _FORTIFY_POS0 __s,
@@ -111,7 +115,7 @@ _FORTIFY_FN(pread) ssize_t pread(int __f, void * _FORTIFY_POS0 __s,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_pread(__f, __s, __n, __o);
+	return FORTIFY_HEADERS_INTERNAL_CALL(pread)(__f, __s, __n, __o);
 }
 
 __fortify_access(write_only, 2, 3)
@@ -121,7 +125,7 @@ _FORTIFY_FN(read) ssize_t read(int __f, void * _FORTIFY_POS0 __s, size_t __n)
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_read(__f, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(read)(__f, __s, __n);
 }
 
 __fortify_access(write_only, 2, 3)
@@ -132,7 +136,7 @@ _FORTIFY_FN(readlink) ssize_t readlink(const char *__p,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_readlink(__p, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(readlink)(__p, __s, __n);
 }
 
 __fortify_access(write_only, 3, 4)
@@ -143,7 +147,7 @@ _FORTIFY_FN(readlinkat) ssize_t readlinkat(int __f, const char *__p,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_readlinkat(__f, __p, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(readlinkat)(__f, __p, __s, __n);
 }
 
 __fortify_access(write_only, 2, 3)
@@ -154,7 +158,7 @@ _FORTIFY_FN(ttyname_r) int ttyname_r(int __f, char * _FORTIFY_POS0 __s,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_ttyname_r(__f, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(ttyname_r)(__f, __s, __n);
 }
 
 __fortify_access(read_only, 2, 3)
@@ -165,7 +169,7 @@ _FORTIFY_FN(write) ssize_t write(int __f, const void * _FORTIFY_POS0 __s,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_write(__f, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(write)(__f, __s, __n);
 }
 
 #if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
@@ -179,7 +183,7 @@ _FORTIFY_FN(swab) void swab(const void * _FORTIFY_POS0 __os,
 
 	if (__n > 0 && ((size_t)__n > __bs || (size_t)__n > __bd))
 		__builtin_trap();
-	return __orig_swab(__os, __od, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(swab)(__os, __od, __n);
 }
 
 #endif

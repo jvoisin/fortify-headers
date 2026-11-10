@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_STRING_H
 #define _FORTIFY_STRING_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -67,7 +71,7 @@ _FORTIFY_FN(memmove) void *memmove(void * _FORTIFY_POS0 __d,
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_memmove(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(memmove)(__d, __s, __n);
 }
 
 __fortify_access(write_only, 1, 3)
@@ -93,7 +97,7 @@ _FORTIFY_FN(stpcpy) char *stpcpy(char * _FORTIFY_POS0 __d, const char *__s)
 
 	if (strlen(__s) + 1 > __b)
 		__builtin_trap();
-	return __orig_stpcpy(__d, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(stpcpy)(__d, __s);
 }
 
 #undef stpncpy
@@ -106,7 +110,7 @@ _FORTIFY_FN(stpncpy) char *stpncpy(char * _FORTIFY_POS0 __d, const char *__s,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_stpncpy(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(stpncpy)(__d, __s, __n);
 }
 #endif
 
@@ -118,7 +122,7 @@ _FORTIFY_FN(strcat) char *strcat(char * _FORTIFY_POS0 __d, const char *__s)
 
 	if (strlen(__s) + strlen(__d) + 1 > __b)
 		__builtin_trap();
-	return __orig_strcat(__d, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(strcat)(__d, __s);
 }
 
 __fortify_access(write_only, 1)
@@ -129,7 +133,7 @@ _FORTIFY_FN(strcpy) char *strcpy(char * _FORTIFY_POS0 __d, const char *__s)
 
 	if (strlen(__s) + 1 > __b)
 		__builtin_trap();
-	return __orig_strcpy(__d, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(strcpy)(__d, __s);
 }
 
 __fortify_access(read_write, 1)
@@ -146,7 +150,7 @@ _FORTIFY_FN(strncat) char *strncat(char * _FORTIFY_POS0 __d, const char *__s,
 		__sl = __n;
 	if (__sl + __dl + 1 > __b)
 		__builtin_trap();
-	return __orig_strncat(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(strncat)(__d, __s, __n);
 }
 
 __fortify_access(write_only, 1)
@@ -158,7 +162,7 @@ _FORTIFY_FN(strncpy) char *strncpy(char * _FORTIFY_POS0 __d,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_strncpy(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(strncpy)(__d, __s, __n);
 }
 
 #ifdef _GNU_SOURCE
@@ -173,7 +177,7 @@ _FORTIFY_FN(mempcpy) void *mempcpy(void * _FORTIFY_POS0 __d,
 
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __orig_mempcpy(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(mempcpy)(__d, __s, __n);
 }
 #endif
 
@@ -189,7 +193,7 @@ _FORTIFY_FN(strlcat) size_t strlcat(char * _FORTIFY_POS0 __d,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_strlcat(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(strlcat)(__d, __s, __n);
 }
 
 __fortify_access(write_only, 1)
@@ -201,7 +205,7 @@ _FORTIFY_FN(strlcpy) size_t strlcpy(char * _FORTIFY_POS0 __d,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_strlcpy(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(strlcpy)(__d, __s, __n);
 }
 #endif
 
