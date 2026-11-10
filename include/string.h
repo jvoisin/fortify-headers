@@ -58,7 +58,7 @@ _FORTIFY_FN(memcpy) void *memcpy(void * _FORTIFY_POS0 __od,
 		__builtin_trap();
 	if (__n > __bd || __n > __bs)
 		__builtin_trap();
-	return __builtin_memcpy(__od, __os, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(memcpy)(__od, __os, __n);
 }
 
 __fortify_access(write_only, 1, 3)
@@ -82,7 +82,7 @@ _FORTIFY_FN(memset) void *memset(void * _FORTIFY_POS0 __d, int __c, size_t __n)
 
 	if (__n > __b)
 		__builtin_trap();
-	return __builtin_memset(__d, __c, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(memset)(__d, __c, __n);
 }
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
