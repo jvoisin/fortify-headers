@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_WCHAR_H
 #define _FORTIFY_WCHAR_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -62,7 +66,7 @@ _FORTIFY_FN(fgetws) wchar_t *fgetws(wchar_t * _FORTIFY_POS0 __s,
 
 	if ((size_t)__n > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_fgetws(__s, __n, __f);
+	return FORTIFY_HEADERS_INTERNAL_CALL(fgetws)(__s, __n, __f);
 }
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
@@ -76,7 +80,7 @@ _FORTIFY_FN(mbsnrtowcs) size_t mbsnrtowcs(wchar_t * _FORTIFY_POS0 __d,
 	size_t __r;
 
 	__b /= sizeof(wchar_t);
-	__r = __orig_mbsnrtowcs(__d, __s, __n, __wn > __b ? __b : __wn, __st);
+	__r = FORTIFY_HEADERS_INTERNAL_CALL(mbsnrtowcs)(__d, __s, __n, __wn > __b ? __b : __wn, __st);
 	if (__b < __wn && __d && *__s && __r != (size_t)-1)
 		__builtin_trap();
 	return __r;
@@ -91,7 +95,7 @@ _FORTIFY_FN(mbsrtowcs) size_t mbsrtowcs(wchar_t * _FORTIFY_POS0 __d,
 	size_t __r;
 
 	__b /= sizeof(wchar_t);
-	__r = __orig_mbsrtowcs(__d, __s, __wn > __b ? __b : __wn, __st);
+	__r = FORTIFY_HEADERS_INTERNAL_CALL(mbsrtowcs)(__d, __s, __wn > __b ? __b : __wn, __st);
 	if (__b < __wn && __d && *__s && __r != (size_t)-1)
 		__builtin_trap();
 	return __r;
@@ -104,7 +108,7 @@ _FORTIFY_FN(mbstowcs) size_t mbstowcs(wchar_t * _FORTIFY_POS0 __ws,
 
 	if (__ws && __wn > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_mbstowcs(__ws, __s, __wn);
+	return FORTIFY_HEADERS_INTERNAL_CALL(mbstowcs)(__ws, __s, __wn);
 }
 
 /* FIXME clang */
@@ -115,7 +119,7 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 		char __buf[MB_LEN_MAX];
 		size_t __r;
 
-		__r = __orig_wcrtomb(__buf, __w, __st);
+		__r = FORTIFY_HEADERS_INTERNAL_CALL(wcrtomb)(__buf, __w, __st);
 		if (__r == (size_t)-1)
 			return __r;
 		if (__r > __bos(__s, 0))
@@ -123,7 +127,7 @@ _FORTIFY_FN(wcrtomb) size_t wcrtomb(char * __s, wchar_t __w, mbstate_t *__st)
 		__builtin_memcpy(__s, __buf, __r);
 		return __r;
 	}
-	return __orig_wcrtomb(__s, __w, __st);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wcrtomb)(__s, __w, __st);
 }
 #endif
 
@@ -134,7 +138,7 @@ _FORTIFY_FN(wcscat) wchar_t *wcscat(wchar_t * _FORTIFY_POS0 __d,
 
 	if (wcslen(__s) + wcslen(__d) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wcscat(__d, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wcscat)(__d, __s);
 }
 
 _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
@@ -144,7 +148,7 @@ _FORTIFY_FN(wcscpy) wchar_t *wcscpy(wchar_t * _FORTIFY_POS0 __d,
 
 	if (wcslen(__s) + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wcscpy(__d, __s);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wcscpy)(__d, __s);
 }
 
 _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
@@ -159,7 +163,7 @@ _FORTIFY_FN(wcsncat) wchar_t *wcsncat(wchar_t * _FORTIFY_POS0 __d,
 		__sl = __n;
 	if (__sl + __dl + 1 > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wcsncat(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wcsncat)(__d, __s, __n);
 }
 
 _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
@@ -169,7 +173,7 @@ _FORTIFY_FN(wcsncpy) wchar_t *wcsncpy(wchar_t * _FORTIFY_POS0 __d,
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wcsncpy(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wcsncpy)(__d, __s, __n);
 }
 
 #if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
@@ -182,7 +186,7 @@ _FORTIFY_FN(wcsnrtombs) size_t wcsnrtombs(char * _FORTIFY_POS0 __d,
 	size_t __b = __bos(__d, 0);
 	size_t __r;
 
-	__r = __orig_wcsnrtombs(__d, __s, __wn, __n > __b ? __b : __n, __st);
+	__r = FORTIFY_HEADERS_INTERNAL_CALL(wcsnrtombs)(__d, __s, __wn, __n > __b ? __b : __n, __st);
 	if (__b < __n && __d && *__s && __r != (size_t)-1)
 		__builtin_trap();
 	return __r;
@@ -196,7 +200,7 @@ _FORTIFY_FN(wcsrtombs) size_t wcsrtombs(char * _FORTIFY_POS0 __d,
 	size_t __b = __bos(__d, 0);
 	size_t __r;
 
-	__r = __orig_wcsrtombs(__d, __s, __n > __b ? __b : __n, __st);
+	__r = FORTIFY_HEADERS_INTERNAL_CALL(wcsrtombs)(__d, __s, __n > __b ? __b : __n, __st);
 	if (__b < __n && __d && *__s && __r != (size_t)-1)
 		__builtin_trap();
 	return __r;
@@ -209,7 +213,7 @@ _FORTIFY_FN(wcstombs) size_t wcstombs(char * _FORTIFY_POS0 __s,
 
 	if (__s && __n > __b)
 		__builtin_trap();
-	return __orig_wcstombs(__s, __ws, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wcstombs)(__s, __ws, __n);
 }
 
 _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
@@ -221,7 +225,7 @@ _FORTIFY_FN(wmemcpy) wchar_t *wmemcpy(wchar_t * _FORTIFY_POS0 __d,
 
 	if (__n > __bd / sizeof(wchar_t) || __n > __bs / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wmemcpy(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wmemcpy)(__d, __s, __n);
 }
 
 _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
@@ -233,7 +237,7 @@ _FORTIFY_FN(wmemmove) wchar_t *wmemmove(wchar_t * _FORTIFY_POS0 __d,
 
 	if (__n > __bd / sizeof(wchar_t) || __n > __bs / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wmemmove(__d, __s, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wmemmove)(__d, __s, __n);
 }
 
 _FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t * _FORTIFY_POS0 __s,
@@ -243,7 +247,7 @@ _FORTIFY_FN(wmemset) wchar_t *wmemset(wchar_t * _FORTIFY_POS0 __s,
 
 	if (__n > __b / sizeof(wchar_t))
 		__builtin_trap();
-	return __orig_wmemset(__s, __c, __n);
+	return FORTIFY_HEADERS_INTERNAL_CALL(wmemset)(__s, __c, __n);
 }
 
 #ifdef __cplusplus

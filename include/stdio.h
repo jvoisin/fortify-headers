@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_STDIO_H
 #define _FORTIFY_STDIO_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -45,7 +49,7 @@ _FORTIFY_FN(fgets) char *fgets(char * _FORTIFY_POS0 __s, int __n, FILE *__f)
 
 	if ((size_t)__n > __b)
 		__builtin_trap();
-	return __orig_fgets(__s, __n, __f);
+	return FORTIFY_HEADERS_INTERNAL_CALL(fgets)(__s, __n, __f);
 }
 
 __fortify_access(write_only, 1)
@@ -59,7 +63,7 @@ _FORTIFY_FN(fread) size_t fread(void * _FORTIFY_POS0 __d, size_t __n,
 		__builtin_trap();
 	if (__n * __m > __b)
 		__builtin_trap();
-	return __orig_fread(__d, __n, __m, __f);
+	return FORTIFY_HEADERS_INTERNAL_CALL(fread)(__d, __n, __m, __f);
 }
 
 __fortify_access(read_only, 1)
@@ -73,7 +77,7 @@ _FORTIFY_FN(fwrite) size_t fwrite(const void * _FORTIFY_POS0 __d, size_t __n,
 		__builtin_trap();
 	if (__n * __m > __b)
 		__builtin_trap();
-	return __orig_fwrite(__d, __n, __m, __f);
+	return FORTIFY_HEADERS_INTERNAL_CALL(fwrite)(__d, __n, __m, __f);
 }
 
 __fortify__format(printf, 3, 0)
@@ -86,7 +90,7 @@ _FORTIFY_FN(vsnprintf) int vsnprintf(char * _FORTIFY_POS0 __s, size_t __n,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_vsnprintf(__s, __n, __f, __v);
+	return FORTIFY_HEADERS_INTERNAL_CALL(vsnprintf)(__s, __n, __f, __v);
 }
 
 __fortify__format(printf, 2, 0)
@@ -99,11 +103,11 @@ _FORTIFY_FN(vsprintf) int vsprintf(char * _FORTIFY_POS0 __s, const char *__f,
 	int __r;
 
 	if (__b) {
-		__r = __orig_vsnprintf(__s, __b, __f, __v);
+		__r = FORTIFY_HEADERS_INTERNAL_CALL(vsnprintf)(__s, __b, __f, __v);
 		if (__r != -1 && (size_t)__r >= __b)
 			__builtin_trap();
 	} else {
-		__r = __orig_vsprintf(__s, __f, __v);
+		__r = FORTIFY_HEADERS_INTERNAL_CALL(vsprintf)(__s, __f, __v);
 	}
 	return __r;
 }
@@ -130,7 +134,7 @@ _FORTIFY_FN(snprintf) int snprintf(char *__s, size_t __n,
 
 	if (__n > __b)
 		__builtin_trap();
-	return __orig_snprintf(__s, __n, __f, __builtin_va_arg_pack());
+	return FORTIFY_HEADERS_INTERNAL_CALL(snprintf)(__s, __n, __f, __builtin_va_arg_pack());
 }
 
 __fortify__format(printf, 2, 3)
@@ -140,11 +144,11 @@ _FORTIFY_FN(sprintf) int sprintf(char *__s, const char *__f, ...)
 	int __r;
 
 	if (__b) {
-		__r = __orig_snprintf(__s, __b, __f, __builtin_va_arg_pack());
+		__r = FORTIFY_HEADERS_INTERNAL_CALL(snprintf)(__s, __b, __f, __builtin_va_arg_pack());
 		if (__r != -1 && (size_t)__r >= __b)
 			__builtin_trap();
 	} else {
-		__r = __orig_sprintf(__s, __f, __builtin_va_arg_pack());
+		__r = FORTIFY_HEADERS_INTERNAL_CALL(sprintf)(__s, __f, __builtin_va_arg_pack());
 	}
 	return __r;
 }

@@ -17,6 +17,10 @@
 #ifndef _FORTIFY_STDLIB_H
 #define _FORTIFY_STDLIB_H
 
+#if defined(_FORTIFY_SOURCE) && _FORTIFY_SOURCE > 0 && defined(__OPTIMIZE__) && __OPTIMIZE__ > 0
+#include "fortify-builtins.h"
+#endif
+
 #if !defined(__cplusplus) && !defined(__clang__)
 __extension__
 #endif
@@ -51,7 +55,7 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 		char __buf[PATH_MAX], *__ret;
 		size_t __l;
 
-		__ret = __orig_realpath(__p, __buf);
+		__ret = FORTIFY_HEADERS_INTERNAL_CALL(realpath)(__p, __buf);
 		if (!__ret)
 			return NULL;
 		__l = __builtin_strlen(__ret) + 1;
@@ -60,7 +64,7 @@ _FORTIFY_FN(realpath) char *realpath(const char *__p, char *__r)
 		__builtin_memcpy(__r, __ret, __l);
 		return __r;
 	}
-	return __orig_realpath(__p, __r);
+	return FORTIFY_HEADERS_INTERNAL_CALL(realpath)(__p, __r);
 }
 #ifdef _FORTIFY_UNDEF_PATH_MAX
 #undef PATH_MAX
